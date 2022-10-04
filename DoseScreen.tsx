@@ -12,7 +12,10 @@ export default function DoseScreen() {
           onPress={() => {
             setActiveSection("Renal");
           }}
-          style={styles.Button}
+          style={[
+            styles.Button,
+            activeSection === "Renal" ? styles.ButtonActive : null,
+          ]}
         >
           <Text style={styles.ButtonText}>Renal Impairment</Text>
         </TouchableOpacity>
@@ -20,7 +23,10 @@ export default function DoseScreen() {
           onPress={() => {
             setActiveSection("Dialysis");
           }}
-          style={styles.Button}
+          style={[
+            styles.Button,
+            activeSection === "Dialysis" ? styles.ButtonActive : null,
+          ]}
         >
           <Text style={styles.ButtonText}>Hemodialysis</Text>
         </TouchableOpacity>
@@ -28,7 +34,10 @@ export default function DoseScreen() {
           onPress={() => {
             setActiveSection("Hepatic");
           }}
-          style={styles.Button}
+          style={[
+            styles.Button,
+            activeSection === "Hepatic" ? styles.ButtonActive : null,
+          ]}
         >
           <Text style={styles.ButtonText}>Hepatic impairment</Text>
         </TouchableOpacity>
@@ -51,6 +60,9 @@ const styles = StyleSheet.create({
     backgroundColor: "gray",
     alignItems: "center",
     justifyContent: "center",
+  },
+  ButtonActive: {
+    backgroundColor: "orange",
   },
   ButtonText: {
     color: "white",
