@@ -10,7 +10,7 @@ export default function WarningInfo({ route }) {
         <Text style={[styles.header, { marginTop: 0 }]}>Warnings: </Text>
         {drug.warning.map((warning, index) => {
           return (
-            <Text>
+            <Text key={index}>
               {index + 1}. {warning}
             </Text>
           );
@@ -19,7 +19,7 @@ export default function WarningInfo({ route }) {
         <Text style={styles.header}>Precautions</Text>
         {drug.precaution.map((precaution, index) => {
           return (
-            <Text>
+            <Text key={index}>
               {index + 1}. {precaution}
             </Text>
           );
@@ -28,7 +28,7 @@ export default function WarningInfo({ route }) {
         <Text style={styles.header}>Contraindications</Text>
         {drug.contra.map((contra, index) => {
           return (
-            <Text>
+            <Text key={index}>
               {index + 1}. {contra}
             </Text>
           );
