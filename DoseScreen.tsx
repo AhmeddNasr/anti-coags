@@ -1,65 +1,66 @@
-import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
-import { useState } from "react";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+} from "react-native";
+import RenalDoseAdjustment from "./DoseScreen/components/RenalDoseAdjustment";
+import drugs from "./drugs";
+import theme from "./theme";
 
-export default function DoseScreen() {
-  const [activeSection, setActiveSection] = useState("");
-
+export default function DoseScreen({ navigation }) {
   return (
     <View>
-      <Text>{activeSection}</Text>
-      <View style={styles.ButtonGroup}>
-        <TouchableOpacity
-          onPress={() => {
-            setActiveSection("Renal");
-          }}
-          style={[
-            styles.Button,
-            activeSection === "Renal" ? styles.ButtonActive : null,
-          ]}
-        >
-          <Text style={styles.ButtonText}>Renal Impairment</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setActiveSection("Dialysis");
-          }}
-          style={[
-            styles.Button,
-            activeSection === "Dialysis" ? styles.ButtonActive : null,
-          ]}
-        >
-          <Text style={styles.ButtonText}>Hemodialysis</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setActiveSection("Hepatic");
-          }}
-          style={[
-            styles.Button,
-            activeSection === "Hepatic" ? styles.ButtonActive : null,
-          ]}
-        >
-          <Text style={styles.ButtonText}>Hepatic impairment</Text>
-        </TouchableOpacity>
-      </View>
+      {drugs.map((drug, index) => {
+        return (
+          <View key={index} style={styles.container}>
+            {index === 0 ? (
+              <View style={styles.titleContainer}>
+                <Text style={styles.title}>Oral anti-coagulants</Text>
+              </View>
+            ) : index === 1 ? (
+              <View style={styles.titleContainer}>
+                <Text style={styles.title}>Parentral anti-coagulants</Text>
+              </View>
+            ) : null}
+            <Pressable
+              onPress={() => navigation.navigate("DrugDose", { id: index })}
+              style={({ pressed }) => [
+                { opacity: pressed ? 0.8 : 1 },
+                styles.Button,
+              ]}
+            >
+              <Text style={styles.ButtonText}>{drug.name}</Text>
+            </Pressable>
+          </View>
+        );
+      })}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  ButtonGroup: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+  container: {
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
   },
+  titleContainer: {
+    padding: 20,
+    margin: 0,
+  },
+  title: { fontSize: 20 },
   Button: {
     borderColor: "gray",
     marginTop: 20,
     padding: 30,
     paddingRight: 10,
     paddingLeft: 10,
-    backgroundColor: "gray",
+    backgroundColor: theme.PRIMARY_COLOR,
     alignItems: "center",
     justifyContent: "center",
+    width: 130,
   },
   ButtonActive: {
     backgroundColor: "orange",
