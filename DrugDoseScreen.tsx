@@ -57,7 +57,7 @@ export default function DrugDoseScreen({ navigation, route }) {
           <Text style={styles.header}>
             {adjustment === "renal"
               ? "3. Calculate GFR"
-              : "4. Calculate CHILD score"}
+              : "3. Calculate CHILD score"}
           </Text>
         )}
         {adjustment === "renal" ? <RenalDoseAdjustment /> : null}
@@ -68,8 +68,8 @@ export default function DrugDoseScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   header: {
-    fontSize: 18,
-    marginBottom: 10,
+    fontSize: theme.FONT_SIZE_LARGE,
+    marginBottom: 15,
     marginTop: 20,
   },
 });
