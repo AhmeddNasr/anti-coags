@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./HomeScreen";
 import DoseScreen from "./DoseScreen";
 import WarningScreen from "./WarningScreen";
+import WarningInfo from "./WarningInfo";
 import SwitchingScreen from "./SwitchingScreen";
 import ChoosingScreen from "./ChoosingScreen";
 import DrugDoseScreen from "./DrugDoseScreen";
@@ -25,6 +26,7 @@ export default function App() {
           <Stack.Screen name="Switching" component={SwitchingScreen} />
           <Stack.Screen name="Choosing" component={ChoosingScreen} />
           <Stack.Screen name="Warning" component={WarningScreen} />
+          <Stack.Screen name="WarningInfo" component={WarningInfo} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
