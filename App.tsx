@@ -14,16 +14,18 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Dose" component={DoseScreen} />
-        <Stack.Screen name="DrugDose" component={DrugDoseScreen} />
-        <Stack.Screen name="Switching" component={SwitchingScreen} />
-        <Stack.Screen name="Choosing" component={ChoosingScreen} />
-        <Stack.Screen name="Warning" component={WarningScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <NativeBaseProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Dose" component={DoseScreen} />
+          <Stack.Screen name="DrugDose" component={DrugDoseScreen} />
+          <Stack.Screen name="Switching" component={SwitchingScreen} />
+          <Stack.Screen name="Choosing" component={ChoosingScreen} />
+          <Stack.Screen name="Warning" component={WarningScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 }
 
