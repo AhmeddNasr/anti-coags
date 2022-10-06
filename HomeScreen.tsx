@@ -1,61 +1,47 @@
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { Button } from "native-base";
 
 export default function HomeScreen({ navigation }) {
-  return (
-    <View>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("Dose");
-        }}
-        style={styles.Button}
+  const CustomButton = (props) => {
+    return (
+      <Button
+        colorScheme="red"
+        onPress={() => navigation.navigate(props.screen)}
+        my={5}
+        // w={"75%"}
+        py={4}
       >
-        <Text>Dose Modification</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("Hemodialysis");
-        }}
-        style={styles.Button}
-      >
-        <Text>Hemodialysis</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("Switching");
-        }}
-        style={styles.Button}
-      >
-        <Text>Switching</Text>
-      </TouchableOpacity>
+        {props.title}
+      </Button>
+    );
+  };
 
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("Choosing");
-        }}
-        style={styles.Button}
-      >
-        <Text>Choosing a Suitable Anti-coagulant</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("Warning");
-        }}
-        style={{ ...styles.Button, borderBottomWidth: 1 }}
-      >
-        <Text>Special Warnings</Text>
-      </TouchableOpacity>
+  return (
+    <View style={styles.container}>
+      <ScrollView>
+        <CustomButton title="Dose Modification" screen="Dose" />
+        <CustomButton title="Hemodialysis" screen="Hemodialysis" />
+        <CustomButton title="Switching" screen="Switching" />
+        <CustomButton
+          title="Choose a Suitable Anti-coagulant"
+          screen="Choosing"
+        />
+        <CustomButton title="Special Warnings" screen="Warning" />
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  Button: {
-    borderColor: "gray",
-    borderTopWidth: 1,
-    // borderBottomWidth: 1,
-    marginBottom: 10,
-    padding: 40,
-    alignItems: "center",
+  container: {
     justifyContent: "center",
+    alignItems: "center",
+    marginTop: 30,
   },
 });
