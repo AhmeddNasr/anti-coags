@@ -95,7 +95,7 @@ export default function RenalDoseAdjustment() {
           Calculate Dose
         </Button>
       </FormControl>
-      {calculatedGFR && <Text>GFR = {calculatedGFR}</Text>}
+      {calculatedGFR ? <Text>GFR = {calculatedGFR}</Text> : null}
     </>
   );
 }
