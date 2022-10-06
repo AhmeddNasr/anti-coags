@@ -1,11 +1,6 @@
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-} from "react-native";
-import RenalDoseAdjustment from "./DoseScreen/components/RenalDoseAdjustment";
+import { StyleSheet, Text, View } from "react-native";
+import { Button } from "native-base";
+
 import drugs from "./drugs";
 import theme from "./theme";
 
@@ -24,15 +19,12 @@ export default function DoseScreen({ navigation }) {
                 <Text style={styles.title}>Parentral anti-coagulants</Text>
               </View>
             ) : null}
-            <Pressable
+            <Button
               onPress={() => navigation.navigate("DrugDose", { id: index })}
-              style={({ pressed }) => [
-                { opacity: pressed ? 0.8 : 1 },
-                styles.Button,
-              ]}
+              colorScheme="red"
             >
-              <Text style={styles.ButtonText}>{drug.name}</Text>
-            </Pressable>
+              {drug.name}
+            </Button>
           </View>
         );
       })}
