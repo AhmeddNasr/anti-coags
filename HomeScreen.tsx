@@ -13,12 +13,21 @@ export default function HomeScreen({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
+          navigation.navigate("Hemodialysis");
+        }}
+        style={styles.Button}
+      >
+        <Text>Hemodialysis</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
           navigation.navigate("Switching");
         }}
         style={styles.Button}
       >
         <Text>Switching</Text>
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("Choosing");
