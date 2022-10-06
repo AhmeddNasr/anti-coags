@@ -2,6 +2,8 @@ const drugs = [
   {
     id: 0,
     name: "example drug",
+    route: "oral",
+    indications: ["dvtp", "dvtt"],
     doseDVTT: 1,
     intervalDVTT: "once per day",
     doseDVTP: 30,
@@ -19,8 +21,10 @@ const drugs = [
     precaution: ["example precaution 1", "example precaution 2"],
   },
   {
-    id: 0,
+    id: 1,
     name: "example drug 2",
+    route: "parentral",
+    indications: ["dvtp", "af"],
     doseAF: 10,
     intervalAF: "twice per day",
     doseDVTP: 40,
