@@ -4,6 +4,7 @@ import { Radio } from "native-base";
 import drugs from "./drugs";
 import theme from "./theme";
 import RenalDoseAdjustment from "./DoseScreen/components/RenalDoseAdjustment";
+import HepaticDoseAdjustment from "./DoseScreen/components/HepaticDoseAdjustment";
 
 export default function DrugDoseScreen({ navigation, route }) {
   const [adjustment, setAdjustment] = useState("");
@@ -60,7 +61,11 @@ export default function DrugDoseScreen({ navigation, route }) {
               : "3. Calculate CHILD score"}
           </Text>
         )}
-        {adjustment === "renal" ? <RenalDoseAdjustment /> : null}
+        {adjustment === "renal" ? (
+          <RenalDoseAdjustment />
+        ) : adjustment === "hepatic" ? (
+          <HepaticDoseAdjustment />
+        ) : null}
       </ScrollView>
     </View>
   );
