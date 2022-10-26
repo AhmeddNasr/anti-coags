@@ -2,8 +2,9 @@ import { View, StyleSheet, Text } from "react-native";
 import { FormControl, Input, Select, CheckIcon, Button } from "native-base";
 import { useEffect, useState } from "react";
 import theme from "../../theme";
+import calculateDose from "../../Utils/calculateDose";
 
-export default function RenalDoseAdjustment() {
+export default function RenalDoseAdjustment(props) {
   const [weight, setWeight] = useState(0);
   const [height, setHeight] = useState(0);
   const [gender, setGender] = useState("");
@@ -19,7 +20,11 @@ export default function RenalDoseAdjustment() {
   const calculateGFR = () => {
     const factor = gender === "m" ? 1 : 0.85;
     const GFR = ((140 - age) * weight * factor) / (scr * 72);
-    setCalculatedGFR(GFR);
+    return GFR;
+  };
+
+  const calculateBMI = () => {
+    return weight / Math.pow(height / 100, 2);
   };
 
   useEffect(() => {
@@ -90,12 +95,21 @@ export default function RenalDoseAdjustment() {
         <Button
           colorScheme="red"
           isDisabled={!isFormFilled}
-          onPress={() => calculateGFR()}
+          onPress={() => {
+            let info = {
+              gfr: calculateGFR(),
+              weight: weight,
+              age: age,
+              bmi: calculateBMI(),
+            };
+            console.log(info);
+            setCalculatedGFR(calculateDose(props.drug.dose[0], info));
+          }}
         >
           Calculate Dose
         </Button>
       </FormControl>
-      {calculatedGFR ? <Text>GFR = {calculatedGFR}</Text> : null}
+      {calculatedGFR ? <Text>{calculatedGFR}</Text> : null}
     </>
   );
 }
