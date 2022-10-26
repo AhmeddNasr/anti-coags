@@ -1,22 +1,47 @@
 // all conditions lead to the same output
 export default function checkCondition(info, condition) {
   // condition wa7da
-  condition.forEach((object) => {
-    for (let [key, value] of Object.entries(object)) {
+  for (let i = 0; i < condition.length; i++) {
+    for (let [key, value] of Object.entries(condition[i])) {
       // check type of condition
       if (key === "gfr") {
-        return isSmaller(info.gfr, value);
+        if (isSmaller(info.gfr, value)) {
+          return true;
+        }
       } else {
         if (key === "bmi") {
-          return isBigger(info.bmi, value);
+          if (isBigger(info.bmi, value)) {
+            return true;
+          }
         } else if (key === "weight") {
-          return isBigger(info.weight, value);
+          if (isBigger(info.weight, value)) {
+            return true;
+          }
         } else {
-          return isBigger(info.age, value);
+          if (isBigger(info.age, value)) {
+            return true;
+          }
         }
       }
     }
-  });
+  }
+
+  // condition.forEach((object) => {
+  //   for (let [key, value] of Object.entries(object)) {
+  //     // check type of condition
+  //     if (key === "gfr") {
+  //       console.log("result", isSmaller(info.gfr, value));
+  //     } else {
+  //       if (key === "bmi") {
+  //         if (isBigger(info.bmi, value);
+  //       } else if (key === "weight") {
+  //         if (isBigger(info.weight, value);
+  //       } else {
+  //         if (isBigger(info.age, value);
+  //       }
+  //     }
+  //   }
+  // });
 }
 
 function isBigger(current, cutOff) {
