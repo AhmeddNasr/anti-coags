@@ -57,12 +57,12 @@ export default function DrugDoseScreen({ navigation, route }) {
         {adjustment.length > 0 && (
           <Text style={styles.header}>
             {adjustment === "renal"
-              ? "3. Calculate GFR"
+              ? "3. Patient Data:"
               : "3. Calculate CHILD score"}
           </Text>
         )}
         {adjustment === "renal" ? (
-          <RenalDoseAdjustment />
+          <RenalDoseAdjustment drug={drug} />
         ) : adjustment === "hepatic" ? (
           <HepaticDoseAdjustment />
         ) : null}
