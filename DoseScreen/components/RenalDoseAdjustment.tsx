@@ -103,7 +103,10 @@ export default function RenalDoseAdjustment(props) {
               bmi: calculateBMI(),
             };
             console.log(info);
-            setCalculatedGFR(calculateDose(props.drug.dose[0], info));
+            setCalculatedGFR(
+              calculateDose(props.drug.dose, info, props.indication)
+            );
+            console.log(calculateDose(props.drug.dose, info, props.indication));
           }}
         >
           Calculate Dose
