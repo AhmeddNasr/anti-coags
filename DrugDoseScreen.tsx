@@ -62,7 +62,7 @@ export default function DrugDoseScreen({ navigation, route }) {
           </Text>
         )}
         {adjustment === "renal" ? (
-          <RenalDoseAdjustment drug={drug} />
+          <RenalDoseAdjustment drug={drug} indication={indication} />
         ) : adjustment === "hepatic" ? (
           <HepaticDoseAdjustment />
         ) : null}
