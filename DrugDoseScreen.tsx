@@ -1,16 +1,17 @@
 import { View, Text, Pressable, StyleSheet, ScrollView } from "react-native";
 import { useState } from "react";
-import { Radio } from "native-base";
+import { Radio, Checkbox, Button } from "native-base";
 import drugs from "./drugs";
 import theme from "./theme";
 import RenalDoseAdjustment from "./DoseScreen/components/RenalDoseAdjustment";
 import HepaticDoseAdjustment from "./DoseScreen/components/HepaticDoseAdjustment";
+import DoseAdjustment from "./DoseScreen/components/DoseAdjustment";
 
-export default function DrugDoseScreen({ navigation, route }) {
-  const [adjustment, setAdjustment] = useState("");
+export default function DrugDoseScreen({ navigation, route }: any) {
+  const [adjustment, setAdjustment] = useState(["renal"]);
   const [indication, setIndication] = useState("");
+  const [patientData, setPatientData] = useState({});
   const drug = drugs[route.params.id];
-
   return (
     <View style={{ margin: 20 }}>
       <ScrollView>
@@ -35,37 +36,51 @@ export default function DrugDoseScreen({ navigation, route }) {
           })}
         </Radio.Group>
 
-        {/* Adjustment Type */}
         {indication.length > 0 && (
           <>
             <Text style={styles.header}>2. Adjustment Type:</Text>
-            <Radio.Group
-              name="adjustmentType"
-              accessibilityLabel="adjustment type"
+            {/* TODO remove nativebase */}
+            <Checkbox.Group
+              onChange={(value) => setAdjustment(value)}
               value={adjustment}
-              onChange={(nextValue) => setAdjustment(nextValue)}
             >
-              <Radio value="renal" colorScheme="red" my={2}>
+              <Checkbox value="renal" colorScheme="red" my={2} isDisabled>
                 Renal Dose Adjustment
-              </Radio>
-              <Radio value="hepatic" colorScheme="red" my={2}>
+              </Checkbox>
+              <Checkbox value="hepatic" colorScheme="red" my={2}>
                 Hepatic Dose Adjustment
-              </Radio>
-            </Radio.Group>
+              </Checkbox>
+            </Checkbox.Group>
+            {/* Renal and Hepatic */}
+            <DoseAdjustment
+              adjustment={adjustment}
+              drug={drug}
+              indication={indication}
+            />
+            <Button
+              colorScheme="red"
+              my={8}
+              // isDisabled={!isFormFilled}
+              onPress={() => {
+                // let info = {
+                //   gfr: calculateGFR(),
+                //   weight: weight,
+                //   age: age,
+                //   bmi: calculateBMI(),
+                // };
+                // console.log(info);
+                // setCalculatedGFR(
+                //   calculateDose(props.drug.dose, info, props.indication)
+                // );
+                // console.log(
+                //   calculateDose(props.drug.dose, info, props.indication)
+                // );
+              }}
+            >
+              Calculate Dose
+            </Button>
           </>
         )}
-        {adjustment.length > 0 && (
-          <Text style={styles.header}>
-            {adjustment === "renal"
-              ? "3. Patient Data:"
-              : "3. Calculate CHILD score"}
-          </Text>
-        )}
-        {adjustment === "renal" ? (
-          <RenalDoseAdjustment drug={drug} indication={indication} />
-        ) : adjustment === "hepatic" ? (
-          <HepaticDoseAdjustment />
-        ) : null}
       </ScrollView>
     </View>
   );

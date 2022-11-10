@@ -1,11 +1,37 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useState } from "react";
 import { Radio } from "native-base";
 import theme from "../../theme";
 
+const IPressable = (props) => {
+  return (
+    <Pressable
+      style={({ pressed }) => [
+        styles.pressable,
+        props.middle
+          ? {
+              borderTopWidth: 1,
+              borderBottomWidth: 1,
+              borderColor: "#00000090",
+            }
+          : null,
+        pressed
+          ? {
+              backgroundColor: theme.PRIMARY_COLOR_70,
+              color: theme.TEXT_COLOR_WHITE,
+            }
+          : null,
+      ]}
+    >
+      <Text style={styles.text}>{props.title}</Text>
+      <Text style={{ color: "gray" }}>+{props.value}</Text>
+    </Pressable>
+  );
+};
+
 const RadioGroup = (props) => {
   return (
-    <View style={styles.radioGroup}>
+    <View style={styles.group}>
       <Text
         style={{
           flex: 1,
@@ -15,23 +41,11 @@ const RadioGroup = (props) => {
       >
         {props.title}
       </Text>
-      <Radio.Group
-        style={{ flex: 2 }}
-        name={props.name}
-        onChange={(nextValue) => {
-          return;
-        }}
-      >
-        <Radio value={"1"} colorScheme="red" my={2}>
-          {props.one}
-        </Radio>
-        <Radio value={"2"} colorScheme="red" my={2}>
-          {props.two}
-        </Radio>
-        <Radio value={"3"} colorScheme="red" my={2}>
-          {props.three}
-        </Radio>
-      </Radio.Group>
+      <View style={styles.radioGroup}>
+        <IPressable title={props.one} value={1} />
+        <IPressable title={props.two} value={2} middle />
+        <IPressable title={props.three} value={3} />
+      </View>
     </View>
   );
 };
@@ -40,48 +54,48 @@ export default function HepaticDoseAdjustment() {
   return (
     <View>
       <RadioGroup
-        name="billirubin"
         title="Bilirubin (Total)"
         one="<2 mg/dL"
         two="2-3 mg/dL"
         three=">3 mg/dL"
       />
       <RadioGroup
-        name="billirubin"
-        title="Bilirubin (Total)"
-        one="<2 mg/dL"
-        two="2-3 mg/dL"
-        three=">3 mg/dL"
+        title="Albumin"
+        one="<3.5 g/dL"
+        two="2.8-3.5 g/dL"
+        three="<2.8 g/dL"
       />
+      <RadioGroup title="INR" one="<1.7" two="1.7-2.2" three=">2.2" />
+      <RadioGroup title="Ascites" one="Absent" two="Slight" three="Moderate" />
       <RadioGroup
-        name="billirubin"
-        title="Bilirubin (Total)"
-        one="<2 mg/dL"
-        two="2-3 mg/dL"
-        three=">3 mg/dL"
-      />
-      <RadioGroup
-        name="billirubin"
-        title="Bilirubin (Total)"
-        one="<2 mg/dL"
-        two="2-3 mg/dL"
-        three=">3 mg/dL"
-      />
-      <RadioGroup
-        name="billirubin"
-        title="Bilirubin (Total)"
-        one="<2 mg/dL"
-        two="2-3 mg/dL"
-        three=">3 mg/dL"
+        title="Encephalopathy"
+        one="No Encephalopathy"
+        two="Grade 1-2"
+        three="Grade 3-4"
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  radioGroup: {
+  group: {
     flexDirection: "row",
     // justifyContent: "space-between",
     marginTop: 10,
+    alignItems: "center",
+  },
+  radioGroup: {
+    flex: 2,
+    borderWidth: 1,
+    borderColor: "#00000080",
+    borderRadius: 7,
+  },
+  pressable: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 10,
+  },
+  text: {
+    fontSize: theme.FONT_SIZE_MEDIUM,
   },
 });

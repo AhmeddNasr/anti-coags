@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import theme from "../../theme";
 import calculateDose from "../../Utils/calculateDose";
 
-export default function RenalDoseAdjustment(props) {
+export default function RenalDoseAdjustment(props: any) {
   const [weight, setWeight] = useState(0);
   const [height, setHeight] = useState(0);
   const [gender, setGender] = useState("");
@@ -13,7 +13,7 @@ export default function RenalDoseAdjustment(props) {
   const [isFormFilled, setIsFormFilled] = useState(false);
   const [calculatedGFR, setCalculatedGFR] = useState(0);
 
-  const updateState = (val, setter) => {
+  const updateState = (val: any, setter: any) => {
     setter(val);
   };
 
@@ -35,82 +35,77 @@ export default function RenalDoseAdjustment(props) {
     }
   }, [weight, height, gender, age, scr]);
 
+  function TextInputBlock(props: any) {
+    return (
+      <View style={styles.inputGroup}>
+        <Text>{props.title}: </Text>
+        <Input
+          w={"75%"}
+          keyboardType={props.keyboardType}
+          InputRightElement={
+            <Text style={styles.inputTextElement}>{props.unit}</Text>
+          }
+          onChangeText={(val) => updateState(val, props.setter)}
+        />
+      </View>
+    );
+  }
+
+  function GenderInput(props: any) {
+    return (
+      <View style={styles.inputGroup}>
+        <Text>Gender: </Text>
+        <Select
+          minWidth="200"
+          accessibilityLabel="Choose gender"
+          placeholder="Gender"
+          _selectedItem={{
+            bg: "teal.600",
+            endIcon: <CheckIcon size={2} />,
+          }}
+          w={"75%"}
+          onValueChange={(val) => updateState(val, setGender)}
+        >
+          <Select.Item label="Male" value="m" />
+          <Select.Item label="Female" value="f" />
+        </Select>
+      </View>
+    );
+  }
+
   return (
     <>
       <FormControl isRequired>
-        <View style={styles.inputGroup}>
-          <Text>Weight: </Text>
-          <Input
-            w={"75%"}
-            keyboardType="number-pad"
-            InputRightElement={<Text style={styles.inputTextElement}>kg</Text>}
-            onChangeText={(val) => updateState(val, setWeight)}
-          />
-        </View>
-        <View style={styles.inputGroup}>
-          <Text>Height: </Text>
-          <Input
-            w={"75%"}
-            keyboardType="number-pad"
-            InputRightElement={<Text style={styles.inputTextElement}>cm</Text>}
-            onChangeText={(val) => updateState(val, setHeight)}
-          />
-        </View>
-        <View style={styles.inputGroup}>
-          <Text>Gender: </Text>
-          <Select
-            minWidth="200"
-            accessibilityLabel="Choose gender"
-            placeholder="Gender"
-            _selectedItem={{
-              bg: "teal.600",
-              endIcon: <CheckIcon size={2} />,
-            }}
-            w={"75%"}
-            onValueChange={(val) => updateState(val, setGender)}
-          >
-            <Select.Item label="Male" value="m" />
-            <Select.Item label="Female" value="f" />
-          </Select>
-        </View>
-        <View style={styles.inputGroup}>
-          <Text>Age: </Text>
-          <Input
-            w={"75%"}
-            keyboardType="number-pad"
-            onChangeText={(val) => updateState(val, setAge)}
-          />
-        </View>
-        <View style={styles.inputGroup}>
-          <Text>S. Cr: </Text>
-          <Input
-            w={"75%"}
-            keyboardType="number-pad"
-            InputRightElement={
-              <Text style={styles.inputTextElement}>mg/dL</Text>
-            }
-            onChangeText={(val) => updateState(val, setScr)}
-          />
-        </View>
-        <Button
-          colorScheme="red"
-          isDisabled={!isFormFilled}
-          onPress={() => {
-            let info = {
-              gfr: calculateGFR(),
-              weight: weight,
-              age: age,
-              bmi: calculateBMI(),
-            };
-            console.log(info);
-            setCalculatedGFR(
-              calculateDose(props.drug.dose, info, props.indication)
+        {props.params.forEach((param: any) => {
+          if (param === "age") {
+            return (
+              <TextInputBlock
+                title="Age"
+                keyboardType="numeric"
+                unit="years"
+                setter={setAge}
+              />
             );
-            console.log(calculateDose(props.drug.dose, info, props.indication));
-          }}
-        >
-          Calculate Dose
-        </Button>
+          } else if (param === "weight") {
+            return (
+              <TextInputBlock
+                title="Weight"
+                keyboardType="numeric"
+                unit="Kg"
+                setter={setWeight}
+              />
+            );
+          } else if (param === "scr") {
+            return (
+              <TextInputBlock
+                title="S.Cr"
+                keyboardType="numeric"
+                unit="mg/dL"
+                setter={setScr}
+              />
+            );
+          }
+        })}
       </FormControl>
       {calculatedGFR ? <Text>{calculatedGFR}</Text> : null}
     </>
