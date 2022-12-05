@@ -1,17 +1,23 @@
 import { View, Text, Pressable, StyleSheet, ScrollView } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Radio, Checkbox, Button } from "native-base";
 import drugs from "./drugs";
 import theme from "./theme";
 import RenalDoseAdjustment from "./DoseScreen/components/RenalDoseAdjustment";
 import HepaticDoseAdjustment from "./DoseScreen/components/HepaticDoseAdjustment";
 import DoseAdjustment from "./DoseScreen/components/DoseAdjustment";
+import Rivaroxaban from "./drug_dose_adjustment/Rivaroxaban";
 
-export default function DrugDoseScreen({ navigation, route }: any) {
+export default function DrugDoseScreen({ navigation, route }) {
   const [adjustment, setAdjustment] = useState(["renal"]);
   const [indication, setIndication] = useState("");
-  const [patientData, setPatientData] = useState({});
+  const [output, setOutput] = useState();
   const drug = drugs[route.params.id];
+
+  useEffect(() => {
+    console.log(output);
+  }, [output]);
+
   return (
     <View style={{ margin: 20 }}>
       <ScrollView>
@@ -52,36 +58,19 @@ export default function DrugDoseScreen({ navigation, route }: any) {
               </Checkbox>
             </Checkbox.Group>
             {/* Renal and Hepatic */}
-            <DoseAdjustment
+            {/* <DoseAdjustment
               adjustment={adjustment}
               drug={drug}
               indication={indication}
-            />
-            <Button
-              colorScheme="red"
-              my={8}
-              // isDisabled={!isFormFilled}
-              onPress={() => {
-                // let info = {
-                //   gfr: calculateGFR(),
-                //   weight: weight,
-                //   age: age,
-                //   bmi: calculateBMI(),
-                // };
-                // console.log(info);
-                // setCalculatedGFR(
-                //   calculateDose(props.drug.dose, info, props.indication)
-                // );
-                // console.log(
-                //   calculateDose(props.drug.dose, info, props.indication)
-                // );
-              }}
-            >
-              Calculate Dose
-            </Button>
+            /> */}
+            <Rivaroxaban setOutput={setOutput} indication={indication} />
           </>
         )}
       </ScrollView>
+      <View>
+        <Text>{output?.text}</Text>
+        <Text>{output?.reason}</Text>
+      </View>
     </View>
   );
 }
