@@ -1,6 +1,8 @@
 import { View, StyleSheet, Text } from "react-native";
 import { useEffect, useState } from "react";
 import { FormControl, Input, Select, CheckIcon, Button } from "native-base";
+import { Checkbox } from "native-base";
+
 import theme from "../../theme";
 
 function TextInputBlock(props) {
@@ -19,6 +21,21 @@ function TextInputBlock(props) {
   );
 }
 
+function CheckboxInput(props) {
+  return (
+    <Checkbox
+      disabled={false}
+      colorScheme="red"
+      value={props.value}
+      onValueChange={(val) => {
+        props.setter(val);
+      }}
+    >
+      {props.title}
+    </Checkbox>
+  );
+}
+
 function WeightInput(props) {
   return (
     <TextInputBlock
@@ -27,6 +44,18 @@ function WeightInput(props) {
       unit="Kg"
       setter={props.setter}
       key="weight"
+    />
+  );
+}
+
+function HeightInput(props) {
+  return (
+    <TextInputBlock
+      title="Height"
+      keyboardType="numeric"
+      unit="cm"
+      setter={props.setter}
+      key="height"
     />
   );
 }
@@ -60,6 +89,46 @@ function SubmitButton(props) {
     <Button onPress={() => props.calculate()} colorScheme="red" my={8}>
       Calculate Dose
     </Button>
+  );
+}
+
+function ConcamitantPgpInput(props) {
+  return (
+    <CheckboxInput
+      title="Concomitant use of potent P-gp inhibitors"
+      value={props.value}
+      setter={props.setter}
+    />
+  );
+}
+
+function BleedingHistoryInput(props) {
+  return (
+    <CheckboxInput
+      title="History of GI bleeding"
+      value={props.value}
+      setter={props.setter}
+    />
+  );
+}
+
+function NsaidUseInput(props) {
+  return (
+    <CheckboxInput
+      title="Continuous Use of NSAIDs"
+      value={props.value}
+      setter={props.setter}
+    />
+  );
+}
+
+function AntiplateletUseInput(props) {
+  return (
+    <CheckboxInput
+      title="Concurrent Use of Antiplatelet"
+      value={props.value}
+      setter={props.setter}
+    />
   );
 }
 
@@ -99,4 +168,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export { AgeInput, GenderInput, WeightInput, ScrInput, SubmitButton };
+export {
+  AgeInput,
+  GenderInput,
+  WeightInput,
+  ScrInput,
+  ConcamitantPgpInput,
+  SubmitButton,
+  BleedingHistoryInput,
+  AntiplateletUseInput,
+  NsaidUseInput,
+  HeightInput,
+};
