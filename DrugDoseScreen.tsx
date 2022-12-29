@@ -7,6 +7,7 @@ import RenalDoseAdjustment from "./DoseScreen/components/RenalDoseAdjustment";
 import HepaticDoseAdjustment from "./DoseScreen/components/HepaticDoseAdjustment";
 import DoseAdjustment from "./DoseScreen/components/DoseAdjustment";
 import Rivaroxaban from "./drug_dose_adjustment/Rivaroxaban";
+import Edoxaban from "./drug_dose_adjustment/Edoxaban";
 
 export default function DrugDoseScreen({ navigation, route }) {
   const [adjustment, setAdjustment] = useState(["renal"]);
@@ -63,7 +64,11 @@ export default function DrugDoseScreen({ navigation, route }) {
               drug={drug}
               indication={indication}
             /> */}
-            <Rivaroxaban setOutput={setOutput} indication={indication} />
+            {drug.name === "rivaroxaban" ? (
+              <Rivaroxaban setOutput={setOutput} indication={indication} />
+            ) : (
+              <Edoxaban setOutput={setOutput} indication={indication} />
+            )}
           </>
         )}
       </ScrollView>
