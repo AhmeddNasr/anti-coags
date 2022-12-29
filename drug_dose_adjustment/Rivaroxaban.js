@@ -7,6 +7,7 @@ import {
   ScrInput,
   SubmitButton,
 } from "../DoseScreen/components/custom-inputs";
+import calculateGFR from "../Utils/calculateGFR";
 
 export default function Rivaroxaban(props) {
   const [weight, setWeight] = useState(null);
@@ -14,12 +15,6 @@ export default function Rivaroxaban(props) {
   const [scr, setScr] = useState(null);
   const [gender, setGender] = useState(null);
   // const [gfr, setGfr] = useState(null);
-
-  const calculateGFR = () => {
-    const factor = gender === "m" ? 1 : 0.85;
-    const GFR = ((140 - age) * weight * factor) / (scr * 72);
-    return GFR;
-  };
 
   const defaultOutput = {
     af: "20 mg once daily with the evening meal",
@@ -38,7 +33,7 @@ export default function Rivaroxaban(props) {
   }, [props.indication]);
 
   const calculate = () => {
-    const gfr = calculateGFR();
+    const gfr = calculateGFR(gender, age, weight, scr);
     // AF
     if (props.indication === "af") {
       if (gfr < 15) {
