@@ -18,15 +18,65 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Dose" component={DoseScreen} />
-          <Stack.Screen name="DrugDose" component={DrugDoseScreen} />
+        <Stack.Navigator
+          screenOptions={{
+            headerTitleAlign: "center",
+            headerStyle: {
+              // backgroundColor: "#152C4C",
+            },
+            headerTitleStyle: {
+              // color: "white",
+            },
+            // headerShadowVisible: false,
+            contentStyle: {
+              backgroundColor: "#FDFDFD",
+            },
+          }}
+        >
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              title: "Coagulito",
+            }}
+          />
+          <Stack.Screen
+            name="Dose"
+            component={DoseScreen}
+            options={{
+              title: "Dose Modification",
+            }}
+          />
+          <Stack.Screen
+            name="DrugDose"
+            component={DrugDoseScreen}
+            options={{
+              title: "??",
+            }}
+          />
           <Stack.Screen name="Hemodialysis" component={HemodialysisScreen} />
           <Stack.Screen name="Switching" component={SwitchingScreen} />
-          <Stack.Screen name="Choosing" component={ChoosingScreen} />
-          <Stack.Screen name="Warning" component={WarningScreen} />
-          <Stack.Screen name="WarningInfo" component={WarningInfo} />
+          <Stack.Screen
+            name="Choosing"
+            component={ChoosingScreen}
+            options={{
+              title: "Dose Modification",
+            }}
+          />
+          <Stack.Screen
+            name="Warning"
+            component={WarningScreen}
+            options={{
+              title: "Special Warnings",
+            }}
+          />
+          <Stack.Screen
+            name="WarningInfo"
+            component={WarningInfo}
+            options={{
+              title: "??",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
