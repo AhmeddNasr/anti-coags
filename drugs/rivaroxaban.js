@@ -7,7 +7,16 @@ const rivaroxaban = {
   doseDVTP: 30,
   dialysis: false,
   hepatic: false,
-  switching: ["titrate example drug 1 dose slowly over 2 days then ….."],
+  switching: {
+    warfarin: [
+      "Initiate warfarin and continue rivaroxaban for ≥2 days after first dose warfarin.",
+      "After 2 days of coadministration, check an INR prior to the next scheduled dose of rivaroxaban.",
+      "Continue coadministration of warfarin and rivaroxaban until INR ≥2.",
+    ],
+    default: [
+      "Start anticoagulant when the next dose of rivaroxaban was scheduled to be given.",
+    ],
+  },
   warning: ["example warning 1", "example warning 2"],
   contra: ["contra with X", "contra with Y", "contra with Z"],
   precaution: ["example precaution 1", "example precaution 2"],

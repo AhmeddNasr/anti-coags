@@ -5,7 +5,22 @@ const apixaban = {
   indications: ["af", "dvtt", "dvtp"],
   dialysis: false,
   hepatic: true,
-  switching: ["titrate example drug 1 dose slowly over 2 days then ….."],
+  switching: {
+    heparin: [
+      "Start the parenteral anticoagulant when the next dose of apixaban was scheduled to be given",
+    ],
+    fondaparinux: [
+      "Start the parenteral anticoagulant when the next dose of apixaban was scheduled to be given",
+    ],
+    warfarin: [
+      "Start warfarin now and consider adding parenteral bridging agent when next apixaban dose would have been due",
+      "Start INR monitoring 2 days after stopping apixaban",
+      "Stop parenteral bridging agent when INR is at goal",
+    ],
+    default: [
+      "Start the new direct oral anticoagulant (DOAC) when the next dose of apixaban  was scheduled to be given",
+    ],
+  },
   warning: ["example warning 1", "example warning 2"],
   contra: ["contra with X", "contra with Y", "contra with Z"],
   precaution: ["example precaution 1", "example precaution 2"],
