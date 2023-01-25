@@ -8,6 +8,7 @@ import HepaticDoseAdjustment from "./DoseScreen/components/HepaticDoseAdjustment
 import DoseAdjustment from "./DoseScreen/components/DoseAdjustment";
 import Rivaroxaban from "./drug_dose_adjustment/Rivaroxaban";
 import Edoxaban from "./drug_dose_adjustment/Edoxaban";
+import colors from "native-base/lib/typescript/theme/v33x-theme/base/colors";
 
 export default function DrugDoseScreen({ navigation, route }) {
   const [adjustment, setAdjustment] = useState(["renal"]);
@@ -20,70 +21,100 @@ export default function DrugDoseScreen({ navigation, route }) {
   }, [output]);
 
   return (
-    <View style={{ margin: 20 }}>
+    <>
       <ScrollView>
-        {/* Indication */}
-        <Text style={[styles.header, { marginTop: 0 }]}>1. Indication: </Text>
-        <Radio.Group
-          name="indication"
-          accessibilityLabel="indication"
-          value={indication}
-          onChange={(nextValue) => setIndication(nextValue)}
-        >
-          {drug.indications.map((indication, index) => {
-            return (
-              <Radio colorScheme="red" value={indication} key={index} my={2}>
-                {indication === "dvtp"
-                  ? "DVT prophylaxis"
-                  : indication === "dvtt"
-                  ? "DVT treatment"
-                  : "AF"}
-              </Radio>
-            );
-          })}
-        </Radio.Group>
+        <View style={{ padding: 20, flex: 1 }}>
+          {/* Indication */}
+          <Text style={[styles.header, { marginTop: 0 }]}>Indication: </Text>
+          <Radio.Group
+            name="indication"
+            accessibilityLabel="indication"
+            value={indication}
+            onChange={(nextValue) => setIndication(nextValue)}
+          >
+            {drug.indications.map((indication, index) => {
+              return (
+                <Radio colorScheme="red" value={indication} key={index} my={2}>
+                  {indication === "dvtp"
+                    ? "DVT prophylaxis"
+                    : indication === "dvtt"
+                    ? "DVT treatment"
+                    : "AF"}
+                </Radio>
+              );
+            })}
+          </Radio.Group>
 
-        {indication.length > 0 && (
-          <>
-            <Text style={styles.header}>2. Adjustment Type:</Text>
-            {/* TODO remove nativebase */}
-            <Checkbox.Group
-              onChange={(value) => setAdjustment(value)}
-              value={adjustment}
-            >
-              <Checkbox value="renal" colorScheme="red" my={2} isDisabled>
-                Renal Dose Adjustment
-              </Checkbox>
-              <Checkbox value="hepatic" colorScheme="red" my={2}>
-                Hepatic Dose Adjustment
-              </Checkbox>
-            </Checkbox.Group>
-            {/* Renal and Hepatic */}
-            {/* <DoseAdjustment
-              adjustment={adjustment}
-              drug={drug}
-              indication={indication}
-            /> */}
-            {drug.name === "rivaroxaban" ? (
-              <Rivaroxaban setOutput={setOutput} indication={indication} />
-            ) : (
-              <Edoxaban setOutput={setOutput} indication={indication} />
-            )}
-          </>
+          {indication.length > 0 && (
+            <>
+              <Text style={styles.header}>Adjustment Type:</Text>
+              {/* TODO remove nativebase */}
+              <Checkbox.Group
+                onChange={(value) => setAdjustment(value)}
+                value={adjustment}
+              >
+                <Checkbox value="renal" colorScheme="red" my={2} isDisabled>
+                  Renal Dose Adjustment
+                </Checkbox>
+                <Checkbox value="hepatic" colorScheme="red" my={2}>
+                  Hepatic Dose Adjustment
+                </Checkbox>
+              </Checkbox.Group>
+              <Text style={styles.header}>Patient information:</Text>
+              {drug.name === "rivaroxaban" ? (
+                <Rivaroxaban setOutput={setOutput} indication={indication} />
+              ) : (
+                <Edoxaban setOutput={setOutput} indication={indication} />
+              )}
+            </>
+          )}
+        </View>
+        {indication !== "" && (
+          <View
+            style={[
+              styles.resultContainer,
+              {
+                backgroundColor:
+                  output?.adjustmentType === 0
+                    ? theme.RED_COLOR
+                    : output?.adjustmentType === 1
+                    ? theme.BLUE_COLOR
+                    : theme.GREEN_COLOR,
+              },
+            ]}
+          >
+            <Text style={styles.resultHeader}>Dose:</Text>
+            <Text style={styles.resultDose}>{output?.text}</Text>
+            <Text>{output?.reason}</Text>
+          </View>
         )}
       </ScrollView>
-      <View>
-        <Text>{output?.text}</Text>
-        <Text>{output?.reason}</Text>
-      </View>
-    </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   header: {
-    fontSize: theme.FONT_SIZE_LARGE,
+    fontSize: theme.FONT_SIZE_EXTRA_LARGE,
     marginBottom: 15,
     marginTop: 20,
+    color: theme.PRIMARY_COLOR,
+    fontWeight: "600",
+  },
+  resultContainer: {
+    width: "100%",
+    padding: 20,
+    // position: "absolute",
+    bottom: 0,
+    backgroundColor: theme.GREEN_COLOR,
+    // color: "white",
+    minHeight: 100,
+  },
+  resultHeader: {
+    color: "white",
+    fontSize: theme.FONT_SIZE_LARGE,
+  },
+  resultDose: {
+    color: "white",
   },
 });
