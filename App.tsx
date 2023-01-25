@@ -10,8 +10,8 @@ import SwitchingScreen from "./SwitchingScreen";
 import ChoosingScreen from "./ChoosingScreen";
 import DrugDoseScreen from "./DrugDoseScreen";
 import HemodialysisScreen from "./HemodialysisScreen";
-import { NativeBaseProvider } from "native-base";
-
+import { NativeBaseProvider, theme } from "native-base";
+import * as myTheme from "./theme";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -22,14 +22,14 @@ export default function App() {
           screenOptions={{
             headerTitleAlign: "center",
             headerStyle: {
-              // backgroundColor: "#152C4C",
+              backgroundColor: myTheme.default.BACKGROUND_COLOR,
             },
             headerTitleStyle: {
               // color: "white",
             },
-            // headerShadowVisible: false,
+            headerShadowVisible: false,
             contentStyle: {
-              backgroundColor: "#FDFDFD",
+              backgroundColor: myTheme.default.BACKGROUND_COLOR,
             },
           }}
         >
@@ -50,9 +50,11 @@ export default function App() {
           <Stack.Screen
             name="DrugDose"
             component={DrugDoseScreen}
-            options={{
-              title: "??",
-            }}
+            options={({ route }) => ({
+              title:
+                route.params.name.charAt(0).toUpperCase() +
+                route.params.name.slice(1),
+            })}
           />
           <Stack.Screen name="Hemodialysis" component={HemodialysisScreen} />
           <Stack.Screen name="Switching" component={SwitchingScreen} />

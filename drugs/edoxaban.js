@@ -1,6 +1,6 @@
 const edoxaban = {
   id: 1,
-  name: "Edoxaban",
+  name: "edoxaban",
   route: "oral",
   indications: ["af", "dvtt"],
   dialysis: false,

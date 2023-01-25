@@ -20,7 +20,12 @@ export default function DoseScreen({ navigation }) {
               </View>
             ) : null}
             <Button
-              onPress={() => navigation.navigate("DrugDose", { id: index })}
+              onPress={() =>
+                navigation.navigate("DrugDose", {
+                  id: index,
+                  name: drugs[index].name,
+                })
+              }
               colorScheme="red"
             >
               {drug.name}
