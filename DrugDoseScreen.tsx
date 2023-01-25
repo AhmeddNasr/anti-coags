@@ -1,15 +1,11 @@
-import { View, Text, Pressable, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useState, useEffect } from "react";
-import { Radio, Checkbox, Button } from "native-base";
+import { Radio, Checkbox } from "native-base";
 import drugs from "./drugs";
 import theme from "./theme";
-import RenalDoseAdjustment from "./DoseScreen/components/RenalDoseAdjustment";
-import HepaticDoseAdjustment from "./DoseScreen/components/HepaticDoseAdjustment";
-import DoseAdjustment from "./DoseScreen/components/DoseAdjustment";
 import Rivaroxaban from "./drug_dose_adjustment/Rivaroxaban";
 import Edoxaban from "./drug_dose_adjustment/Edoxaban";
-import colors from "native-base/lib/typescript/theme/v33x-theme/base/colors";
-
+import { RadioButton } from "./DoseScreen/components/custom-inputs";
 export default function DrugDoseScreen({ navigation, route }) {
   const [adjustment, setAdjustment] = useState(["renal"]);
   const [indication, setIndication] = useState("");
@@ -23,28 +19,31 @@ export default function DrugDoseScreen({ navigation, route }) {
   return (
     <>
       <ScrollView>
-        <View style={{ padding: 20, flex: 1 }}>
+        <View style={{ padding: 25, paddingTop: 10, flex: 1 }}>
+          {/*  */}
           {/* Indication */}
+          {/*  */}
           <Text style={[styles.header, { marginTop: 0 }]}>Indication: </Text>
-          <Radio.Group
-            name="indication"
-            accessibilityLabel="indication"
-            value={indication}
-            onChange={(nextValue) => setIndication(nextValue)}
-          >
-            {drug.indications.map((indication, index) => {
-              return (
-                <Radio colorScheme="red" value={indication} key={index} my={2}>
-                  {indication === "dvtp"
-                    ? "DVT prophylaxis"
-                    : indication === "dvtt"
-                    ? "DVT treatment"
-                    : "AF"}
-                </Radio>
-              );
-            })}
-          </Radio.Group>
+          {drug.indications.map((val, index) => {
+            return (
+              <RadioButton
+                title={
+                  val === "dvtp"
+                    ? "DVT Prophylaxis"
+                    : val === "dvtt"
+                    ? "DVT Treatment"
+                    : "Atrial Fibrillation"
+                }
+                value={val}
+                selected={indication}
+                setter={setIndication}
+              />
+            );
+          })}
 
+          {/*  */}
+          {/* Adjustment Type */}
+          {/*  */}
           {indication.length > 0 && (
             <>
               <Text style={styles.header}>Adjustment Type:</Text>
