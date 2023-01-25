@@ -88,10 +88,7 @@ export default function Rivaroxaban(props) {
       <AgeInput setter={setAge} />
       <WeightInput setter={setWeight} />
       <ScrInput setter={setScr} />
-      <GenderInput setter={setGender} />
-      <Text>
-        indication: {props.indication}, age: {age}
-      </Text>
+      <GenderInput setter={setGender} value={gender} />
       <SubmitButton calculate={calculate} />
     </>
   );

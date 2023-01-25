@@ -172,22 +172,75 @@ function AntiplateletUseInput(props) {
 function GenderInput(props) {
   return (
     <View style={styles.inputGroup}>
-      <Text style={styles.label}>Gender: </Text>
-      <Select
-        minWidth="200"
-        accessibilityLabel="Choose gender"
-        placeholder="Gender"
-        _selectedItem={{
-          bg: "teal.600",
-          endIcon: <CheckIcon size={2} />,
-        }}
-        w={"75%"}
-        onValueChange={(val) => props.setter(val)}
-      >
-        <Select.Item label="Male" value="m" />
-        <Select.Item label="Female" value="f" />
-      </Select>
+      <Text style={styles.label}>Gender</Text>
+      <GenderRadioGroup value={props.value} setter={props.setter} />
     </View>
+  );
+}
+
+function GenderRadioGroup(props) {
+  return (
+    <View style={{ flexDirection: "row" }}>
+      <RadioButton
+        title="Male"
+        value="m"
+        selected={props.value}
+        setter={props.setter}
+      />
+      <RadioButton
+        title="Female"
+        value="f"
+        selected={props.value}
+        setter={props.setter}
+      />
+    </View>
+  );
+}
+
+function RadioButton(props) {
+  return (
+    <Pressable
+      style={({ pressed }) => [
+        {
+          flexDirection: "row",
+          alignItems: "center",
+          padding: 15,
+          paddingLeft: 0,
+          paddingRight: 30,
+          opacity: pressed ? 0.6 : 1,
+          // backgroundColor: "cyan",
+        },
+      ]}
+      onPress={() => props.setter(props.value)}
+    >
+      <View
+        style={[
+          {
+            height: 24,
+            width: 24,
+            borderRadius: 12,
+            borderWidth: props.selected === props.value ? 7 : 1,
+            borderColor:
+              props.selected === props.value
+                ? theme.SECONDARY_COLOR
+                : theme.TEXT_COLOR_GRAY,
+            alignItems: "center",
+            justifyContent: "center",
+            marginRight: 20,
+          },
+          props.style,
+        ]}
+      />
+      <Text
+        style={{
+          color: theme.PRIMARY_COLOR,
+          fontWeight: "600",
+          fontSize: theme.FONT_SIZE_MEDIUM,
+        }}
+      >
+        {props.title}
+      </Text>
+    </Pressable>
   );
 }
 
@@ -221,4 +274,5 @@ export {
   AntiplateletUseInput,
   NsaidUseInput,
   HeightInput,
+  RadioButton,
 };

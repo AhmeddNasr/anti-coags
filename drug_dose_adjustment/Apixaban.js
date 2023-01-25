@@ -47,7 +47,7 @@ export default function Apixaban(props) {
       <AgeInput setter={setAge} />
       <WeightInput setter={setWeight} />
       <ScrInput setter={setScr} />
-      <GenderInput setter={setGender} />
+      <GenderInput setter={setGender} value={gender} />
       <SubmitButton calculate={calculate} />
     </>
   );

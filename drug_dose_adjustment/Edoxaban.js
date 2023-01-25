@@ -85,7 +85,7 @@ export default function Edoxaban(props) {
       <WeightInput setter={setWeight} />
       <HeightInput setter={setHeight} />
       <ScrInput setter={setScr} />
-      <GenderInput setter={setGender} />
+      <GenderInput setter={setGender} value={gender} />
       <ConcamitantPgpInput setter={setPgp} value={pgp} />
       <NsaidUseInput setter={setNsaid} value={nsaid} />
       <AntiplateletUseInput setter={setAntiplatelet} value={antiplatelet} />
