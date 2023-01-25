@@ -108,14 +108,15 @@ function SubmitButton(props) {
       color={theme.SECONDARY_COLOR}
       my={8}
       title="Calculate Dose"
-      style={{
+      style={({ pressed }) => ({
         backgroundColor: theme.SECONDARY_COLOR,
         padding: 20,
         // width: 150,
         borderRadius: 15,
         justifyContent: "center",
         alignItems: "center",
-      }}
+        opacity: pressed ? 0.75 : 1,
+      })}
     >
       <Text
         style={{
