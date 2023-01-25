@@ -1,6 +1,13 @@
-import { View, StyleSheet, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  Button,
+  Pressable,
+} from "react-native";
 import { useEffect, useState } from "react";
-import { FormControl, Input, Select, CheckIcon, Button } from "native-base";
+import { FormControl, Select, CheckIcon } from "native-base";
 import { Checkbox } from "native-base";
 
 import theme from "../../theme";
@@ -8,13 +15,23 @@ import theme from "../../theme";
 function TextInputBlock(props) {
   return (
     <View style={styles.inputGroup}>
-      <Text>{props.title}: </Text>
-      <Input
-        w={"75%"}
+      <Text style={styles.label}>{props.title}</Text>
+      <TextInput
+        // w={"75%"}
+        // value="hi"
+        cursorColor={theme.PRIMARY_COLOR}
+        style={{
+          backgroundColor: "#FFFFFF",
+          borderRadius: 15,
+          padding: 10,
+          paddingLeft: 20,
+          borderWidth: 1,
+          borderColor: "#EBEDF5",
+        }}
         keyboardType={props.keyboardType}
-        InputRightElement={
-          <Text style={styles.inputTextElement}>{props.unit}</Text>
-        }
+        // InputRightElement={
+        //   <Text style={styles.inputTextElement}>{props.unit}</Text>
+        // }
         onChangeText={(val) => props.setter(val)}
       />
     </View>
@@ -39,7 +56,7 @@ function CheckboxInput(props) {
 function WeightInput(props) {
   return (
     <TextInputBlock
-      title="Weight"
+      title="Weight (Kilograms)"
       keyboardType="numeric"
       unit="Kg"
       setter={props.setter}
@@ -51,7 +68,7 @@ function WeightInput(props) {
 function HeightInput(props) {
   return (
     <TextInputBlock
-      title="Height"
+      title="Height (Centimeters)"
       keyboardType="numeric"
       unit="cm"
       setter={props.setter}
@@ -63,7 +80,7 @@ function HeightInput(props) {
 function AgeInput(props) {
   return (
     <TextInputBlock
-      title="age"
+      title="Age (years)"
       keyboardType="numeric"
       unit="years"
       setter={props.setter}
@@ -75,7 +92,7 @@ function AgeInput(props) {
 function ScrInput(props) {
   return (
     <TextInputBlock
-      title="S.Cr"
+      title="S.Cr (mg/dL)"
       keyboardType="numeric"
       unit="mg/dL"
       setter={props.setter}
@@ -86,9 +103,29 @@ function ScrInput(props) {
 
 function SubmitButton(props) {
   return (
-    <Button onPress={() => props.calculate()} colorScheme="red" my={8}>
-      Calculate Dose
-    </Button>
+    <Pressable
+      onPress={() => props.calculate()}
+      color={theme.SECONDARY_COLOR}
+      my={8}
+      title="Calculate Dose"
+      style={{
+        backgroundColor: theme.SECONDARY_COLOR,
+        padding: 20,
+        // width: 150,
+        borderRadius: 15,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Text
+        style={{
+          color: theme.TEXT_COLOR_WHITE,
+          fontSize: theme.FONT_SIZE_MEDIUM,
+        }}
+      >
+        Calculate Dose
+      </Text>
+    </Pressable>
   );
 }
 
@@ -135,7 +172,7 @@ function AntiplateletUseInput(props) {
 function GenderInput(props) {
   return (
     <View style={styles.inputGroup}>
-      <Text>Gender: </Text>
+      <Text style={styles.label}>Gender: </Text>
       <Select
         minWidth="200"
         accessibilityLabel="Choose gender"
@@ -156,8 +193,8 @@ function GenderInput(props) {
 
 const styles = StyleSheet.create({
   inputGroup: {
-    flexDirection: "row",
-    alignItems: "center",
+    // flexDirection: "row",
+    // alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 20,
   },
@@ -165,6 +202,11 @@ const styles = StyleSheet.create({
     marginRight: 20,
     fontSize: theme.FONT_SIZE_MEDIUM,
     color: theme.PRIMARY_COLOR,
+  },
+  label: {
+    color: theme.TEXT_COLOR_GRAY,
+    fontSize: theme.FONT_SIZE_MEDIUM,
+    marginBottom: 10,
   },
 });
 
