@@ -82,9 +82,15 @@ export default function DrugDoseScreen({ navigation, route }) {
               },
             ]}
           >
-            <Text style={styles.resultHeader}>Dose:</Text>
+            <Text style={styles.resultHeader}>
+              {output?.adjustmentType === 0
+                ? "Use is contraindicated"
+                : "Dose: "}
+            </Text>
             <Text style={styles.resultDose}>{output?.text}</Text>
-            <Text>{output?.reason}</Text>
+            <Text style={styles.resultReason}>
+              Reason for adjustment: {output?.reason}
+            </Text>
           </View>
         )}
       </ScrollView>
@@ -112,8 +118,15 @@ const styles = StyleSheet.create({
   resultHeader: {
     color: "white",
     fontSize: theme.FONT_SIZE_LARGE,
+    fontWeight: "600",
+    marginBottom: 10,
   },
   resultDose: {
+    color: "white",
+    marginBottom: 20,
+  },
+  resultReason: {
+    fontStyle: "italic",
     color: "white",
   },
 });
