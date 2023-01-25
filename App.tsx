@@ -26,6 +26,8 @@ export default function App() {
             },
             headerTitleStyle: {
               // color: "white",
+              fontWeight: "600",
+              color: myTheme.default.PRIMARY_COLOR,
             },
             headerShadowVisible: false,
             contentStyle: {
