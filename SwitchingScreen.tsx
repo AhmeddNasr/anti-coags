@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { useState, useEffect } from "react";
 import drugs from "./drugs";
 import theme from "./theme";
-import { Picker } from "@react-native-picker/picker";
+import capitalizeFirstLetter from "./Utils/capitalizeFirstLetter";
 export default function SwitchingScreen() {
   const [firstDrug, setFirstDrug] = useState(-1);
   const [secondDrug, setSecondDrug] = useState(-1);
@@ -18,18 +18,18 @@ export default function SwitchingScreen() {
           placeholder="From"
           w={"75%"}
           onValueChange={(value) => {
-            console.log("value: ", value);
-            console.log("secondDrug: ", secondDrug);
             if (value === secondDrug) {
               setSecondDrug(-1);
             }
             setFirstDrug(value);
           }}
+          fontSize={theme.FONT_SIZE_MEDIUM}
+          p={3}
         >
           {drugs.map((drug, key) => {
             return (
               <Select.Item
-                label={drug.name}
+                label={capitalizeFirstLetter(drug.name)}
                 key={`Switch1-${key}`}
                 value={drug.id}
               />
@@ -41,6 +41,8 @@ export default function SwitchingScreen() {
           minWidth="200"
           accessibilityLabel="Second drug"
           placeholder="To"
+          fontSize={theme.FONT_SIZE_MEDIUM}
+          p={3}
           // _selectedItem={{
           //   bg: "teal.600",
           //   endIcon: <CheckIcon size={2} />,
@@ -54,7 +56,13 @@ export default function SwitchingScreen() {
             if (drug.id === firstDrug) {
               return null;
             }
-            return <Select.Item label={drug.name} key={key} value={drug.id} />;
+            return (
+              <Select.Item
+                label={capitalizeFirstLetter(drug.name)}
+                key={key}
+                value={drug.id}
+              />
+            );
           })}
         </Select>
         {/* <Text style={{ marginTop: 30 }}>first drug: {firstDrug}</Text>
@@ -67,7 +75,6 @@ export default function SwitchingScreen() {
 
 function Results(props) {
   const [results, setResults] = useState([]);
-  console.log("hi");
 
   useEffect(() => {
     if (props.firstDrug < 0 || props.secondDrug < 0) {
@@ -86,11 +93,11 @@ function Results(props) {
   }, [props.firstDrug, props.secondDrug]);
 
   if (props.firstDrug < 0 || props.secondDrug < 0) {
-    console.log("oops");
+    // console.log("oops");
     return null;
   }
 
-  console.log(results);
+  // console.log(results);
 
   if (results.length !== 0) {
     return (
@@ -99,14 +106,15 @@ function Results(props) {
         {results.map((val, index) => {
           return (
             <Text style={styles.resultText} key={index}>
-              {index + 1}. {val}
+              {results.length > 1 ? index + 1 + ". " : null}
+              {val}
             </Text>
           );
         })}
       </View>
     );
   } else {
-    return <Text>ERROR</Text>;
+    return <Text>ERROR {":("}</Text>;
   }
 }
 
@@ -119,7 +127,7 @@ const styles = StyleSheet.create({
   label: {
     color: theme.PRIMARY_COLOR,
     fontSize: theme.FONT_SIZE_LARGE,
-    marginBottom: 30,
+    marginBottom: 20,
     marginTop: 20,
     fontWeight: "600",
   },
