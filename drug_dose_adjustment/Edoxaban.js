@@ -11,6 +11,7 @@ import {
   AntiplateletUseInput,
   BleedingHistoryInput,
   HeightInput,
+  Label,
 } from "../DoseScreen/components/custom-inputs";
 import calculateGFR from "../Utils/calculateGFR";
 
@@ -27,16 +28,24 @@ export default function Edoxaban(props) {
 
   const calculate = () => {
     const gfr = calculateGFR(gender, age, weight, scr);
-    const bmi = weight / ((height / 100) ^ 2);
-
+    const bmi = weight / Math.pow(height / 100, 2);
     // contraindications
     if (bmi > 40 || weight > 120 || gfr > 95 || gfr < 15) {
-      return props.setOutput({
-        adjustmentType: 0,
-        reason:
-          "Use should be avoided for patients with BMI >40 kg/m2 % or weight >120 kg %",
-        variables: [bmi, weight],
-      });
+      if (bmi > 40 || weight > 120) {
+        return props.setOutput({
+          adjustmentType: 0,
+          reason:
+            "Use should be avoided for patients with BMI >40 kg/m2 % or weight >120 kg %",
+          variables: [bmi, weight],
+        });
+      } else {
+        return props.setOutput({
+          adjustmentType: 0,
+          reason:
+            "Use should be avoided for patients with a GFR > 95mL/min or < 15mL/min %",
+          variables: [gfr],
+        });
+      }
     }
 
     // AF indication
@@ -86,13 +95,14 @@ export default function Edoxaban(props) {
       <HeightInput setter={setHeight} />
       <ScrInput setter={setScr} />
       <GenderInput setter={setGender} value={gender} />
+      <Label title={"History"} />
       <ConcamitantPgpInput setter={setPgp} value={pgp} />
       <NsaidUseInput setter={setNsaid} value={nsaid} />
       <AntiplateletUseInput setter={setAntiplatelet} value={antiplatelet} />
       <BleedingHistoryInput setter={setBleeding} value={bleeding} />
-      <Text>
+      {/* <Text>
         indication: {props.indication}, age: {age}
-      </Text>
+      </Text> */}
       <SubmitButton calculate={calculate} />
     </>
   );
