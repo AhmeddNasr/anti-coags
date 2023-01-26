@@ -89,7 +89,8 @@ export default function DrugDoseScreen({ navigation, route }) {
             </Text>
             <Text style={styles.resultDose}>{output?.text}</Text>
             <Text style={styles.resultReason}>
-              {output.reason ? "Reason for adjustment:" : null} {output?.reason}
+              {output?.reason ? "Reason for adjustment: " : null}
+              {output?.reason}
             </Text>
           </View>
         )}
