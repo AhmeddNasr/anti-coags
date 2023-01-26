@@ -1,4 +1,4 @@
-import { Select, CheckIcon, Button } from "native-base";
+import { Select, CheckIcon, Button, ScrollView } from "native-base";
 import { View, StyleSheet, Text } from "react-native";
 import { useState, useEffect } from "react";
 import drugs from "./drugs";
@@ -10,56 +10,57 @@ export default function SwitchingScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.label, { marginTop: 0 }]}>Switch From</Text>
-
-      <Select
-        minWidth="200"
-        accessibilityLabel="First drug"
-        placeholder="From"
-        w={"75%"}
-        onValueChange={(value) => {
-          console.log("value: ", value);
-          console.log("secondDrug: ", secondDrug);
-          if (value === secondDrug) {
-            setSecondDrug(-1);
-          }
-          setFirstDrug(value);
-        }}
-      >
-        {drugs.map((drug, key) => {
-          return (
-            <Select.Item
-              label={drug.name}
-              key={`Switch1-${key}`}
-              value={drug.id}
-            />
-          );
-        })}
-      </Select>
-      <Text style={styles.label}>Switch To</Text>
-      <Select
-        minWidth="200"
-        accessibilityLabel="Second drug"
-        placeholder="To"
-        // _selectedItem={{
-        //   bg: "teal.600",
-        //   endIcon: <CheckIcon size={2} />,
-        // }}
-        w={"75%"}
-        // mt={10}
-        isDisabled={firstDrug === undefined || firstDrug === null}
-        onValueChange={(value) => setSecondDrug(value)}
-      >
-        {drugs.map((drug, key) => {
-          if (drug.id === firstDrug) {
-            return null;
-          }
-          return <Select.Item label={drug.name} key={key} value={drug.id} />;
-        })}
-      </Select>
-      {/* <Text style={{ marginTop: 30 }}>first drug: {firstDrug}</Text>
+      <ScrollView>
+        <Text style={[styles.label, { marginTop: 0 }]}>Switch From</Text>
+        <Select
+          minWidth="200"
+          accessibilityLabel="First drug"
+          placeholder="From"
+          w={"75%"}
+          onValueChange={(value) => {
+            console.log("value: ", value);
+            console.log("secondDrug: ", secondDrug);
+            if (value === secondDrug) {
+              setSecondDrug(-1);
+            }
+            setFirstDrug(value);
+          }}
+        >
+          {drugs.map((drug, key) => {
+            return (
+              <Select.Item
+                label={drug.name}
+                key={`Switch1-${key}`}
+                value={drug.id}
+              />
+            );
+          })}
+        </Select>
+        <Text style={styles.label}>Switch To</Text>
+        <Select
+          minWidth="200"
+          accessibilityLabel="Second drug"
+          placeholder="To"
+          // _selectedItem={{
+          //   bg: "teal.600",
+          //   endIcon: <CheckIcon size={2} />,
+          // }}
+          w={"75%"}
+          // mt={10}
+          isDisabled={firstDrug === undefined || firstDrug === null}
+          onValueChange={(value) => setSecondDrug(value)}
+        >
+          {drugs.map((drug, key) => {
+            if (drug.id === firstDrug) {
+              return null;
+            }
+            return <Select.Item label={drug.name} key={key} value={drug.id} />;
+          })}
+        </Select>
+        {/* <Text style={{ marginTop: 30 }}>first drug: {firstDrug}</Text>
       <Text style={{ marginTop: 0 }}>second drug: {secondDrug}</Text> */}
-      <Results firstDrug={firstDrug} secondDrug={secondDrug} />
+        <Results firstDrug={firstDrug} secondDrug={secondDrug} />
+      </ScrollView>
     </View>
   );
 }
