@@ -57,7 +57,7 @@ export default function DrugDoseScreen({ navigation, route }) {
                 value={renalAdjustment}
               />
               <CheckboxInput
-                title="Renal Dose Adjustment"
+                title="Hepatic Dose Adjustment"
                 setter={setHepaticAdjustment}
                 value={hepaticAdjustment}
               />
