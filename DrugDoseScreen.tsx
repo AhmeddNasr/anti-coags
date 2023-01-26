@@ -6,8 +6,11 @@ import theme from "./theme";
 import Rivaroxaban from "./drug_dose_adjustment/Rivaroxaban";
 import Edoxaban from "./drug_dose_adjustment/Edoxaban";
 import { RadioButton } from "./DoseScreen/components/custom-inputs";
+import { CheckboxInput } from "./DoseScreen/components/custom-inputs";
+
 export default function DrugDoseScreen({ navigation, route }) {
-  const [adjustment, setAdjustment] = useState(["renal"]);
+  const [renalAdjustment, setRenalAdjustment] = useState(true);
+  const [hepaticAdjustment, setHepaticAdjustment] = useState(false);
   const [indication, setIndication] = useState("");
   const [output, setOutput] = useState();
   const drug = drugs[route.params.id];
@@ -48,17 +51,16 @@ export default function DrugDoseScreen({ navigation, route }) {
             <>
               <Text style={styles.header}>Adjustment Type:</Text>
               {/* TODO remove nativebase */}
-              <Checkbox.Group
-                onChange={(value) => setAdjustment(value)}
-                value={adjustment}
-              >
-                <Checkbox value="renal" colorScheme="red" my={2} isDisabled>
-                  Renal Dose Adjustment
-                </Checkbox>
-                <Checkbox value="hepatic" colorScheme="red" my={2}>
-                  Hepatic Dose Adjustment
-                </Checkbox>
-              </Checkbox.Group>
+              <CheckboxInput
+                title="Renal Dose Adjustment"
+                setter={setRenalAdjustment}
+                value={renalAdjustment}
+              />
+              <CheckboxInput
+                title="Renal Dose Adjustment"
+                setter={setHepaticAdjustment}
+                value={hepaticAdjustment}
+              />
               <Text style={styles.header}>Patient information:</Text>
               {drug.name === "rivaroxaban" ? (
                 <Rivaroxaban setOutput={setOutput} indication={indication} />
@@ -87,7 +89,9 @@ export default function DrugDoseScreen({ navigation, route }) {
                 ? "Use is contraindicated"
                 : "Dose: "}
             </Text>
-            <Text style={styles.resultDose}>{output?.text}</Text>
+            {output?.text && (
+              <Text style={styles.resultDose}>{output?.text}</Text>
+            )}
             <Text style={styles.resultReason}>
               {output?.reason ? "Reason for adjustment: " : null}
               {output?.reason}
