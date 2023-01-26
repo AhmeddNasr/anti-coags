@@ -161,6 +161,7 @@ function SubmitButton(props) {
         style={{
           color: theme.TEXT_COLOR_WHITE,
           fontSize: theme.FONT_SIZE_MEDIUM,
+          fontWeight: "700",
         }}
       >
         Calculate Dose
