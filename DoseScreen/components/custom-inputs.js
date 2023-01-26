@@ -289,6 +289,102 @@ function RadioButton(props) {
   );
 }
 
+function HepaticRadioGroup(props) {
+  return (
+    <View>
+      <Label title={props.title} />
+      <RadioButton
+        title={props.one}
+        value={1}
+        selected={props.value}
+        setter={props.setter}
+      />
+      <RadioButton
+        title={props.two}
+        value={2}
+        selected={props.value}
+        setter={props.setter}
+      />
+      <RadioButton
+        title={props.three}
+        value={3}
+        selected={props.value}
+        setter={props.setter}
+      />
+    </View>
+  );
+}
+
+function HepaticAdjustment(props) {
+  const [billirubin, setBillirubin] = useState(-1);
+  const [albumin, setAlbumin] = useState(-1);
+  const [inr, setInr] = useState(-1);
+  const [ascites, setAscites] = useState(-1);
+  const [encephalopathy, setEncephalopathy] = useState(-1);
+
+  useEffect(() => {
+    let score = billirubin + albumin + inr + ascites + encephalopathy;
+    if (score >= 5) {
+      props.setter(score);
+    }
+  }, [billirubin, albumin, inr, ascites, encephalopathy]);
+  return (
+    <>
+      <Text
+        style={{
+          fontSize: theme.FONT_SIZE_EXTRA_LARGE,
+          marginBottom: 15,
+          marginTop: 0,
+          color: theme.PRIMARY_COLOR,
+          fontWeight: "600",
+        }}
+      >
+        Child-Pugh Score:
+      </Text>
+      <HepaticRadioGroup
+        title="Bilirubin (Total)"
+        one="<2 mg/dL"
+        two="2-3 mg/dL"
+        three=">3 mg/dL"
+        value={billirubin}
+        setter={setBillirubin}
+      />
+      <HepaticRadioGroup
+        title="Albumin"
+        one="<3.5 g/dL"
+        two="2.8-3.5 g/dL"
+        three="<2.8 g/dL"
+        value={albumin}
+        setter={setAlbumin}
+      />
+      <HepaticRadioGroup
+        title="INR"
+        one="<1.7"
+        two="1.7-2.2"
+        three=">2.2"
+        value={inr}
+        setter={setInr}
+      />
+      <HepaticRadioGroup
+        title="Ascites"
+        one="Absent"
+        two="Slight"
+        three="Moderate"
+        value={ascites}
+        setter={setAscites}
+      />
+      <HepaticRadioGroup
+        title="Encephalopathy"
+        one="No Encephalopathy"
+        two="Grade 1-2"
+        three="Grade 3-4"
+        value={encephalopathy}
+        setter={setEncephalopathy}
+      />
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
   inputGroup: {
     // flexDirection: "row",
@@ -322,4 +418,5 @@ export {
   RadioButton,
   Label,
   CheckboxInput,
+  HepaticAdjustment,
 };
