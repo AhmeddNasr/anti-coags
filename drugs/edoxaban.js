@@ -7,8 +7,8 @@ const edoxaban = {
   hepatic: false,
   switching: {
     warfarin: [
-      "If  the dose of  Edoxaban is 60 mg once daily, reduce the dose to 30 mg once daily and begin warfarin concomitantly.",
-      "If  the dose of  Edoxaban is 30 mg once daily, reduce the dose to 15 mg once¬, begin warfarin concomitantly.",
+      "If the dose of  Edoxaban is 60 mg once daily, reduce the dose to 30 mg once daily and begin warfarin concomitantly.",
+      "If the dose of  Edoxaban is 30 mg once daily, reduce the dose to 15 mg once¬, begin warfarin concomitantly.",
       "Measure INR at least weekly and just prior to the daily dose of Edoxaban. Discontinue Edoxaban once a stable INR ≥2 is achieved; continue warfarin",
       "Discontinue Edoxaban and initiate a parenteral anticoagulant and warfarin at the time of the next scheduled Edoxaban dose.",
       "Discontinue the parenteral anticoagulant once a stable INR ≥2 is achieved; continue warfarin.",

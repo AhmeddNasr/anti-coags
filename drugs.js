@@ -3,7 +3,8 @@ import edoxaban from "./drugs/edoxaban";
 import apixaban from "./drugs/apixaban";
 import heparin from "./drugs/heparin";
 import enoxaparin from "./drugs/enoxaparin";
+import warfarin from "./drugs/warfarin";
 
-const drugs = [rivaroxaban, edoxaban, apixaban, heparin, enoxaparin];
+const drugs = [rivaroxaban, edoxaban, apixaban, heparin, enoxaparin, warfarin];
 
 export default drugs;
