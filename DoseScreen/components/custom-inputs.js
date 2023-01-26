@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { FormControl, Select, CheckIcon } from "native-base";
 import { Checkbox } from "native-base";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 import theme from "../../theme";
 
@@ -40,16 +41,53 @@ function TextInputBlock(props) {
 
 function CheckboxInput(props) {
   return (
-    <Checkbox
-      disabled={false}
-      colorScheme="red"
-      value={props.value}
-      onValueChange={(val) => {
-        props.setter(val);
+    // <Checkbox
+    //   disabled={false}
+    //   colorScheme="red"
+    //   value={props.value}
+    //   onValueChange={(val) => {
+    //     props.setter(val);
+    //   }}
+    // >
+    //   {props.title}
+    // </Checkbox>
+    <Pressable
+      onPress={() => {
+        props.setter(!props.value);
       }}
+      {...props}
+      // style={{
+      //   flexDirection: "row",
+      //   alignItems: "center",
+      //   paddingTop: 7.5,
+      //   paddingBottom: 7.5,
+      // }}
+      style={({ pressed }) => [
+        {
+          flexDirection: "row",
+          alignItems: "center",
+          paddingTop: 7.5,
+          paddingBottom: 7.5,
+          opacity: pressed ? 0.65 : 1,
+        },
+      ]}
     >
-      {props.title}
-    </Checkbox>
+      <Icon
+        size={30}
+        color={props.value ? theme.SECONDARY_COLOR : theme.TEXT_COLOR_GRAY}
+        name={props.value ? "check-box" : "check-box-outline-blank"}
+        style={{ marginRight: 8 }}
+      />
+      <Text
+        style={{
+          fontSize: theme.FONT_SIZE_MEDIUM,
+          color: theme.PRIMARY_COLOR,
+          fontWeight: "600",
+        }}
+      >
+        {props.title}
+      </Text>
+    </Pressable>
   );
 }
 
@@ -113,6 +151,7 @@ function SubmitButton(props) {
         padding: 20,
         // width: 150,
         borderRadius: 15,
+        marginTop: 10,
         justifyContent: "center",
         alignItems: "center",
         opacity: pressed ? 0.75 : 1,
@@ -198,6 +237,10 @@ function GenderRadioGroup(props) {
   );
 }
 
+function Label(props) {
+  return <Text style={styles.label}>{props.title}</Text>;
+}
+
 function RadioButton(props) {
   return (
     <Pressable
@@ -276,4 +319,6 @@ export {
   NsaidUseInput,
   HeightInput,
   RadioButton,
+  Label,
+  CheckboxInput,
 };
