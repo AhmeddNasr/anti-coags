@@ -27,6 +27,15 @@ export default function Rivaroxaban(props) {
   }, [props.indication]);
 
   const calculate = () => {
+    if (props.hepaticAdjustment && hepatic >= 7) {
+      return props.setOutput({
+        adjustmentType: 0,
+        reason:
+          "Avoid use with moderate to severe impairment (Child-Pugh class B or C) and any hepatic disease associated with coagulopathy.\n [Child-Pugh score: " +
+          hepatic +
+          " ]",
+      });
+    }
     const gfr = calculateGFR(gender, age, weight, scr);
     // AF
     if (props.indication === "af") {
