@@ -45,7 +45,7 @@ export default function GenerateInputs(props) {
         </>
       )}
       {props.hepaticAdjustment && (
-        <HepaticAdjustment setter={props.hepaticSetter} />
+        <HepaticAdjustment setter={props.setHepatic} />
       )}
       <SubmitButton calculate={props.calculate} />
     </>
