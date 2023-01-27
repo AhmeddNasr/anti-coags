@@ -14,6 +14,7 @@ import {
   Label,
 } from "../DoseScreen/components/custom-inputs";
 import calculateGFR from "../Utils/calculateGFR";
+import GenerateInputs from "../DoseScreen/components/GenerateInputs";
 
 export default function Edoxaban(props) {
   const [weight, setWeight] = useState(null);
@@ -25,6 +26,22 @@ export default function Edoxaban(props) {
   const [nsaid, setNsaid] = useState(false);
   const [antiplatelet, setAntiplatelet] = useState(false);
   const [bleeding, setBleeding] = useState(false);
+  const [hepatic, setHepatic] = useState(null);
+
+  const defaultOutput = {
+    af: "60 mg once daily",
+    dvtt: `> 60kg: 60 mg once daily \n ≤ 60kg: 30 mg once daily`,
+  };
+
+  useEffect(() => {
+    if (props.indication === "af") {
+      props.setOutput({ text: defaultOutput.af });
+    } else if (props.indication === "dvtt") {
+      props.setOutput({ text: defaultOutput.dvtt });
+    } else {
+      props.setOutput({ text: defaultOutput.dvtp });
+    }
+  }, [props.indication]);
 
   const calculate = () => {
     const gfr = calculateGFR(gender, age, weight, scr);
@@ -90,20 +107,21 @@ export default function Edoxaban(props) {
 
   return (
     <>
-      <AgeInput setter={setAge} />
-      <WeightInput setter={setWeight} />
-      <HeightInput setter={setHeight} />
-      <ScrInput setter={setScr} />
-      <GenderInput setter={setGender} value={gender} />
-      <Label title={"History"} />
-      <ConcamitantPgpInput setter={setPgp} value={pgp} />
-      <NsaidUseInput setter={setNsaid} value={nsaid} />
-      <AntiplateletUseInput setter={setAntiplatelet} value={antiplatelet} />
-      <BleedingHistoryInput setter={setBleeding} value={bleeding} />
-      {/* <Text>
-        indication: {props.indication}, age: {age}
-      </Text> */}
-      <SubmitButton calculate={calculate} />
+      <GenerateInputs
+        setAge={setAge}
+        setWeight={setWeight}
+        setHeight={setHeight}
+        setScr={setScr}
+        setGender={setGender}
+        gender={gender}
+        pgp={{ setter: setPgp, value: pgp }}
+        nsaid={{ setter: setNsaid, value: nsaid }}
+        platelet={{ setter: setAntiplatelet, value: antiplatelet }}
+        bleeding={{ setter: setBleeding, value: bleeding }}
+        calculate={calculate}
+        hepaticAdjustment={props.hepaticAdjustment}
+        setHepatic={setHepatic}
+      />
     </>
   );
 }

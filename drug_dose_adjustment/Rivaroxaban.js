@@ -1,19 +1,13 @@
-import { Text } from "react-native";
 import { useState, useEffect } from "react";
-import {
-  AgeInput,
-  GenderInput,
-  WeightInput,
-  ScrInput,
-  SubmitButton,
-} from "../DoseScreen/components/custom-inputs";
 import calculateGFR from "../Utils/calculateGFR";
+import GenerateInputs from "../DoseScreen/components/GenerateInputs";
 
 export default function Rivaroxaban(props) {
   const [weight, setWeight] = useState(null);
   const [age, setAge] = useState(null);
   const [scr, setScr] = useState(null);
   const [gender, setGender] = useState(null);
+  const [hepatic, setHepatic] = useState(0);
   // const [gfr, setGfr] = useState(null);
 
   const defaultOutput = {
@@ -85,11 +79,16 @@ export default function Rivaroxaban(props) {
 
   return (
     <>
-      <AgeInput setter={setAge} />
-      <WeightInput setter={setWeight} />
-      <ScrInput setter={setScr} />
-      <GenderInput setter={setGender} value={gender} />
-      <SubmitButton calculate={calculate} />
+      <GenerateInputs
+        setAge={setAge}
+        setWeight={setWeight}
+        setScr={setScr}
+        setGender={setGender}
+        gender={gender}
+        calculate={calculate}
+        hepaticAdjustment={props.hepaticAdjustment}
+        setHepatic={setHepatic}
+      />
     </>
   );
 }

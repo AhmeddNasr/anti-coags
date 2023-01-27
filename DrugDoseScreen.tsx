@@ -63,9 +63,19 @@ export default function DrugDoseScreen({ navigation, route }) {
               />
               <Text style={styles.header}>Patient information:</Text>
               {drug.name === "rivaroxaban" ? (
-                <Rivaroxaban setOutput={setOutput} indication={indication} />
+                <Rivaroxaban
+                  setOutput={setOutput}
+                  indication={indication}
+                  hepaticAdjustment={hepaticAdjustment}
+                  renalAdjustment={renalAdjustment}
+                />
               ) : (
-                <Edoxaban setOutput={setOutput} indication={indication} />
+                <Edoxaban
+                  setOutput={setOutput}
+                  indication={indication}
+                  hepaticAdjustment={hepaticAdjustment}
+                  renalAdjustment={renalAdjustment}
+                />
               )}
             </>
           )}
