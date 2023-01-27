@@ -34,13 +34,15 @@ export default function Rivaroxaban(props) {
         props.setOutput({
           adjustmentType: 0,
           text: "Apixaban or warfarin is preferred",
-          reason: "crcl less than 15 %",
+          reason:
+            "GFR less than 15 mL/min\n[Estimated GFR: " + gfr + " mL/min]",
         });
       } else if (gfr <= 50) {
         props.setOutput({
           adjustmentType: 1,
           text: "15 mg once daily with the evening meal.",
-          reason: "crcl less than 50 %",
+          reason:
+            "GFR less than 50 mL/min\n[Estimated GFR: " + gfr + " mL/min]",
         });
       } else {
         props.setOutput({
@@ -53,7 +55,8 @@ export default function Rivaroxaban(props) {
       if (gfr < 30) {
         props.setOutput({
           adjustmentType: 0,
-          reason: "crcl less than 30",
+          reason:
+            "GFR less than 30 mL/min\n[Estimated GFR: " + gfr + " mL/min]",
         });
       } else {
         props.setOutput({
@@ -66,7 +69,8 @@ export default function Rivaroxaban(props) {
       if (gfr < 30) {
         props.setOutput({
           adjustmentType: 0,
-          reason: "crcl less than 30",
+          reason:
+            "GFR less than 30 mL/min\n[Estimated GFR: " + gfr + " mL/min]",
         });
       } else {
         props.setOutput({
