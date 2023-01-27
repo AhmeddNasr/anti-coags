@@ -329,12 +329,11 @@ function HepaticAdjustment(props) {
     }
   }, [billirubin, albumin, inr, ascites, encephalopathy]);
   return (
-    <>
+    <View style={{ marginBottom: 20 }}>
       <Text
         style={{
           fontSize: theme.FONT_SIZE_EXTRA_LARGE,
           marginBottom: 15,
-          marginTop: 0,
           color: theme.PRIMARY_COLOR,
           fontWeight: "600",
         }}
@@ -381,7 +380,7 @@ function HepaticAdjustment(props) {
         value={encephalopathy}
         setter={setEncephalopathy}
       />
-    </>
+    </View>
   );
 }
 
