@@ -26,13 +26,19 @@ export default function HomeScreen({ navigation }) {
             : null,
         ]}
       >
-        <Icon.Fontisto name={props.icon} color="white" size={38} />
-        <Text style={{ fontSize: 17, marginTop: 10, color: "white" }}>
+        <Icon.Fontisto
+          name={props.icon}
+          color={theme.PRIMARY_COLOR}
+          size={38}
+        />
+        <Text
+          style={{ fontSize: 17, marginTop: 10, color: theme.PRIMARY_COLOR }}
+        >
           {props.title}
         </Text>
         <Text
           style={{
-            color: "white",
+            color: theme.TEXT_COLOR_GRAY,
             alignSelf: "flex-start",
             fontSize: 13,
             fontStyle: "italic",
@@ -67,14 +73,14 @@ export default function HomeScreen({ navigation }) {
         screen: "Switching",
         bg: "#fb5607",
         icon: "arrow-swap",
-        description: "Switching to another agent guide",
+        description: "Guidelines to switching to another anticoagulant agent",
       },
       {
         title: "Choosing an anticoagulant",
         screen: "Choosing",
         bg: "#8338ec",
         icon: "search",
-        description: "Choosing a suitable anticoagulant guide",
+        description: "Choose a suitable anticoagulant based on patient's data",
       },
     ],
     [
@@ -140,16 +146,17 @@ const styles = StyleSheet.create({
     // width: 100,
     // height: 100,
     borderRadius: 15,
-    // borderWidth: 1,
+    borderWidth: 1,
     paddingTop: 20,
     padding: 10,
     flex: 1,
+    borderColor: theme.TEXT_COLOR_GRAY,
     // flexGrow: 1,
     // backgroundColor: props.bg,
     // alignContent: "center",
     // justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#E84545",
+    // backgroundColor: "#E84545",
     justifyContent: "space-around",
   },
   text: {
