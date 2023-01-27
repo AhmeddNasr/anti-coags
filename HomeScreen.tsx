@@ -10,15 +10,12 @@ import {
 } from "react-native";
 // import { LinearGradient } from "expo-linear-gradient";
 import * as Icon from "@expo/vector-icons";
+import theme from "./theme";
 
 export default function HomeScreen({ navigation }) {
-  const CustomButton = (props) => {
-    if (!props.title) {
-      return <View style={{ flex: 1, margin: 20 }}></View>;
-    }
+  function CustomButton(props: any) {
     return (
       <Pressable
-        colorScheme="red"
         onPress={() => navigation.navigate(props.screen)}
         style={({ pressed }) => [
           styles.button,
@@ -29,7 +26,7 @@ export default function HomeScreen({ navigation }) {
             : null,
         ]}
       >
-        <Icon.Fontisto name={props.icon} color="white" size={40} />
+        <Icon.Fontisto name={props.icon} color="white" size={38} />
         <Text style={{ fontSize: 17, marginTop: 10, color: "white" }}>
           {props.title}
         </Text>
@@ -45,12 +42,12 @@ export default function HomeScreen({ navigation }) {
         </Text>
       </Pressable>
     );
-  };
+  }
 
   const data = [
     [
       {
-        title: "Calculate Dose",
+        title: "Dosing",
         screen: "Dose",
         bg: "#3a86ff",
         icon: "calculator",
@@ -88,27 +85,21 @@ export default function HomeScreen({ navigation }) {
         icon: "travis",
         description: "Warnings and precautions for the use of anticoagulants",
       },
-      {},
+      {
+        title: "Warfarin and Heparin Dose Monitoring and Patient Education",
+        screen: "Warning",
+        icon: "night-clear",
+        description: "hhhhhhhhhhh",
+      },
     ],
   ];
-
-  const renderItem = ({ item }) => {
-    return (
-      <CustomButton
-        title={item.title}
-        screen={item.screen}
-        bg={item.bg}
-        icon={item.icon}
-      />
-    );
-  };
 
   return (
     <View style={styles.container}>
       {data.map((group, index) => {
         return (
-          <View key={index} style={styles.group}>
-            {group.map((item) => {
+          <View key={"buttonGroup-" + index} style={styles.group}>
+            {group.map((item, groupIndex) => {
               return (
                 <CustomButton
                   title={item.title}
@@ -116,6 +107,7 @@ export default function HomeScreen({ navigation }) {
                   bg={item.bg}
                   icon={item.icon}
                   description={item.description}
+                  key={`homeButton-${index}-${groupIndex}`}
                 />
               );
             })}
