@@ -7,8 +7,6 @@ import {
   Pressable,
 } from "react-native";
 import { useEffect, useState } from "react";
-import { FormControl, Select, CheckIcon } from "native-base";
-import { Checkbox } from "native-base";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import theme from "../../theme";
@@ -30,6 +28,7 @@ function TextInputBlock(props) {
           borderColor: "#EBEDF5",
         }}
         keyboardType={props.keyboardType}
+        value={props.value}
         // InputRightElement={
         //   <Text style={styles.inputTextElement}>{props.unit}</Text>
         // }
@@ -41,27 +40,11 @@ function TextInputBlock(props) {
 
 function CheckboxInput(props) {
   return (
-    // <Checkbox
-    //   disabled={false}
-    //   colorScheme="red"
-    //   value={props.value}
-    //   onValueChange={(val) => {
-    //     props.setter(val);
-    //   }}
-    // >
-    //   {props.title}
-    // </Checkbox>
     <Pressable
       onPress={() => {
         props.setter(!props.value);
       }}
       {...props}
-      // style={{
-      //   flexDirection: "row",
-      //   alignItems: "center",
-      //   paddingTop: 7.5,
-      //   paddingBottom: 7.5,
-      // }}
       style={({ pressed }) => [
         {
           flexDirection: "row",
@@ -99,6 +82,7 @@ function WeightInput(props) {
       unit="Kg"
       setter={props.setter}
       key="weight"
+      value={props.value}
     />
   );
 }
@@ -111,6 +95,7 @@ function HeightInput(props) {
       unit="cm"
       setter={props.setter}
       key="height"
+      value={props.value}
     />
   );
 }
@@ -123,6 +108,7 @@ function AgeInput(props) {
       unit="years"
       setter={props.setter}
       key="age"
+      value={props.value}
     />
   );
 }
@@ -135,6 +121,7 @@ function ScrInput(props) {
       unit="mg/dL"
       setter={props.setter}
       key="scr"
+      value={props.value}
     />
   );
 }
