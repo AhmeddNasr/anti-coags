@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import calculateGFR from "../Utils/calculateGFR";
 import GenerateInputs from "../DoseScreen/components/GenerateInputs";
+import { Text } from "react-native";
 
 export default function Rivaroxaban(props) {
-  const [weight, setWeight] = useState(null);
-  const [age, setAge] = useState(null);
-  const [scr, setScr] = useState(null);
-  const [gender, setGender] = useState(null);
+  const [weight, setWeight] = useState(props.data?.weight || null);
+  const [age, setAge] = useState(props.data?.age || null);
+  const [scr, setScr] = useState(props.data?.scr || null);
+  const [gender, setGender] = useState(props.data?.gender || null);
   const [hepatic, setHepatic] = useState(0);
-  // const [gfr, setGfr] = useState(null);
 
   const defaultOutput = {
     af: "20 mg once daily with the evening meal",
@@ -94,8 +94,11 @@ export default function Rivaroxaban(props) {
     <>
       <GenerateInputs
         setAge={setAge}
+        age={age}
         setWeight={setWeight}
+        weight={weight}
         setScr={setScr}
+        scr={scr}
         setGender={setGender}
         gender={gender}
         calculate={calculate}
