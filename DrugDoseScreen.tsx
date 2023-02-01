@@ -40,6 +40,7 @@ export default function DrugDoseScreen({ navigation, route }) {
                 value={val}
                 selected={indication}
                 setter={setIndication}
+                key={"indicationRadio-" + index}
               />
             );
           })}
@@ -102,10 +103,19 @@ export default function DrugDoseScreen({ navigation, route }) {
             {output?.text && (
               <Text style={styles.resultDose}>{output?.text}</Text>
             )}
-            <Text style={styles.resultReason}>
+            <Text
+              style={[
+                styles.resultReason,
+                {
+                  fontWeight: "600",
+                  fontSize: theme.FONT_SIZE_MEDIUM,
+                  marginBottom: 0,
+                },
+              ]}
+            >
               {output?.reason ? "Reason for adjustment: " : null}
-              {output?.reason}
             </Text>
+            <Text style={styles.resultReason}>{output?.reason}</Text>
           </View>
         )}
       </ScrollView>
@@ -143,5 +153,6 @@ const styles = StyleSheet.create({
   resultReason: {
     fontStyle: "italic",
     color: "white",
+    marginBottom: 10,
   },
 });
