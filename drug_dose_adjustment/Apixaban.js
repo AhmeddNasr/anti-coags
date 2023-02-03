@@ -7,15 +7,26 @@ import {
   SubmitButton,
 } from "../DoseScreen/components/custom-inputs";
 import calculateGFR from "../Utils/calculateGFR";
+import GenerateInputs from "../DoseScreen/components/GenerateInputs";
 
 export default function Apixaban(props) {
   const [weight, setWeight] = useState(null);
   const [age, setAge] = useState(null);
   const [scr, setScr] = useState(null);
   const [gender, setGender] = useState(null);
+  const [hepatic, setHepatic] = useState(null);
 
   const calculate = () => {
     const gfr = calculateGFR(gender, age, weight, scr);
+    if (props.hepaticAdjustment && hepatic >= 10) {
+      return props.setOutput({
+        adjustmentType: 0,
+        reason:
+          "Avoid use with severe impairment (Child-Pugh class C) [Child-Pugh score: " +
+          hepatic +
+          " ]",
+      });
+    }
     if (props.indication === "af") {
       if (
         gfr < 30 ||
@@ -44,11 +55,19 @@ export default function Apixaban(props) {
 
   return (
     <>
-      <AgeInput setter={setAge} />
-      <WeightInput setter={setWeight} />
-      <ScrInput setter={setScr} />
-      <GenderInput setter={setGender} value={gender} />
-      <SubmitButton calculate={calculate} />
+      <GenerateInputs
+        setAge={setAge}
+        age={age}
+        setWeight={setWeight}
+        weight={weight}
+        setScr={setScr}
+        scr={scr}
+        setGender={setGender}
+        gender={gender}
+        hepaticAdjustment={props.hepaticAdjustment}
+        setHepatic={setHepatic}
+        calculate={calculate}
+      />
     </>
   );
 }
