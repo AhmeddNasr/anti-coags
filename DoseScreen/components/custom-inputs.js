@@ -126,6 +126,36 @@ function ScrInput(props) {
   );
 }
 
+function CustomButton(props) {
+  return (
+    <Pressable
+      onPress={() => props.handlePress()}
+      color={theme.SECONDARY_COLOR}
+      style={({ pressed }) => ({
+        backgroundColor: theme.SECONDARY_COLOR,
+        padding: 20,
+        // width: 150,
+        borderRadius: 15,
+        marginTop: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        opacity: pressed ? 0.75 : 1,
+        width: 150,
+      })}
+    >
+      <Text
+        style={{
+          color: theme.TEXT_COLOR_WHITE,
+          fontSize: theme.FONT_SIZE_MEDIUM,
+          fontWeight: "600",
+        }}
+      >
+        {props.title}
+      </Text>
+    </Pressable>
+  );
+}
+
 function SubmitButton(props) {
   return (
     <Pressable
@@ -405,4 +435,5 @@ export {
   Label,
   CheckboxInput,
   HepaticAdjustment,
+  CustomButton,
 };
