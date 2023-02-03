@@ -16,15 +16,22 @@ import {
 export default function GenerateInputs(props) {
   return (
     <>
-      {props.setAge && <AgeInput setter={props.setAge} value={props.age} />}
-      {props.setWeight && (
-        <WeightInput setter={props.setWeight} value={props.weight} />
-      )}
+      {props.setAge &&
+        (props.renalAdjustment || !props.renalOnlyParams?.includes("age")) && (
+          <AgeInput setter={props.setAge} value={props.age} />
+        )}
+      {props.setWeight &&
+        (props.renalAdjustment ||
+          !props.renalOnlyParams?.includes("weight")) && (
+          <WeightInput setter={props.setWeight} value={props.weight} />
+        )}
       {props.setHeight && (
         <HeightInput setter={props.setHeight} value={props.height} />
       )}
-      {props.setScr && <ScrInput setter={props.setScr} value={props.scr} />}
-      {props.setGender && (
+      {props.setScr && props.renalAdjustment && (
+        <ScrInput setter={props.setScr} value={props.scr} />
+      )}
+      {props.setGender && props.renalAdjustment && (
         <GenderInput setter={props.setGender} value={props.gender} />
       )}
       {props.nsaid && (
