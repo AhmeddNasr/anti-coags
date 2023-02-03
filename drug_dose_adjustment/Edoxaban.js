@@ -121,6 +121,7 @@ export default function Edoxaban(props) {
         calculate={calculate}
         hepaticAdjustment={props.hepaticAdjustment}
         setHepatic={setHepatic}
+        renalAdjustment={props.renalAdjustment}
       />
     </>
   );

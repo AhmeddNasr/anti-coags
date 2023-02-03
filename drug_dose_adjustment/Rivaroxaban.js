@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import calculateGFR from "../Utils/calculateGFR";
 import GenerateInputs from "../DoseScreen/components/GenerateInputs";
-import { Text } from "react-native";
 
 export default function Rivaroxaban(props) {
   const [weight, setWeight] = useState(props.data?.weight || null);
@@ -87,7 +86,6 @@ export default function Rivaroxaban(props) {
         });
       }
     }
-    //
   };
 
   return (
@@ -104,6 +102,7 @@ export default function Rivaroxaban(props) {
         calculate={calculate}
         hepaticAdjustment={props.hepaticAdjustment}
         setHepatic={setHepatic}
+        renalAdjustment={props.renalAdjustment}
       />
     </>
   );
