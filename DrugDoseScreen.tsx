@@ -1,27 +1,28 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useState, useEffect } from "react";
-import { Radio, Checkbox } from "native-base";
 import drugs from "./drugs";
 import theme from "./theme";
 import Rivaroxaban from "./drug_dose_adjustment/Rivaroxaban";
 import Edoxaban from "./drug_dose_adjustment/Edoxaban";
 import { RadioButton } from "./DoseScreen/components/custom-inputs";
 import { CheckboxInput } from "./DoseScreen/components/custom-inputs";
+import Apixaban from "./drug_dose_adjustment/Apixaban";
+import Enoxaparin from "./drug_dose_adjustment/Enoxaparin";
 
 export default function DrugDoseScreen({ navigation, route }) {
   const [renalAdjustment, setRenalAdjustment] = useState(true);
   const [hepaticAdjustment, setHepaticAdjustment] = useState(false);
   const [indication, setIndication] = useState("");
   const [output, setOutput] = useState();
+  const [notes, setNotes] = useState([]);
   const drug = drugs[route.params.id];
 
-  useEffect(() => {
-    console.log(output);
-  }, [output]);
+  const hepaticDrugs = ["rivaroxaban", "edoxaban", "apixaban"];
+  const renalDrugs = ["rivaroxaban", "edoxaban", "enoxaparin", "fondaparinux"];
 
   return (
     <>
-      <ScrollView>
+      <ScrollView style={{ flex: 1 }}>
         <View style={{ padding: 25, paddingTop: 10, flex: 1 }}>
           {/*  */}
           {/* Indication */}
@@ -51,30 +52,51 @@ export default function DrugDoseScreen({ navigation, route }) {
           {indication.length > 0 && (
             <>
               <Text style={styles.header}>Adjustment Type:</Text>
-              {/* TODO remove nativebase */}
-              <CheckboxInput
-                title="Renal Dose Adjustment"
-                setter={setRenalAdjustment}
-                value={renalAdjustment}
-              />
-              <CheckboxInput
-                title="Hepatic Dose Adjustment"
-                setter={setHepaticAdjustment}
-                value={hepaticAdjustment}
-              />
+              {renalDrugs.includes(drug.name) && (
+                <CheckboxInput
+                  title="Renal Dose Adjustment"
+                  setter={setRenalAdjustment}
+                  value={renalAdjustment}
+                />
+              )}
+
+              {hepaticDrugs.includes(drug.name) && (
+                <CheckboxInput
+                  title="Hepatic Dose Adjustment"
+                  setter={setHepaticAdjustment}
+                  value={hepaticAdjustment}
+                />
+              )}
+
               <Text style={styles.header}>Patient information:</Text>
-              {drug.name === "rivaroxaban" ? (
+              {drug.name === "rivaroxaban" && (
                 <Rivaroxaban
                   setOutput={setOutput}
                   indication={indication}
                   hepaticAdjustment={hepaticAdjustment}
                   renalAdjustment={renalAdjustment}
                 />
-              ) : (
+              )}
+              {drug.name === "edoxaban" && (
                 <Edoxaban
                   setOutput={setOutput}
                   indication={indication}
                   hepaticAdjustment={hepaticAdjustment}
+                  renalAdjustment={renalAdjustment}
+                />
+              )}
+              {drug.name === "apixaban" && (
+                <Apixaban
+                  setOutput={setOutput}
+                  indication={indication}
+                  hepaticAdjustment={hepaticAdjustment}
+                  renalAdjustment={renalAdjustment}
+                />
+              )}
+              {drug.name === "enoxaparin" && (
+                <Enoxaparin
+                  setOutput={setOutput}
+                  indication={indication}
                   renalAdjustment={renalAdjustment}
                 />
               )}
@@ -134,11 +156,11 @@ const styles = StyleSheet.create({
   resultContainer: {
     width: "100%",
     padding: 20,
-    // position: "absolute",
-    bottom: 0,
     backgroundColor: theme.GREEN_COLOR,
     // color: "white",
     minHeight: 100,
+    // marginTop: "auto",
+    marginTop: "auto",
   },
   resultHeader: {
     color: "white",
