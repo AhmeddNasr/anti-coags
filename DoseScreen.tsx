@@ -1,36 +1,56 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "native-base";
-
+import { CustomButton } from "./DoseScreen/components/custom-inputs";
 import drugs from "./drugs";
 import theme from "./theme";
 
+const oralDrugs = [
+  { name: "rivaroxaban", id: 0 },
+  { name: "edoxaban", id: 1 },
+  { name: "apixaban", id: 2 },
+  { name: "warfarin" },
+];
+const parentralDrugs = [
+  { name: "enoxaparin", id: 3 },
+  { name: "heparin" },
+  { name: "fondaparinux" },
+];
+
 export default function DoseScreen({ navigation }) {
   return (
-    <View>
-      {drugs.map((drug, index) => {
+    <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Oral anti-coagulants</Text>
+      </View>
+      {oralDrugs.map((drug, index) => {
         return (
-          <View key={index} style={styles.container}>
-            {index === 0 ? (
-              <View style={styles.titleContainer}>
-                <Text style={styles.title}>Oral anti-coagulants</Text>
-              </View>
-            ) : index === 1 ? (
-              <View style={styles.titleContainer}>
-                <Text style={styles.title}>Parentral anti-coagulants</Text>
-              </View>
-            ) : null}
-            <Button
-              onPress={() =>
-                navigation.navigate("DrugDose", {
-                  id: index,
-                  name: drugs[index].name,
-                })
-              }
-              colorScheme="red"
-            >
-              {drug.name}
-            </Button>
-          </View>
+          <CustomButton
+            handlePress={() => {
+              navigation.navigate("DrugDose", {
+                id: drug.id,
+                name: drug.name,
+              });
+            }}
+            title={drug.name}
+            key={"oral-" + index}
+          />
+        );
+      })}
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Parentral anti-coagulants</Text>
+      </View>
+      {parentralDrugs.map((drug, index) => {
+        return (
+          <CustomButton
+            handlePress={() => {
+              navigation.navigate("DrugDose", {
+                id: drug.id,
+                name: drug.name,
+              });
+            }}
+            title={drug.name}
+            key={"parentral-" + index}
+          />
         );
       })}
     </View>
