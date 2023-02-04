@@ -15,9 +15,9 @@ function TextInputBlock(props) {
   return (
     <View style={styles.inputGroup}>
       <Text style={styles.label}>{props.title}</Text>
+
+      {/* Input */}
       <TextInput
-        // w={"75%"}
-        // value="hi"
         cursorColor={theme.PRIMARY_COLOR}
         style={{
           backgroundColor: "#FFFFFF",
@@ -25,7 +25,7 @@ function TextInputBlock(props) {
           padding: 10,
           paddingLeft: 20,
           borderWidth: 1,
-          borderColor: "#EBEDF5",
+          borderColor: props.error ? theme.ERROR_COLOR : "#EBEDF5",
         }}
         keyboardType={props.keyboardType}
         value={props.value}
@@ -34,6 +34,30 @@ function TextInputBlock(props) {
         // }
         onChangeText={(val) => props.setter(val)}
       />
+      {/* Error validation */}
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: 5,
+          marginBottom: 5,
+        }}
+      >
+        <Icon
+          name="error"
+          color={props.error ? theme.ERROR_COLOR : theme.BACKGROUND_COLOR}
+          style={{ marginRight: 5 }}
+          size={16}
+        />
+        <Text
+          style={{
+            color: props.error ? theme.ERROR_COLOR : theme.BACKGROUND_COLOR,
+            fontSize: 13,
+          }}
+        >
+          {props.error}
+        </Text>
+      </View>
     </View>
   );
 }
@@ -75,6 +99,10 @@ function CheckboxInput(props) {
 }
 
 function WeightInput(props) {
+  const [error, setError] = useState("");
+  useEffect(() => {
+    validateInput(30, 200, setError, error, props.value, "kg");
+  }, [props.value]);
   return (
     <TextInputBlock
       title="Weight (Kilograms)"
@@ -83,11 +111,16 @@ function WeightInput(props) {
       setter={props.setter}
       key="weight"
       value={props.value}
+      error={error === "" ? null : error}
     />
   );
 }
 
 function HeightInput(props) {
+  const [error, setError] = useState("");
+  useEffect(() => {
+    validateInput(100, 250, setError, error, props.value, "cm");
+  }, [props.value]);
   return (
     <TextInputBlock
       title="Height (Centimeters)"
@@ -96,11 +129,16 @@ function HeightInput(props) {
       setter={props.setter}
       key="height"
       value={props.value}
+      error={error === "" ? null : error}
     />
   );
 }
 
 function AgeInput(props) {
+  const [error, setError] = useState("");
+  useEffect(() => {
+    validateInput(12, 110, setError, error, props.value, "years");
+  }, [props.value]);
   return (
     <TextInputBlock
       title="Age (years)"
@@ -109,11 +147,30 @@ function AgeInput(props) {
       setter={props.setter}
       key="age"
       value={props.value}
+      error={error === "" ? null : error}
     />
   );
 }
+let timer;
+function validateInput(min, max, setError, error, value, unit) {
+  if (value === null) {
+    return;
+  }
+  clearTimeout(timer);
+  timer = setTimeout(() => {
+    if (value < min || value > max || value === "") {
+      setError("Must be between " + min + " and " + max + " " + unit);
+    } else if (error !== "") {
+      setError("");
+    }
+  }, 400);
+}
 
 function ScrInput(props) {
+  const [error, setError] = useState("");
+  useEffect(() => {
+    validateInput(0.1, 70, setError, error, props.value, "mg/dL");
+  }, [props.value]);
   return (
     <TextInputBlock
       title="S.Cr (mg/dL)"
@@ -122,6 +179,7 @@ function ScrInput(props) {
       setter={props.setter}
       key="scr"
       value={props.value}
+      error={error === "" ? null : error}
     />
   );
 }
@@ -406,7 +464,7 @@ const styles = StyleSheet.create({
     // flexDirection: "row",
     // alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 20,
+    // marginBottom: 20,
   },
   inputTextElement: {
     marginRight: 20,
@@ -417,6 +475,7 @@ const styles = StyleSheet.create({
     color: theme.TEXT_COLOR_GRAY,
     fontSize: theme.FONT_SIZE_MEDIUM,
     marginBottom: 10,
+    marginTop: 6,
   },
 });
 
