@@ -35,6 +35,9 @@ export default function Rivaroxaban(props) {
           " ]",
       });
     }
+    if (gender === "" || age === "" || weight === "" || scr === "") {
+      return;
+    }
     const gfr = calculateGFR(gender, age, weight, scr);
     // AF
     if (props.indication === "af") {
@@ -103,6 +106,7 @@ export default function Rivaroxaban(props) {
         hepaticAdjustment={props.hepaticAdjustment}
         setHepatic={setHepatic}
         renalAdjustment={props.renalAdjustment}
+        renalOnlyParams={["age", "weight"]}
       />
     </>
   );
