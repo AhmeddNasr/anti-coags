@@ -409,6 +409,7 @@ function HepaticAdjustment(props) {
         style={{
           fontSize: theme.FONT_SIZE_EXTRA_LARGE,
           marginBottom: 15,
+          marginTop: 20,
           color: theme.PRIMARY_COLOR,
           fontWeight: "600",
         }}
