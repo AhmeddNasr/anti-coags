@@ -7,7 +7,7 @@ export default function Enoxaparin(props) {
   const [height, setHeight] = useState(props.data?.height || null);
   const [age, setAge] = useState(props.data?.age || null);
   const [scr, setScr] = useState(props.data?.scr || null);
-  const [gender, setGender] = useState(props.data?.gender || null);
+  const [gender, setGender] = useState(props.data?.gender || "m");
 
   //TODO ADD NOTE
   const calculate = () => {
@@ -103,7 +103,7 @@ export default function Enoxaparin(props) {
       setHeight={setHeight}
       calculate={calculate}
       renalAdjustment={props.renalAdjustment}
-      renalOnlyParams={"age"}
+      renalOnlyParams={["age"]}
     />
   );
 }

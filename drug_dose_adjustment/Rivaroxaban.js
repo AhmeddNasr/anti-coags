@@ -6,7 +6,7 @@ export default function Rivaroxaban(props) {
   const [weight, setWeight] = useState(props.data?.weight || null);
   const [age, setAge] = useState(props.data?.age || null);
   const [scr, setScr] = useState(props.data?.scr || null);
-  const [gender, setGender] = useState(props.data?.gender || null);
+  const [gender, setGender] = useState(props.data?.gender || "m");
   const [hepatic, setHepatic] = useState(0);
 
   const defaultOutput = {
@@ -26,7 +26,7 @@ export default function Rivaroxaban(props) {
   }, [props.indication]);
 
   const calculate = () => {
-    if (props.hepaticAdjustment && hepatic >= 7) {
+    if (props.adjustment === "hepatic" && hepatic >= 7) {
       return props.setOutput({
         adjustmentType: 0,
         reason:
@@ -103,9 +103,9 @@ export default function Rivaroxaban(props) {
         setGender={setGender}
         gender={gender}
         calculate={calculate}
-        hepaticAdjustment={props.hepaticAdjustment}
+        hepaticAdjustment={props.adjustment === "hepatic"}
         setHepatic={setHepatic}
-        renalAdjustment={props.renalAdjustment}
+        renalAdjustment={props.adjustment === "renal"}
         renalOnlyParams={["age", "weight"]}
       />
     </>

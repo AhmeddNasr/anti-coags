@@ -13,7 +13,7 @@ export default function Apixaban(props) {
   const [weight, setWeight] = useState(null);
   const [age, setAge] = useState(null);
   const [scr, setScr] = useState(null);
-  const [gender, setGender] = useState(null);
+  const [gender, setGender] = useState("m");
   const [hepatic, setHepatic] = useState(null);
 
   const calculate = () => {

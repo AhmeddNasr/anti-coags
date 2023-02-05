@@ -21,7 +21,7 @@ export default function Edoxaban(props) {
   const [age, setAge] = useState(null);
   const [height, setHeight] = useState(null);
   const [scr, setScr] = useState(null);
-  const [gender, setGender] = useState(null);
+  const [gender, setGender] = useState("m");
   const [pgp, setPgp] = useState(false);
   const [nsaid, setNsaid] = useState(false);
   const [antiplatelet, setAntiplatelet] = useState(false);
@@ -109,9 +109,13 @@ export default function Edoxaban(props) {
     <>
       <GenerateInputs
         setAge={setAge}
+        age={age}
         setWeight={setWeight}
+        weight={weight}
         setHeight={setHeight}
+        height={height}
         setScr={setScr}
+        scr={scr}
         setGender={setGender}
         gender={gender}
         pgp={{ setter: setPgp, value: pgp }}
