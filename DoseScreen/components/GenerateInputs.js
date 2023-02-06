@@ -12,8 +12,27 @@ import {
   Label,
   ScrInput,
 } from "./custom-inputs";
+import evaluateInput from "../../Utils/evaluateInput";
+import { useState, useEffect } from "react";
 
 export default function GenerateInputs(props) {
+  const [validInput, setValidInput] = useState(false);
+  useEffect(() => {
+    if (
+      evaluateInput({
+        age: props.age,
+        weight: props.weight,
+        height: props.height,
+        scr: props.scr,
+      })
+    ) {
+      if (!validInput) {
+        setValidInput(true);
+      }
+    } else {
+      setValidInput(false);
+    }
+  }, [props.age, props.weight, props.height, props.scr]);
   return (
     <>
       {props.setAge &&
@@ -58,7 +77,7 @@ export default function GenerateInputs(props) {
       {props.hepaticAdjustment && (
         <HepaticAdjustment setter={props.setHepatic} />
       )}
-      <SubmitButton calculate={props.calculate} />
+      <SubmitButton calculate={props.calculate} validInput={validInput} />
     </>
   );
 }

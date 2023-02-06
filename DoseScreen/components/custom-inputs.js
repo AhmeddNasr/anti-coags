@@ -29,6 +29,10 @@ function TextInputBlock(props) {
         }}
         keyboardType={props.keyboardType}
         value={props.value}
+        onBlur={() => {
+          console.log("blur!");
+          props.setTouched(true);
+        }}
         // InputRightElement={
         //   <Text style={styles.inputTextElement}>{props.unit}</Text>
         // }
@@ -100,9 +104,13 @@ function CheckboxInput(props) {
 
 function WeightInput(props) {
   const [error, setError] = useState("");
+  const [touched, setTouched] = useState(false);
   useEffect(() => {
+    if (!touched) {
+      return;
+    }
     validateInput(30, 200, setError, error, props.value, "kg");
-  }, [props.value]);
+  }, [props.value, touched]);
   return (
     <TextInputBlock
       title="Weight (Kilograms)"
@@ -112,15 +120,20 @@ function WeightInput(props) {
       key="weight"
       value={props.value}
       error={error === "" ? null : error}
+      setTouched={setTouched}
     />
   );
 }
 
 function HeightInput(props) {
   const [error, setError] = useState("");
+  const [touched, setTouched] = useState(false);
   useEffect(() => {
+    if (!touched) {
+      return;
+    }
     validateInput(100, 250, setError, error, props.value, "cm");
-  }, [props.value]);
+  }, [props.value, touched]);
   return (
     <TextInputBlock
       title="Height (Centimeters)"
@@ -130,15 +143,20 @@ function HeightInput(props) {
       key="height"
       value={props.value}
       error={error === "" ? null : error}
+      setTouched={setTouched}
     />
   );
 }
 
 function AgeInput(props) {
   const [error, setError] = useState("");
+  const [touched, setTouched] = useState(false);
   useEffect(() => {
+    if (!touched) {
+      return;
+    }
     validateInput(12, 110, setError, error, props.value, "years");
-  }, [props.value]);
+  }, [props.value, touched]);
   return (
     <TextInputBlock
       title="Age (years)"
@@ -148,6 +166,7 @@ function AgeInput(props) {
       key="age"
       value={props.value}
       error={error === "" ? null : error}
+      setTouched={setTouched}
     />
   );
 }
@@ -168,9 +187,13 @@ function validateInput(min, max, setError, error, value, unit) {
 
 function ScrInput(props) {
   const [error, setError] = useState("");
+  const [touched, setTouched] = useState(false);
   useEffect(() => {
+    if (!touched) {
+      return;
+    }
     validateInput(0.1, 70, setError, error, props.value, "mg/dL");
-  }, [props.value]);
+  }, [props.value, touched]);
   return (
     <TextInputBlock
       title="S.Cr (mg/dL)"
@@ -180,6 +203,7 @@ function ScrInput(props) {
       key="scr"
       value={props.value}
       error={error === "" ? null : error}
+      setTouched={(val) => setTouched(val)}
     />
   );
 }
@@ -220,7 +244,7 @@ function SubmitButton(props) {
       onPress={() => props.calculate()}
       color={theme.SECONDARY_COLOR}
       my={8}
-      title="Calculate Dose"
+      disabled={!props.validInput}
       style={({ pressed }) => ({
         backgroundColor: theme.SECONDARY_COLOR,
         padding: 20,
@@ -229,7 +253,7 @@ function SubmitButton(props) {
         marginTop: 10,
         justifyContent: "center",
         alignItems: "center",
-        opacity: pressed ? 0.75 : 1,
+        opacity: props.validInput ? (pressed ? 0.75 : 1) : 0.6,
       })}
     >
       <Text
