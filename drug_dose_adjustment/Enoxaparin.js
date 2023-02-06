@@ -3,10 +3,10 @@ import calculateGFR from "../Utils/calculateGFR";
 import GenerateInputs from "../DoseScreen/components/GenerateInputs";
 import calculateBmi from "../Utils/calculateBmi";
 export default function Enoxaparin(props) {
-  const [weight, setWeight] = useState(props.data?.weight || null);
-  const [height, setHeight] = useState(props.data?.height || null);
-  const [age, setAge] = useState(props.data?.age || null);
-  const [scr, setScr] = useState(props.data?.scr || null);
+  const [weight, setWeight] = useState(props.data?.weight || "");
+  const [height, setHeight] = useState(props.data?.height || "");
+  const [age, setAge] = useState(props.data?.age || "");
+  const [scr, setScr] = useState(props.data?.scr || "");
   const [gender, setGender] = useState(props.data?.gender || "m");
 
   //TODO ADD NOTE

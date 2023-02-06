@@ -17,10 +17,10 @@ import calculateGFR from "../Utils/calculateGFR";
 import GenerateInputs from "../DoseScreen/components/GenerateInputs";
 
 export default function Edoxaban(props) {
-  const [weight, setWeight] = useState(null);
-  const [age, setAge] = useState(null);
-  const [height, setHeight] = useState(null);
-  const [scr, setScr] = useState(null);
+  const [weight, setWeight] = useState("");
+  const [age, setAge] = useState("");
+  const [height, setHeight] = useState("");
+  const [scr, setScr] = useState("");
   const [gender, setGender] = useState("m");
   const [pgp, setPgp] = useState(false);
   const [nsaid, setNsaid] = useState(false);

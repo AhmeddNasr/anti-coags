@@ -12,6 +12,7 @@ import DrugDoseScreen from "./DrugDoseScreen";
 import HemodialysisScreen from "./HemodialysisScreen";
 import { NativeBaseProvider, theme } from "native-base";
 import * as myTheme from "./theme";
+import capitalizeFirstLetter from "./Utils/capitalizeFirstLetter";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -53,9 +54,7 @@ export default function App() {
             name="DrugDose"
             component={DrugDoseScreen}
             options={({ route }) => ({
-              title:
-                route.params.name.charAt(0).toUpperCase() +
-                route.params.name.slice(1),
+              title: capitalizeFirstLetter(route.params.name),
             })}
           />
           <Stack.Screen name="Hemodialysis" component={HemodialysisScreen} />

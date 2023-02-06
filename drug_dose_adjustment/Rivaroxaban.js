@@ -3,9 +3,9 @@ import calculateGFR from "../Utils/calculateGFR";
 import GenerateInputs from "../DoseScreen/components/GenerateInputs";
 
 export default function Rivaroxaban(props) {
-  const [weight, setWeight] = useState(props.data?.weight || null);
-  const [age, setAge] = useState(props.data?.age || null);
-  const [scr, setScr] = useState(props.data?.scr || null);
+  const [weight, setWeight] = useState(props.data?.weight || "");
+  const [age, setAge] = useState(props.data?.age || "");
+  const [scr, setScr] = useState(props.data?.scr || "");
   const [gender, setGender] = useState(props.data?.gender || "m");
   const [hepatic, setHepatic] = useState(0);
 
