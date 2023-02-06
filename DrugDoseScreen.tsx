@@ -12,13 +12,14 @@ import Enoxaparin from "./drug_dose_adjustment/Enoxaparin";
 export default function DrugDoseScreen({ navigation, route }) {
   const [renalAdjustment, setRenalAdjustment] = useState(true);
   const [hepaticAdjustment, setHepaticAdjustment] = useState(false);
+  const [adjustment, setAdjustment] = useState("renal");
   const [indication, setIndication] = useState("");
   const [output, setOutput] = useState();
   const [notes, setNotes] = useState([]);
   const drug = drugs[route.params.id];
 
-  const hepaticDrugs = ["rivaroxaban", "edoxaban", "apixaban"];
-  const renalDrugs = ["rivaroxaban", "edoxaban", "enoxaparin", "fondaparinux"];
+  const hepaticDrugs = ["edoxaban", "apixaban"];
+  const renalDrugs = ["edoxaban", "enoxaparin", "fondaparinux"];
 
   return (
     <>
@@ -27,7 +28,7 @@ export default function DrugDoseScreen({ navigation, route }) {
           {/*  */}
           {/* Indication */}
           {/*  */}
-          <Text style={[styles.header, { marginTop: 0 }]}>Indication: </Text>
+          <Text style={[styles.header, { marginTop: 0 }]}>Indication</Text>
           {drug.indications.map((val, index) => {
             return (
               <RadioButton
@@ -51,7 +52,23 @@ export default function DrugDoseScreen({ navigation, route }) {
           {/*  */}
           {indication.length > 0 && (
             <>
-              <Text style={styles.header}>Adjustment Type:</Text>
+              <Text style={styles.header}>Adjustment Type</Text>
+              {drug.name === "rivaroxaban" && (
+                <>
+                  <RadioButton
+                    title="Renal Dose Adjustment"
+                    value="renal"
+                    selected={adjustment}
+                    setter={setAdjustment}
+                  />
+                  <RadioButton
+                    title="Hepatic Dose Adjustment"
+                    value="hepatic"
+                    selected={adjustment}
+                    setter={setAdjustment}
+                  />
+                </>
+              )}
               {renalDrugs.includes(drug.name) && (
                 <CheckboxInput
                   title="Renal Dose Adjustment"
@@ -59,7 +76,6 @@ export default function DrugDoseScreen({ navigation, route }) {
                   value={renalAdjustment}
                 />
               )}
-
               {hepaticDrugs.includes(drug.name) && (
                 <CheckboxInput
                   title="Hepatic Dose Adjustment"
@@ -67,14 +83,16 @@ export default function DrugDoseScreen({ navigation, route }) {
                   value={hepaticAdjustment}
                 />
               )}
-
-              <Text style={styles.header}>Patient information:</Text>
+              {drug.name !== "rivaroxaban" ? (
+                <Text style={styles.header}>Patient information</Text>
+              ) : adjustment === "renal" ? (
+                <Text style={styles.header}>Patient information</Text>
+              ) : null}
               {drug.name === "rivaroxaban" && (
                 <Rivaroxaban
                   setOutput={setOutput}
                   indication={indication}
-                  hepaticAdjustment={hepaticAdjustment}
-                  renalAdjustment={renalAdjustment}
+                  adjustment={adjustment}
                 />
               )}
               {drug.name === "edoxaban" && (
