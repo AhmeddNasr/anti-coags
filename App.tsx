@@ -13,9 +13,22 @@ import HemodialysisScreen from "./HemodialysisScreen";
 import { NativeBaseProvider, theme } from "native-base";
 import * as myTheme from "./theme";
 import capitalizeFirstLetter from "./Utils/capitalizeFirstLetter";
+import setDefaultProps from "react-native-simple-default-props";
+import { useFonts } from "expo-font";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [loaded] = useFonts({
+    "Proxima-Nova": require("./assets/fonts/proxima-nova.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+  setDefaultProps(Text, {
+    style: [{ fontFamily: "Proxima-Nova" }],
+  });
   return (
     <NativeBaseProvider>
       <NavigationContainer>
