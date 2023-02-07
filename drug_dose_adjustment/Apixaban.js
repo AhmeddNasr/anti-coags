@@ -1,11 +1,4 @@
 import { useState } from "react";
-import {
-  AgeInput,
-  GenderInput,
-  WeightInput,
-  ScrInput,
-  SubmitButton,
-} from "../DoseScreen/components/custom-inputs";
 import calculateGFR from "../Utils/calculateGFR";
 import GenerateInputs from "../DoseScreen/components/GenerateInputs";
 
@@ -64,6 +57,7 @@ export default function Apixaban(props) {
         scr={scr}
         setGender={setGender}
         gender={gender}
+        renalAdjustment={props.renalAdjustment}
         hepaticAdjustment={props.hepaticAdjustment}
         setHepatic={setHepatic}
         calculate={calculate}
