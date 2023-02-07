@@ -182,7 +182,7 @@ function validateInput(min, max, setError, error, value, unit) {
     } else if (error !== "") {
       setError("");
     }
-  }, 400);
+  }, 100);
 }
 
 function ScrInput(props) {
@@ -263,7 +263,7 @@ function SubmitButton(props) {
           fontWeight: "700",
         }}
       >
-        Calculate Dose
+        {props.buttonTitle ? props.buttonTitle : "Calculate Dose"}
       </Text>
     </Pressable>
   );
@@ -385,6 +385,32 @@ function RadioButton(props) {
         {props.title}
       </Text>
     </Pressable>
+  );
+}
+
+function PlateletCountGroup(props) {
+  return (
+    <View>
+      <Label title={"Platelet Count (Billion/Liter)"} />
+      <RadioButton
+        title={"50-100"}
+        value={1}
+        selected={props.value}
+        setter={props.setter}
+      />
+      <RadioButton
+        title={"30-50"}
+        value={2}
+        selected={props.value}
+        setter={props.setter}
+      />
+      <RadioButton
+        title={"> 30"}
+        value={3}
+        selected={props.value}
+        setter={props.setter}
+      />
+    </View>
   );
 }
 
@@ -520,4 +546,5 @@ export {
   CheckboxInput,
   HepaticAdjustment,
   CustomButton,
+  PlateletCountGroup,
 };

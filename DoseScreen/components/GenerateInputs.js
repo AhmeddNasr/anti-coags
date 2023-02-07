@@ -11,6 +11,7 @@ import {
   AntiplateletUseInput,
   Label,
   ScrInput,
+  PlateletCountGroup,
 } from "./custom-inputs";
 import evaluateInput from "../../Utils/evaluateInput";
 import { useState, useEffect } from "react";
@@ -35,6 +36,9 @@ export default function GenerateInputs(props) {
   }, [props.age, props.weight, props.height, props.scr]);
   return (
     <>
+      {props.platlet && (
+        <PlateletCountGroup value={props.platlet} setter={props.setPlatlet} />
+      )}
       {props.setAge &&
         (props.renalAdjustment || !props.renalOnlyParams?.includes("age")) && (
           <AgeInput setter={props.setAge} value={props.age} />
@@ -77,7 +81,11 @@ export default function GenerateInputs(props) {
       {props.hepaticAdjustment && (
         <HepaticAdjustment setter={props.setHepatic} />
       )}
-      <SubmitButton calculate={props.calculate} validInput={validInput} />
+      <SubmitButton
+        calculate={props.calculate}
+        validInput={validInput}
+        buttonTitle={props.buttonTitle}
+      />
     </>
   );
 }
