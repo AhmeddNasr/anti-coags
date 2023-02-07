@@ -19,7 +19,7 @@ export default function DrugDoseScreen({ navigation, route }) {
   const drug = drugs[route.params.id];
 
   const hepaticDrugs = ["edoxaban", "apixaban"];
-  const renalDrugs = ["edoxaban", "enoxaparin", "fondaparinux"];
+  const renalDrugs = ["edoxaban", "enoxaparin", "fondaparinux", "apixaban"];
 
   return (
     <>
@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: theme.PRIMARY_COLOR,
     fontWeight: "600",
+    fontFamily: "inter-font",
   },
   resultContainer: {
     width: "100%",
