@@ -2,7 +2,7 @@ const rivaroxaban = {
   id: 0,
   name: "rivaroxaban",
   route: "oral",
-  indications: ["af", "dvtp"],
+  indications: ["af", "dvtp", "dvtt"],
   doseDVTT: 1,
   doseDVTP: 30,
   dialysis: false,
