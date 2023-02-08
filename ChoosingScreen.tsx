@@ -13,9 +13,9 @@ export default function ChoosingScreen() {
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("m");
   const [indication, setIndication] = useState("");
-  const [platlet, setPlatlet] = useState(1);
-  const [renalAdjustment, setRenalAdjustment] = useState(true);
-  const [hepaticAdjustment, setHepaticAdjustment] = useState(true);
+  const [platlet, setPlatlet] = useState(4);
+  const [renalAdjustment, setRenalAdjustment] = useState(false);
+  const [hepaticAdjustment, setHepaticAdjustment] = useState(false);
   const [allContra, setAllContra] = useState(false);
   const [suitableDrugs, setSuitableDrugs] = useState([]);
   const [scr, setScr] = useState(0);
@@ -25,7 +25,6 @@ export default function ChoosingScreen() {
   let output;
 
   function calculate() {
-    // console.log(output);
     output = [];
     if (indication === "") {
       return;
@@ -73,31 +72,33 @@ export default function ChoosingScreen() {
       dose: "",
       id: 6,
     };
-    if (indication === "af") {
-      if (platlet === 1) {
-        apixaban.dose = "Reduced dose (2.5 mg twice daily)";
-        rivaroxaban.dose = "Reduced dose (15mg twice daily)";
-        enoxaparin.contra = true;
-        fondaparinux.contra = true;
-      } else {
-        return setAllContra(true);
-      }
-    } else if (indication === "dvtt") {
-      if (platlet === 2) {
-        apixaban.contra = true;
-        rivaroxaban.contra = true;
-        edoxaban.contra = true;
-        enoxaparin.dose =
-          "In case of high bleedin risk: 50% reduction of dose or prophylactic dose";
-      } else {
-        return setAllContra(true);
-      }
-    } else if (indication === "dvtp") {
-      if (platlet !== 1) {
-        return setAllContra(true);
+    if (platlet !== 4) {
+      if (indication === "af") {
+        if (platlet === 1) {
+          apixaban.dose = "Reduced dose (2.5 mg twice daily)";
+          rivaroxaban.dose = "Reduced dose (15mg twice daily)";
+          enoxaparin.contra = true;
+          fondaparinux.contra = true;
+        } else {
+          return setAllContra(true);
+        }
+      } else if (indication === "dvtt") {
+        if (platlet === 2) {
+          apixaban.contra = true;
+          rivaroxaban.contra = true;
+          edoxaban.contra = true;
+          enoxaparin.dose =
+            "In case of high bleedin risk: 50% reduction of dose or prophylactic dose";
+        } else if (platlet === 3) {
+          return setAllContra(true);
+        }
+      } else if (indication === "dvtp") {
+        if (platlet !== 1) {
+          return setAllContra(true);
+        }
       }
     }
-
+    console.log("hi");
     if (renalAdjustment) {
       let gfr = calculateGFR(gender, age, weight, scr);
       if (gfr < 15) {
@@ -145,7 +146,7 @@ export default function ChoosingScreen() {
   return (
     <ScrollView style={styles.container}>
       {/* TODO DRY */}
-      {console.log(suitableDrugs)}
+      {/* {console.log(suitableDrugs)} */}
       <View style={{ padding: 25, paddingTop: 0 }}>
         <Text style={[styles.header, { marginTop: 0 }]}>Indication</Text>
         {indications.map((val, index) => {
@@ -178,6 +179,7 @@ export default function ChoosingScreen() {
         />
         <Text style={[styles.header]}>Patient Information</Text>
         <GenerateInputs
+          indication={indication}
           platlet={platlet}
           setPlatlet={setPlatlet}
           age={age}
