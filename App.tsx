@@ -10,7 +10,7 @@ import SwitchingScreen from "./SwitchingScreen";
 import ChoosingScreen from "./ChoosingScreen";
 import DrugDoseScreen from "./DrugDoseScreen";
 import HemodialysisScreen from "./HemodialysisScreen";
-import { NativeBaseProvider, theme } from "native-base";
+import { NativeBaseProvider } from "native-base";
 import * as myTheme from "./theme";
 import capitalizeFirstLetter from "./Utils/capitalizeFirstLetter";
 import setDefaultProps from "react-native-simple-default-props";
@@ -21,6 +21,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [loaded] = useFonts({
     "Proxima-Nova": require("./assets/fonts/proxima-nova.ttf"),
+    "inter-font": require("./assets/fonts/inter.ttf"),
   });
 
   if (!loaded) {
@@ -76,7 +77,7 @@ export default function App() {
             name="Choosing"
             component={ChoosingScreen}
             options={{
-              title: "Dose Modification",
+              title: "Suitable Selection",
             }}
           />
           <Stack.Screen
