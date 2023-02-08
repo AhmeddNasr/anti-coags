@@ -1,14 +1,42 @@
-export default function evaluateInput(data) {
-  if (
-    !evaluateAge(data.age) ||
-    !evaluateWeight(data.weight) ||
-    !evaluateScr(data.scr) ||
-    !evaluateHeight(data.height)
-  ) {
+export default function evaluateInput(
+  renalAdjustment,
+  hepaticAdjustment,
+  renalOnlyParams,
+  data
+) {
+  if (data.indication === "") {
     return false;
-  } else {
-    return true;
   }
+
+  if (renalAdjustment && !evaluateScr(data.scr)) {
+    return false;
+  }
+
+  if (renalOnlyParams.includes("age")) {
+    if (renalAdjustment && !evaluateScr(data.age)) {
+      return false;
+    }
+  } else {
+    if (!evaluateAge(data.age)) {
+      return false;
+    }
+  }
+
+  if (renalOnlyParams.includes("weight")) {
+    if (renalAdjustment && !evaluateWeight(data.weight)) {
+      return false;
+    }
+  } else {
+    if (!evaluateScr(data.weight)) {
+      return false;
+    }
+  }
+
+  if (!evaluateHeight(data.height)) {
+    return false;
+  }
+
+  return true;
 }
 
 function evaluate(val, min, max) {
