@@ -13,7 +13,7 @@ export default function evaluateInput(
   }
 
   if (renalOnlyParams.includes("age")) {
-    if (renalAdjustment && !evaluateScr(data.age)) {
+    if (renalAdjustment && !evaluateAge(data.age)) {
       return false;
     }
   } else {
@@ -27,7 +27,7 @@ export default function evaluateInput(
       return false;
     }
   } else {
-    if (!evaluateScr(data.weight)) {
+    if (!evaluateWeight(data.weight)) {
       return false;
     }
   }
