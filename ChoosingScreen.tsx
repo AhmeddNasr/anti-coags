@@ -1,4 +1,4 @@
-import { Text, StyleSheet, ScrollView, View } from "react-native";
+import { Text, StyleSheet, ScrollView, View, Pressable } from "react-native";
 import { useState } from "react";
 import theme from "./theme";
 import GenerateInputs from "./DoseScreen/components/GenerateInputs";
@@ -17,42 +17,62 @@ export default function ChoosingScreen() {
   const [renalAdjustment, setRenalAdjustment] = useState(true);
   const [hepaticAdjustment, setHepaticAdjustment] = useState(true);
   const [allContra, setAllContra] = useState(false);
+  const [suitableDrugs, setSuitableDrugs] = useState([]);
   const [scr, setScr] = useState(0);
   const indications = ["af", "dvtt", "dvtp"];
 
-  let rivaroxaban = {
-    contra: false,
-    dose: "",
-  };
-  let edoxaban = {
-    contra: false,
-    dose: "",
-  };
-  let apixaban = {
-    contra: false,
-    dose: "",
-  };
-  let heparin = {
-    contra: false,
-    dose: "",
-  };
-  let warfarin = {
-    contra: false,
-    dose: "",
-  };
-  let enoxaparin = {
-    contra: false,
-    dose: "",
-  };
-  let fondaparinux = {
-    contra: false,
-    dose: "",
-  };
+  let drugs;
+  let output;
 
   function calculate() {
+    // console.log(output);
+    output = [];
     if (indication === "") {
       return;
     }
+    setAllContra(false);
+    let rivaroxaban = {
+      title: "rivaroxaban",
+      contra: false,
+      dose: "",
+      id: 0,
+    };
+    let edoxaban = {
+      title: "edoxaban",
+      contra: false,
+      dose: "",
+      id: 1,
+    };
+    let apixaban = {
+      title: "apixaban",
+      contra: false,
+      dose: "",
+      id: 2,
+    };
+    let heparin = {
+      title: "heparin",
+      contra: false,
+      dose: "",
+      id: 4,
+    };
+    let warfarin = {
+      title: "warfarin",
+      contra: false,
+      dose: "",
+      id: 5,
+    };
+    let enoxaparin = {
+      title: "enoxaparin",
+      contra: false,
+      dose: "",
+      id: 3,
+    };
+    let fondaparinux = {
+      title: "fondaparinux",
+      contra: false,
+      dose: "",
+      id: 6,
+    };
     if (indication === "af") {
       if (platlet === 1) {
         apixaban.dose = "Reduced dose (2.5 mg twice daily)";
@@ -101,18 +121,31 @@ export default function ChoosingScreen() {
       }
     }
 
-    console.log(
+    drugs = [
       rivaroxaban,
       apixaban,
       warfarin,
+      heparin,
       fondaparinux,
       edoxaban,
-      heparin
-    );
+      enoxaparin,
+    ];
+
+    drugs.map((drug, index) => {
+      if (!drug.contra) {
+        output.push(drug);
+      }
+    });
+    if (output.length === 0) {
+      setAllContra(true);
+    } else {
+      setSuitableDrugs(output);
+    }
   }
   return (
     <ScrollView style={styles.container}>
       {/* TODO DRY */}
+      {console.log(suitableDrugs)}
       <View style={{ padding: 25, paddingTop: 0 }}>
         <Text style={[styles.header, { marginTop: 0 }]}>Indication</Text>
         {indications.map((val, index) => {
@@ -171,20 +204,46 @@ export default function ChoosingScreen() {
           backgroundColor: theme.BLUE_COLOR,
         }}
       >
-        <Text
-          style={{
-            fontFamily: "inter",
-            color: theme.TEXT_COLOR_WHITE,
-            fontSize: theme.FONT_SIZE_EXTRA_LARGE,
-            marginBottom: 15,
-          }}
-        >
-          Suitable Drugs:
-        </Text>
-        <Text style={styles.resultDrug}>Apixaban</Text>
-        <Text style={styles.resultDrug}>Rivaroxaban</Text>
-        <Text style={styles.resultDrug}>Edoxaban</Text>
-        <Text style={styles.resultDrug}>Warfarin</Text>
+        {/* <Text>All contra: {allContra ? "yes" : "no"}</Text> */}
+
+        {!allContra ? (
+          <>
+            <Text
+              style={{
+                fontFamily: "inter-font",
+                color: theme.TEXT_COLOR_WHITE,
+                fontSize: theme.FONT_SIZE_EXTRA_LARGE,
+                marginBottom: 15,
+              }}
+            >
+              Suitable Drugs:
+            </Text>
+            {suitableDrugs.map((drug, index) => {
+              // console.log(suitableDrugs);
+              return (
+                <Pressable key={index}>
+                  <Text style={styles.resultDrug}>{drug.title}</Text>
+                </Pressable>
+              );
+            })}
+          </>
+        ) : (
+          <>
+            <Text
+              style={{
+                fontFamily: "inter-font",
+                color: theme.TEXT_COLOR_WHITE,
+                fontSize: theme.FONT_SIZE_EXTRA_LARGE,
+                marginBottom: 15,
+              }}
+            >
+              No Drugs Found
+            </Text>
+            <Text style={{ color: "white", fontSize: theme.FONT_SIZE_MEDIUM }}>
+              We could not find any suitable drug for this patient
+            </Text>
+          </>
+        )}
       </View>
     </ScrollView>
   );
