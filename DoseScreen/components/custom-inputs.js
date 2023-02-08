@@ -240,32 +240,59 @@ function CustomButton(props) {
 
 function SubmitButton(props) {
   return (
-    <Pressable
-      onPress={() => props.calculate()}
-      color={theme.SECONDARY_COLOR}
-      my={8}
-      disabled={!props.validInput}
-      style={({ pressed }) => ({
-        backgroundColor: theme.SECONDARY_COLOR,
-        padding: 20,
-        // width: 150,
-        borderRadius: 15,
-        marginTop: 10,
-        justifyContent: "center",
-        alignItems: "center",
-        opacity: props.validInput ? (pressed ? 0.75 : 1) : 0.6,
-      })}
-    >
-      <Text
+    <>
+      <Pressable
+        onPress={() => props.calculate()}
+        color={theme.SECONDARY_COLOR}
+        my={8}
+        disabled={!props.validInput}
+        style={({ pressed }) => ({
+          backgroundColor: theme.SECONDARY_COLOR,
+          padding: 20,
+          // width: 150,
+          borderRadius: 15,
+          marginTop: 10,
+          justifyContent: "center",
+          alignItems: "center",
+          opacity: props.validInput ? (pressed ? 0.75 : 1) : 0.6,
+        })}
+      >
+        <Text
+          style={{
+            color: theme.TEXT_COLOR_WHITE,
+            fontSize: theme.FONT_SIZE_MEDIUM,
+            fontWeight: "700",
+          }}
+        >
+          {props.buttonTitle ? props.buttonTitle : "Calculate Dose"}
+        </Text>
+      </Pressable>
+      <View
         style={{
-          color: theme.TEXT_COLOR_WHITE,
-          fontSize: theme.FONT_SIZE_MEDIUM,
-          fontWeight: "700",
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: 5,
+          marginBottom: 5,
         }}
       >
-        {props.buttonTitle ? props.buttonTitle : "Calculate Dose"}
-      </Text>
-    </Pressable>
+        <Icon
+          name="error"
+          color={!props.validInput ? theme.ERROR_COLOR : theme.BACKGROUND_COLOR}
+          style={{ marginRight: 5 }}
+          size={16}
+        />
+        <Text
+          style={{
+            color: !props.validInput
+              ? theme.ERROR_COLOR
+              : theme.BACKGROUND_COLOR,
+            fontSize: 13,
+          }}
+        >
+          You must fill all the required fields
+        </Text>
+      </View>
+    </>
   );
 }
 
@@ -393,6 +420,12 @@ function PlateletCountGroup(props) {
     <View>
       <Label title={"Platelet Count (Billion/Liter)"} />
       <RadioButton
+        title={"> 100"}
+        value={4}
+        selected={props.value}
+        setter={props.setter}
+      />
+      <RadioButton
         title={"50-100"}
         value={1}
         selected={props.value}
@@ -405,7 +438,7 @@ function PlateletCountGroup(props) {
         setter={props.setter}
       />
       <RadioButton
-        title={"> 30"}
+        title={"< 30"}
         value={3}
         selected={props.value}
         setter={props.setter}
