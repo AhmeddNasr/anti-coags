@@ -20,12 +20,18 @@ export default function GenerateInputs(props) {
   const [validInput, setValidInput] = useState(false);
   useEffect(() => {
     if (
-      evaluateInput({
-        age: props.age,
-        weight: props.weight,
-        height: props.height,
-        scr: props.scr,
-      })
+      evaluateInput(
+        props.renalAdjustment,
+        props.hepaticAdjustment,
+        props.renalOnlyParams,
+        {
+          indication: props.indication,
+          age: props.age,
+          weight: props.weight,
+          height: props.height,
+          scr: props.scr,
+        }
+      )
     ) {
       if (!validInput) {
         setValidInput(true);
@@ -33,7 +39,15 @@ export default function GenerateInputs(props) {
     } else {
       setValidInput(false);
     }
-  }, [props.age, props.weight, props.height, props.scr]);
+  }, [
+    props.age,
+    props.weight,
+    props.height,
+    props.scr,
+    props.renalAdjustment,
+    props.hepaticAdjustment,
+    props.renalOnlyParams,
+  ]);
   return (
     <>
       {props.platlet && (
