@@ -8,6 +8,7 @@ export default function Rivaroxaban(props) {
   const [scr, setScr] = useState(props.data?.scr || "");
   const [gender, setGender] = useState(props.data?.gender || "m");
   const [hepatic, setHepatic] = useState(0);
+  const [hemodialysis, setHemodialysis] = useState(false);
 
   const defaultOutput = {
     af: "20 mg once daily with the evening meal",
@@ -26,6 +27,12 @@ export default function Rivaroxaban(props) {
   }, [props.indication]);
 
   const calculate = () => {
+    if (hemodialysis === true) {
+      return props.setOutput({
+        adjustmentType: 0,
+        reason: "Rivaroxaban is not used in hemodialysis",
+      });
+    }
     if (props.adjustment === "hepatic" && hepatic >= 7) {
       return props.setOutput({
         adjustmentType: 0,
@@ -107,6 +114,9 @@ export default function Rivaroxaban(props) {
         setHepatic={setHepatic}
         renalAdjustment={props.adjustment === "renal"}
         renalOnlyParams={["age", "weight"]}
+        hemodialysisContra={true}
+        hemodialysis={hemodialysis}
+        setHemodialysis={setHemodialysis}
       />
     </>
   );
