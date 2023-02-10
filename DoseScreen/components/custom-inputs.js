@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import theme from "../../theme";
+import capitalizeFirstLetter from "../../Utils/capitalizeFirstLetter";
 
 function TextInputBlock(props) {
   return (
@@ -218,10 +219,10 @@ function CustomButton(props) {
       onPress={() => props.handlePress()}
       color={theme.SECONDARY_COLOR}
       style={({ pressed }) => ({
-        backgroundColor: theme.SECONDARY_COLOR,
+        backgroundColor: theme.BLUE_COLOR,
         padding: 20,
         // width: 150,
-        borderRadius: 15,
+        borderRadius: 10,
         marginTop: 10,
         justifyContent: "center",
         alignItems: "center",
@@ -236,7 +237,7 @@ function CustomButton(props) {
           fontWeight: "600",
         }}
       >
-        {props.title}
+        {capitalizeFirstLetter(props.title)}
       </Text>
     </Pressable>
   );
