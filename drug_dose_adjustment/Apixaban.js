@@ -10,7 +10,13 @@ export default function Apixaban(props) {
   const [hepatic, setHepatic] = useState(null);
 
   const calculate = () => {
-    const gfr = calculateGFR(gender, age, weight, scr);
+    let gfr;
+    if (props.renalAdjustment) {
+      gfr = calculateGFR(gender, age, weight, scr);
+    } else {
+      gfr = 80;
+      setScr(1);
+    }
     if (props.hepaticAdjustment && hepatic >= 10) {
       return props.setOutput({
         adjustmentType: 0,
@@ -21,14 +27,23 @@ export default function Apixaban(props) {
       });
     }
     if (props.indication === "af") {
-      if (
-        gfr < 30 ||
-        (scr < 1.5 && age >= 80 && weight <= 60) ||
-        (scr >= 1.5 && (age > 80 || weight > 60))
-      ) {
+      if (gfr < 30) {
         props.setOutput({
           adjustmentType: 1,
           text: "2.5 mg twice daily",
+          reason: "GFR < 30, [ calculated GFR: " + gfr + " mL/min ]",
+        });
+      } else if (scr < 1.5 && age >= 80 && weight <= 60) {
+        props.setOutput({
+          adjustmentType: 1,
+          text: "2.5 mg twice daily",
+          reason: "Serum creatinine < 1.5, age > 80, weight < 60",
+        });
+      } else if (scr >= 1.5 && (age > 80 || weight > 60)) {
+        props.setOutput({
+          adjustmentType: 1,
+          text: "2.5 mg twice daily",
+          reason: "Serume creatinine > 1.5, age > 80 OR weight > 60",
         });
       } else {
         props.setOutput({
@@ -43,6 +58,9 @@ export default function Apixaban(props) {
       props.setOutput({
         text: "2.5 mg twice daily beginning 12 to 24 hours.",
       });
+    }
+    if (!props.renalAdjustment) {
+      setScr("");
     }
   };
 
@@ -61,6 +79,7 @@ export default function Apixaban(props) {
         hepaticAdjustment={props.hepaticAdjustment}
         setHepatic={setHepatic}
         calculate={calculate}
+        renalOnlyParams={[]}
       />
     </>
   );
