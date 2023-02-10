@@ -8,12 +8,12 @@ const oralDrugs = [
   { name: "rivaroxaban", id: 0 },
   { name: "edoxaban", id: 1 },
   { name: "apixaban", id: 2 },
-  { name: "warfarin" },
+  { name: "warfarin", id: 5 },
 ];
 const parentralDrugs = [
   { name: "enoxaparin", id: 3 },
-  { name: "heparin" },
-  { name: "fondaparinux" },
+  { name: "heparin", id: 4 },
+  { name: "fondaparinux", id: 6 },
 ];
 
 export default function DoseScreen({ navigation }) {
@@ -40,6 +40,7 @@ export default function DoseScreen({ navigation }) {
         <Text style={styles.title}>Parentral anti-coagulants</Text>
       </View>
       {parentralDrugs.map((drug, index) => {
+        console.log(drug);
         return (
           <CustomButton
             handlePress={() => {
