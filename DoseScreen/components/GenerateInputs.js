@@ -12,12 +12,29 @@ import {
   Label,
   ScrInput,
   PlateletCountGroup,
+  RadioButton,
 } from "./custom-inputs";
 import evaluateInput from "../../Utils/evaluateInput";
 import { useState, useEffect } from "react";
 
 export default function GenerateInputs(props) {
   const [validInput, setValidInput] = useState(false);
+  const [allDisabled, setAllDisabled] = useState(false);
+
+  useEffect(() => {
+    if (
+      props.hemodialysis &&
+      props.hemodialysisContra &&
+      props.renalAdjustment
+    ) {
+      props.calculate();
+      setAllDisabled(true);
+    } else {
+      setAllDisabled(false);
+    }
+    console.log(allDisabled);
+  }, [props.hemodialysis, props.hemodialysisContra, props.renalAdjustment]);
+
   useEffect(() => {
     if (
       evaluateInput(
@@ -50,56 +67,81 @@ export default function GenerateInputs(props) {
   ]);
   return (
     <>
-      {props.platlet && (
-        <PlateletCountGroup value={props.platlet} setter={props.setPlatlet} />
-      )}
-      {props.setAge &&
-        (props.renalAdjustment || !props.renalOnlyParams?.includes("age")) && (
-          <AgeInput setter={props.setAge} value={props.age} />
-        )}
-      {props.setWeight &&
-        (props.renalAdjustment ||
-          !props.renalOnlyParams?.includes("weight")) && (
-          <WeightInput setter={props.setWeight} value={props.weight} />
-        )}
-      {props.setHeight && (
-        <HeightInput setter={props.setHeight} value={props.height} />
-      )}
-      {props.setScr && props.renalAdjustment && (
-        <ScrInput setter={props.setScr} value={props.scr} />
-      )}
-      {props.setGender && props.renalAdjustment && (
-        <GenderInput setter={props.setGender} value={props.gender} />
-      )}
-      {props.nsaid && (
+      {props.hemodialysisContra && props.renalAdjustment && (
         <>
-          <Label title={"History"} />
-          <ConcamitantPgpInput
-            setter={props.pgp.setter}
-            value={props.pgp.value}
+          <Label title="Hemodialysis" />
+          <RadioButton
+            value={true}
+            setter={props.setHemodialysis}
+            selected={props.hemodialysis}
+            title={"Patient on Hemodialysis"}
           />
-          <NsaidUseInput
-            setter={props.nsaid.setter}
-            value={props.nsaid.value}
-          />
-          <AntiplateletUseInput
-            setter={props.platelet.setter}
-            value={props.platelet.value}
-          />
-          <BleedingHistoryInput
-            setter={props.bleeding.setter}
-            value={props.bleeding.value}
+          <RadioButton
+            value={false}
+            setter={props.setHemodialysis}
+            selected={props.hemodialysis}
+            title={"Patient not on Hemodialysis"}
           />
         </>
       )}
-      {props.hepaticAdjustment && (
-        <HepaticAdjustment setter={props.setHepatic} />
+      {!allDisabled && (
+        <>
+          {props.platlet && (
+            <PlateletCountGroup
+              value={props.platlet}
+              setter={props.setPlatlet}
+            />
+          )}
+          {props.setAge &&
+            (props.renalAdjustment ||
+              !props.renalOnlyParams?.includes("age")) && (
+              <AgeInput setter={props.setAge} value={props.age} />
+            )}
+          {props.setWeight &&
+            (props.renalAdjustment ||
+              !props.renalOnlyParams?.includes("weight")) && (
+              <WeightInput setter={props.setWeight} value={props.weight} />
+            )}
+          {props.setHeight && (
+            <HeightInput setter={props.setHeight} value={props.height} />
+          )}
+          {props.setScr && props.renalAdjustment && (
+            <ScrInput setter={props.setScr} value={props.scr} />
+          )}
+          {props.setGender && props.renalAdjustment && (
+            <GenderInput setter={props.setGender} value={props.gender} />
+          )}
+          {props.nsaid && (
+            <>
+              <Label title={"History"} />
+              <ConcamitantPgpInput
+                setter={props.pgp.setter}
+                value={props.pgp.value}
+              />
+              <NsaidUseInput
+                setter={props.nsaid.setter}
+                value={props.nsaid.value}
+              />
+              <AntiplateletUseInput
+                setter={props.platelet.setter}
+                value={props.platelet.value}
+              />
+              <BleedingHistoryInput
+                setter={props.bleeding.setter}
+                value={props.bleeding.value}
+              />
+            </>
+          )}
+          {props.hepaticAdjustment && (
+            <HepaticAdjustment setter={props.setHepatic} />
+          )}
+          <SubmitButton
+            calculate={props.calculate}
+            validInput={validInput}
+            buttonTitle={props.buttonTitle}
+          />
+        </>
       )}
-      <SubmitButton
-        calculate={props.calculate}
-        validInput={validInput}
-        buttonTitle={props.buttonTitle}
-      />
     </>
   );
 }
