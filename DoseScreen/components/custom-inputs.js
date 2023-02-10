@@ -15,9 +15,9 @@ function TextInputBlock(props) {
   return (
     <View style={styles.inputGroup}>
       <Text style={styles.label}>{props.title}</Text>
-
       {/* Input */}
       <TextInput
+        editable={props.disabled}
         cursorColor={theme.PRIMARY_COLOR}
         style={{
           backgroundColor: "#FFFFFF",
@@ -121,6 +121,7 @@ function WeightInput(props) {
       value={props.value}
       error={error === "" ? null : error}
       setTouched={setTouched}
+      disabled={props.disabled}
     />
   );
 }
@@ -144,6 +145,7 @@ function HeightInput(props) {
       value={props.value}
       error={error === "" ? null : error}
       setTouched={setTouched}
+      disabled={props.disabled}
     />
   );
 }
@@ -167,6 +169,7 @@ function AgeInput(props) {
       value={props.value}
       error={error === "" ? null : error}
       setTouched={setTouched}
+      disabled={props.disabled}
     />
   );
 }
@@ -204,6 +207,7 @@ function ScrInput(props) {
       value={props.value}
       error={error === "" ? null : error}
       setTouched={(val) => setTouched(val)}
+      disabled={props.disabled}
     />
   );
 }
@@ -245,7 +249,7 @@ function SubmitButton(props) {
         onPress={() => props.calculate()}
         color={theme.SECONDARY_COLOR}
         my={8}
-        disabled={!props.validInput}
+        disabled={!props.validInput || props.disabled}
         style={({ pressed }) => ({
           backgroundColor: theme.SECONDARY_COLOR,
           padding: 20,
