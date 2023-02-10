@@ -1,18 +1,5 @@
 import { Text } from "react-native";
 import { useState, useEffect } from "react";
-import {
-  AgeInput,
-  GenderInput,
-  WeightInput,
-  ScrInput,
-  SubmitButton,
-  ConcamitantPgpInput,
-  NsaidUseInput,
-  AntiplateletUseInput,
-  BleedingHistoryInput,
-  HeightInput,
-  Label,
-} from "../DoseScreen/components/custom-inputs";
 import calculateGFR from "../Utils/calculateGFR";
 import GenerateInputs from "../DoseScreen/components/GenerateInputs";
 
@@ -44,22 +31,42 @@ export default function Edoxaban(props) {
   }, [props.indication]);
 
   const calculate = () => {
-    const gfr = calculateGFR(gender, age, weight, scr);
+    let gfr;
+    if (!props.renalAdjustment) {
+      gfr = 80;
+    } else {
+      gfr = calculateGFR(gender, age, weight, scr);
+    }
+
     const bmi = weight / Math.pow(height / 100, 2);
+
+    if (hepatic >= 7) {
+      props.setOutput({
+        adjustmentType: 0,
+        reason:
+          "Avoid use with moderate to severe impairment (Child-Pugh class B or C) and any hepatic disease associated with coagulopathy.\n [Child-Pugh score: " +
+          hepatic +
+          " ]",
+      });
+    }
     // contraindications
     if (bmi > 40 || weight > 120 || gfr > 95 || gfr < 15) {
       if (bmi > 40 || weight > 120) {
         return props.setOutput({
           adjustmentType: 0,
           reason:
-            "Use should be avoided for patients with BMI >40 kg/m2 % or weight >120 kg %",
+            "Use should be avoided for patients with BMI >40 kg/m2 % or weight >120 kg [ BMI: " +
+            bmi +
+            " ]",
           variables: [bmi, weight],
         });
       } else {
         return props.setOutput({
           adjustmentType: 0,
           reason:
-            "Use should be avoided for patients with a GFR > 95mL/min or < 15mL/min %",
+            "Use should be avoided for patients with a GFR > 95mL/min or < 15mL/min [ Calculated GFR: " +
+            gfr +
+            " ]",
           variables: [gfr],
         });
       }
@@ -74,18 +81,23 @@ export default function Edoxaban(props) {
             text: "15 mg once daily",
           });
         }
-      } else if (age >= 65 && (weight >= 60 || pgp || gfr <= 50)) {
-        return props.setOutput({
-          adjustmentType: 1,
-          text: "30 mg once daily",
-        });
       }
       if (gfr < 50) {
         return props.setOutput({
           adjustmentType: 1,
           text: "30 mg once daily",
+          reason: "GFR < 50 mL/min [ Calculated GFR: " + gfr + " mL/min ]",
         });
       }
+      if (age >= 65 && (weight >= 60 || pgp || gfr <= 50)) {
+        return props.setOutput({
+          adjustmentType: 1,
+          text: "30 mg once daily",
+          reason:
+            "Age >= 65 and one of the following: weight > 60, GFR < 50, Use of P-gp inhibitors",
+        });
+      }
+
       return props.setOutput({
         text: "60 mg once daily",
       });
@@ -97,6 +109,8 @@ export default function Edoxaban(props) {
         return props.setOutput({
           adjustmentType: 1,
           text: "30 mg once daily",
+          reason:
+            "Weight < 60 or GFR < 50 [ Calculated GFR: " + gfr + " mL/min ]",
         });
       }
       return props.setOutput({
@@ -126,6 +140,8 @@ export default function Edoxaban(props) {
         hepaticAdjustment={props.hepaticAdjustment}
         setHepatic={setHepatic}
         renalAdjustment={props.renalAdjustment}
+        renalOnlyParams={["age", "gender"]}
+        indication={props.indication}
       />
     </>
   );
