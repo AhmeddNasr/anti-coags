@@ -1,18 +1,37 @@
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-  Pressable,
-  StatusBar,
-  Image,
-} from "react-native";
-// import { LinearGradient } from "expo-linear-gradient";
+import { Text, View, StyleSheet, Pressable } from "react-native";
 import * as Icon from "@expo/vector-icons";
 import theme from "./theme";
 
 export default function HomeScreen({ navigation }) {
+  const data = [
+    [
+      {
+        title: "Dosing",
+        screen: "Dose",
+        bg: "#3a86ff",
+        icon: "calculator",
+        description:
+          "Calculate optimum dose based on patient's weight, height, renal and hepatic function",
+      },
+      {
+        title: "Switching",
+        screen: "Switching",
+        bg: "#fb5607",
+        icon: "arrow-swap",
+        description: "Switching to another anticoagulant agent guideline",
+      },
+    ],
+    [
+      {
+        title: "Checklist",
+        screen: "Choosing",
+        bg: "#8338ec",
+        icon: "search",
+        description: "Find suitable anti-coagulants based on patient's data",
+      },
+    ],
+  ];
+
   function CustomButton(props: any) {
     return (
       <Pressable
@@ -24,87 +43,59 @@ export default function HomeScreen({ navigation }) {
                 backgroundColor: "#5BC0F8",
               }
             : null,
+          { justifyContent: "space-between" },
         ]}
       >
+        <View>
+          <Text
+            style={[
+              styles.text,
+              {
+                fontSize: theme.FONT_SIZE_EXTRA_LARGE,
+                fontFamily: "inter-font",
+                fontWeight: "900",
+                marginTop: 10,
+              },
+            ]}
+          >
+            {props.title}
+          </Text>
+          <Text
+            style={{
+              color: theme.TEXT_COLOR_WHITE,
+              alignSelf: "flex-start",
+              fontSize: 14,
+              fontStyle: "italic",
+            }}
+          >
+            {props.description}
+          </Text>
+        </View>
         <Icon.Fontisto
           name={props.icon}
-          color={theme.PRIMARY_COLOR}
-          size={38}
+          color={theme.TEXT_COLOR_WHITE}
+          size={theme.FONT_SIZE_LOGO}
+          style={{ alignSelf: "flex-end", margin: 10 }}
         />
-        <Text
-          style={{ fontSize: 17, marginTop: 10, color: theme.PRIMARY_COLOR }}
-        >
-          {props.title}
-        </Text>
-        <Text
-          style={{
-            color: theme.TEXT_COLOR_GRAY,
-            alignSelf: "flex-start",
-            fontSize: 13,
-            fontStyle: "italic",
-          }}
-        >
-          {props.description}
-        </Text>
       </Pressable>
     );
   }
 
-  const data = [
-    [
-      {
-        title: "Dosing",
-        screen: "Dose",
-        bg: "#3a86ff",
-        icon: "calculator",
-        description: "Adjust dose according to patient's data",
-      },
-      {
-        title: "Hemodialysis",
-        screen: "Hemodialysis",
-        bg: "#ff006e",
-        icon: "blood-drop",
-        description: "Hemodialysis compatibility guide",
-      },
-    ],
-    [
-      {
-        title: "Switching",
-        screen: "Switching",
-        bg: "#fb5607",
-        icon: "arrow-swap",
-        description: "Guidelines to switching to another anticoagulant agent",
-      },
-      {
-        title: "Choosing an anticoagulant",
-        screen: "Choosing",
-        bg: "#8338ec",
-        icon: "search",
-        description: "Choose a suitable anticoagulant based on patient's data",
-      },
-    ],
-    [
-      {
-        title: "Warnings",
-        screen: "Warning",
-        bg: "#3a86ff",
-        icon: "travis",
-        description: "Warnings and precautions for the use of anticoagulants",
-      },
-      {
-        title: "Warfarin and Heparin Dose Monitoring and Patient Education",
-        screen: "Warning",
-        icon: "night-clear",
-        description: "hhhhhhhhhhh",
-      },
-    ],
-  ];
-
   return (
     <View style={styles.container}>
+      <Text
+        style={{
+          marginBottom: 30,
+          marginTop: 30,
+          fontSize: theme.FONT_SIZE_LOGO,
+          fontFamily: "inter-font",
+        }}
+      >
+        CoaguRx
+      </Text>
       {data.map((group, index) => {
         return (
-          <View key={"buttonGroup-" + index} style={styles.group}>
+          <>
             {group.map((item, groupIndex) => {
               return (
                 <CustomButton
@@ -117,7 +108,7 @@ export default function HomeScreen({ navigation }) {
                 />
               );
             })}
-          </View>
+          </>
         );
       })}
     </View>
@@ -134,30 +125,32 @@ const styles = StyleSheet.create({
     // backgroundColor: "#203453",
     margin: 30,
   },
-  group: {
-    flexDirection: "row",
-    flex: 1,
-    alignItems: "stretch",
-    justifyContent: "space-evenly",
-    // backgroundColor: "red",
-  },
+  // group: {
+  //   flexDirection: "row",
+  //   flex: 1,
+  //   alignItems: "stretch",
+  //   justifyContent: "space-evenly",
+  //   // backgroundColor: "red",
+  // },
   button: {
-    margin: 10,
+    // margin: 10,
     // width: 100,
     // height: 100,
     borderRadius: 15,
-    borderWidth: 1,
-    paddingTop: 20,
+    // borderWidth: 1,
+    // paddingTop: 20,
     padding: 10,
     flex: 1,
-    borderColor: theme.TEXT_COLOR_GRAY,
+    // borderColor: theme.TEXT_COLOR_GRAY,
+    backgroundColor: theme.BLUE_COLOR,
+    marginBottom: 30,
     // flexGrow: 1,
     // backgroundColor: props.bg,
     // alignContent: "center",
     // justifyContent: "center",
-    alignItems: "center",
+    // alignItems: "center",
     // backgroundColor: "#E84545",
-    justifyContent: "space-around",
+    // justifyContent: "space-around",
   },
   text: {
     color: "white",
