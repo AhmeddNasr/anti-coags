@@ -9,7 +9,7 @@ export default function HomeScreen({ navigation }) {
         title: "Dosing",
         screen: "Dose",
         bg: "#3a86ff",
-        icon: "calculator",
+        icon: "ios-calculator",
         description:
           "Calculate optimum dose based on patient's weight, height, renal and hepatic function",
       },
@@ -17,7 +17,7 @@ export default function HomeScreen({ navigation }) {
         title: "Switching",
         screen: "Switching",
         bg: "#fb5607",
-        icon: "arrow-swap",
+        icon: "sync-circle-outline",
         description: "Switching to another anticoagulant agent guideline",
       },
     ],
@@ -26,7 +26,7 @@ export default function HomeScreen({ navigation }) {
         title: "Checklist",
         screen: "Choosing",
         bg: "#8338ec",
-        icon: "search",
+        icon: "ios-search-circle-outline",
         description: "Find suitable anti-coagulants based on patient's data",
       },
     ],
@@ -40,7 +40,7 @@ export default function HomeScreen({ navigation }) {
           styles.button,
           pressed
             ? {
-                backgroundColor: "#5BC0F8",
+                opacity: 0.9,
               }
             : null,
           { justifyContent: "space-between" },
@@ -71,10 +71,10 @@ export default function HomeScreen({ navigation }) {
             {props.description}
           </Text>
         </View>
-        <Icon.Fontisto
+        <Icon.Ionicons
           name={props.icon}
           color={theme.TEXT_COLOR_WHITE}
-          size={theme.FONT_SIZE_LOGO}
+          size={45}
           style={{ alignSelf: "flex-end", margin: 10 }}
         />
       </Pressable>
