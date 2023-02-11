@@ -4,32 +4,28 @@ import theme from "./theme";
 
 export default function HomeScreen({ navigation }) {
   const data = [
-    [
-      {
-        title: "Dosing",
-        screen: "Dose",
-        bg: "#3a86ff",
-        icon: "ios-calculator",
-        description:
-          "Calculate optimum dose based on patient's weight, height, renal and hepatic function",
-      },
-      {
-        title: "Switching",
-        screen: "Switching",
-        bg: "#fb5607",
-        icon: "sync-circle-outline",
-        description: "Switching to another anticoagulant agent guideline",
-      },
-    ],
-    [
-      {
-        title: "Checklist",
-        screen: "Choosing",
-        bg: "#8338ec",
-        icon: "ios-search-circle-outline",
-        description: "Find suitable anti-coagulants based on patient's data",
-      },
-    ],
+    {
+      title: "Dosing",
+      screen: "Dose",
+      bg: "#3a86ff",
+      icon: "ios-calculator",
+      description:
+        "Calculate optimum dose based on patient's weight, height, renal and hepatic function",
+    },
+    {
+      title: "Switching",
+      screen: "Switching",
+      bg: "#fb5607",
+      icon: "sync-circle-outline",
+      description: "Switching to another anticoagulant agent guideline",
+    },
+    {
+      title: "Checklist",
+      screen: "Choosing",
+      bg: "#8338ec",
+      icon: "ios-search-circle-outline",
+      description: "Find suitable anti-coagulants based on patient's data",
+    },
   ];
 
   function CustomButton(props: any) {
@@ -93,22 +89,16 @@ export default function HomeScreen({ navigation }) {
       >
         CoaguRx
       </Text>
-      {data.map((group, index) => {
+      {data.map((item, index) => {
         return (
-          <>
-            {group.map((item, groupIndex) => {
-              return (
-                <CustomButton
-                  title={item.title}
-                  screen={item.screen}
-                  bg={item.bg}
-                  icon={item.icon}
-                  description={item.description}
-                  key={`homeButton-${index}-${groupIndex}`}
-                />
-              );
-            })}
-          </>
+          <CustomButton
+            title={item.title}
+            screen={item.screen}
+            bg={item.bg}
+            icon={item.icon}
+            description={item.description}
+            key={`homeButton-${index}`}
+          />
         );
       })}
     </View>
