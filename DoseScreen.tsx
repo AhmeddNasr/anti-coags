@@ -5,15 +5,21 @@ import drugs from "./drugs";
 import theme from "./theme";
 
 const oralDrugs = [
-  { name: "rivaroxaban", id: 0 },
-  { name: "edoxaban", id: 1 },
-  { name: "apixaban", id: 2 },
-  { name: "warfarin", id: 5 },
+  [
+    { name: "rivaroxaban", id: 0 },
+    { name: "edoxaban", id: 1 },
+  ],
+  [
+    { name: "apixaban", id: 2 },
+    { name: "warfarin", id: 5 },
+  ],
 ];
 const parentralDrugs = [
-  { name: "enoxaparin", id: 3 },
-  { name: "heparin", id: 4 },
-  { name: "fondaparinux", id: 6 },
+  [
+    { name: "enoxaparin", id: 3 },
+    { name: "heparin", id: 4 },
+  ],
+  [{ name: "fondaparinux", id: 6 }],
 ];
 
 export default function DoseScreen({ navigation }) {
@@ -22,36 +28,53 @@ export default function DoseScreen({ navigation }) {
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Oral anti-coagulants</Text>
       </View>
-      {oralDrugs.map((drug, index) => {
+      {oralDrugs.map((group, groupIndex) => {
         return (
-          <CustomButton
-            handlePress={() => {
-              navigation.navigate("DrugDose", {
-                id: drug.id,
-                name: drug.name,
-              });
-            }}
-            title={drug.name}
-            key={"oral-" + index}
-          />
+          <View style={styles.group} key={"oral-group-" + groupIndex}>
+            {group.map((drug, index) => {
+              return (
+                <View style={{ marginRight: index % 2 === 0 ? 20 : 0 }}>
+                  <CustomButton
+                    handlePress={() => {
+                      navigation.navigate("DrugDose", {
+                        id: drug.id,
+                        name: drug.name,
+                      });
+                    }}
+                    title={drug.name}
+                    key={"oral-" + index}
+                  />
+                </View>
+              );
+            })}
+          </View>
         );
       })}
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>Parentral anti-coagulants</Text>
+        <Text style={[styles.title, { marginTop: 30 }]}>
+          Parentral anti-coagulants
+        </Text>
       </View>
-      {parentralDrugs.map((drug, index) => {
-        console.log(drug);
+      {parentralDrugs.map((group, groupIndex) => {
         return (
-          <CustomButton
-            handlePress={() => {
-              navigation.navigate("DrugDose", {
-                id: drug.id,
-                name: drug.name,
-              });
-            }}
-            title={drug.name}
-            key={"parentral-" + index}
-          />
+          <View style={styles.group} key={"parentral-group-" + groupIndex}>
+            {group.map((drug, index) => {
+              return (
+                <View style={{ marginRight: index % 2 === 0 ? 20 : 0 }}>
+                  <CustomButton
+                    handlePress={() => {
+                      navigation.navigate("DrugDose", {
+                        id: drug.id,
+                        name: drug.name,
+                      });
+                    }}
+                    title={drug.name}
+                    key={"parentral-" + index}
+                  />
+                </View>
+              );
+            })}
+          </View>
         );
       })}
     </View>
@@ -60,15 +83,18 @@ export default function DoseScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignContent: "center",
+    // alignItems: "center",
+    margin: 30,
+    marginTop: 0,
   },
   titleContainer: {
-    padding: 20,
-    margin: 0,
+    // padding: 20,
+    marginBottom: 10,
+    marginTop: 10,
   },
-  title: { fontSize: 20 },
+  title: { fontSize: theme.FONT_SIZE_LOGO, marginBottom: 20 },
   Button: {
     borderColor: "gray",
     marginTop: 20,
@@ -85,5 +111,8 @@ const styles = StyleSheet.create({
   },
   ButtonText: {
     color: "white",
+  },
+  group: {
+    flexDirection: "row",
   },
 });
