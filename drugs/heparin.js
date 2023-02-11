@@ -2,6 +2,7 @@ const heparin = {
   id: 4,
   name: "heparin",
   route: "parentral",
+  indications: ["af", "dvtt", "dvtp", "hemo", "monitoring"],
   switching: {
     fondaparinux: [
       "Stop IV heparin and within 1 hour start SubQ fondaparinux.",
