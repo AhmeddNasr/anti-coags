@@ -14,7 +14,7 @@ export default function Edoxaban(props) {
   const [antiplatelet, setAntiplatelet] = useState(false);
   const [bleeding, setBleeding] = useState(false);
   const [hepatic, setHepatic] = useState(null);
-
+  const [hemodialysis, setHemodialysis] = useState(false);
   const defaultOutput = {
     af: "60 mg once daily",
     dvtt: `> 60kg: 60 mg once daily \n ≤ 60kg: 30 mg once daily`,
@@ -47,6 +47,13 @@ export default function Edoxaban(props) {
           "Avoid use with moderate to severe impairment (Child-Pugh class B or C) and any hepatic disease associated with coagulopathy.\n [Child-Pugh score: " +
           hepatic +
           " ]",
+      });
+    }
+
+    if (hemodialysis) {
+      return props.setOutput({
+        adjustmentType: 0,
+        reason: "Edoxaban is not used in hemodialysis",
       });
     }
     // contraindications
@@ -142,6 +149,9 @@ export default function Edoxaban(props) {
         renalAdjustment={props.renalAdjustment}
         renalOnlyParams={["age", "gender"]}
         indication={props.indication}
+        hemodialysisContra={true}
+        hemodialysis={hemodialysis}
+        setHemodialysis={setHemodialysis}
       />
     </>
   );
