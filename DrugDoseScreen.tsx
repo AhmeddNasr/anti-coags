@@ -4,13 +4,14 @@ import drugs from "./drugs";
 import theme from "./theme";
 import Rivaroxaban from "./drug_dose_adjustment/Rivaroxaban";
 import Edoxaban from "./drug_dose_adjustment/Edoxaban";
+import Heparin from "./drug_dose_adjustment/Heparin";
 import { RadioButton } from "./DoseScreen/components/custom-inputs";
 import { CheckboxInput } from "./DoseScreen/components/custom-inputs";
 import Apixaban from "./drug_dose_adjustment/Apixaban";
 import Enoxaparin from "./drug_dose_adjustment/Enoxaparin";
 
 export default function DrugDoseScreen({ navigation, route }) {
-  const [renalAdjustment, setRenalAdjustment] = useState(true);
+  const [renalAdjustment, setRenalAdjustment] = useState(false);
   const [hepaticAdjustment, setHepaticAdjustment] = useState(false);
   const [adjustment, setAdjustment] = useState("renal");
   const [indication, setIndication] = useState("");
@@ -37,7 +38,11 @@ export default function DrugDoseScreen({ navigation, route }) {
                     ? "DVT Prophylaxis"
                     : val === "dvtt"
                     ? "DVT Treatment"
-                    : "Atrial Fibrillation"
+                    : val === "af"
+                    ? "Atrial Fibrillation"
+                    : val === "hemo"
+                    ? "Hemodialysis"
+                    : "Monitoring"
                 }
                 value={val}
                 selected={indication}
@@ -52,7 +57,9 @@ export default function DrugDoseScreen({ navigation, route }) {
           {/*  */}
           {indication.length > 0 && (
             <>
-              <Text style={styles.header}>Adjustment Type</Text>
+              {drug.name !== "heparin" ? (
+                <Text style={styles.header}>Adjustment Type</Text>
+              ) : null}
               {drug.name === "rivaroxaban" && (
                 <>
                   <RadioButton
@@ -118,6 +125,7 @@ export default function DrugDoseScreen({ navigation, route }) {
                   renalAdjustment={renalAdjustment}
                 />
               )}
+              {drug.name === "heparin" && <Heparin />}
             </>
           )}
         </View>
@@ -141,7 +149,9 @@ export default function DrugDoseScreen({ navigation, route }) {
                 : "Dose: "}
             </Text>
             {output?.text && (
-              <Text style={styles.resultDose}>{output?.text}</Text>
+              <Text style={[styles.resultDose, styles.content]}>
+                {output?.text}
+              </Text>
             )}
             <Text
               style={[
@@ -155,7 +165,9 @@ export default function DrugDoseScreen({ navigation, route }) {
             >
               {output?.reason ? "Reason for adjustment: " : null}
             </Text>
-            <Text style={styles.resultReason}>{output?.reason}</Text>
+            <Text style={[styles.resultReason, styles.content]}>
+              {output?.reason}
+            </Text>
           </View>
         )}
       </ScrollView>
@@ -183,8 +195,9 @@ const styles = StyleSheet.create({
   },
   resultHeader: {
     color: "white",
-    fontSize: theme.FONT_SIZE_LARGE,
+    fontSize: theme.FONT_SIZE_EXTRA_LARGE,
     fontWeight: "600",
+    fontFamily: "inter-font",
     marginBottom: 10,
   },
   resultDose: {
@@ -195,5 +208,8 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     color: "white",
     marginBottom: 10,
+  },
+  content: {
+    fontSize: theme.FONT_SIZE_MEDIUM,
   },
 });
