@@ -20,6 +20,7 @@ import { useState, useEffect } from "react";
 export default function GenerateInputs(props) {
   const [validInput, setValidInput] = useState(false);
   const [allDisabled, setAllDisabled] = useState(false);
+  const [hepaticValid, setHepaticValid] = useState(false);
 
   useEffect(() => {
     if (
@@ -47,6 +48,7 @@ export default function GenerateInputs(props) {
           weight: props.weight,
           height: props.height,
           scr: props.scr,
+          hepaticValid: hepaticValid,
         }
       )
     ) {
@@ -54,7 +56,9 @@ export default function GenerateInputs(props) {
         setValidInput(true);
       }
     } else {
-      setValidInput(false);
+      if (validInput) {
+        setValidInput(false);
+      }
     }
   }, [
     props.age,
@@ -133,7 +137,11 @@ export default function GenerateInputs(props) {
             </>
           )}
           {props.hepaticAdjustment && (
-            <HepaticAdjustment setter={props.setHepatic} />
+            <HepaticAdjustment
+              setter={props.setHepatic}
+              setHepaticValid={setHepaticValid}
+              hepaticValid={hepaticValid}
+            />
           )}
           <SubmitButton
             calculate={props.calculate}

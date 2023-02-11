@@ -493,6 +493,9 @@ function HepaticAdjustment(props) {
       encephalopathy !== -1
     ) {
       props.setter(billirubin + albumin + inr + ascites + encephalopathy);
+      if (!props.hepaticValid) {
+        props.setHepaticValid(true);
+      }
     }
   }, [billirubin, albumin, inr, ascites, encephalopathy]);
   return (

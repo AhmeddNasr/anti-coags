@@ -8,6 +8,10 @@ export default function evaluateInput(
     return false;
   }
 
+  if (hepaticAdjustment && !data.hepaticValid) {
+    return false;
+  }
+
   if (renalAdjustment && !evaluateScr(data.scr)) {
     return false;
   }
