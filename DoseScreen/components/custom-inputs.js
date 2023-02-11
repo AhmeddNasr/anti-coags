@@ -484,11 +484,15 @@ function HepaticAdjustment(props) {
   const [inr, setInr] = useState(-1);
   const [ascites, setAscites] = useState(-1);
   const [encephalopathy, setEncephalopathy] = useState(-1);
-
   useEffect(() => {
-    let score = billirubin + albumin + inr + ascites + encephalopathy;
-    if (score >= 5) {
-      props.setter(score);
+    if (
+      billirubin !== -1 &&
+      albumin !== -1 &&
+      inr !== -1 &&
+      ascites !== -1 &&
+      encephalopathy !== -1
+    ) {
+      props.setter(billirubin + albumin + inr + ascites + encephalopathy);
     }
   }, [billirubin, albumin, inr, ascites, encephalopathy]);
   return (

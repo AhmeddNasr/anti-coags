@@ -19,6 +19,7 @@ export default function ChoosingScreen() {
   const [allContra, setAllContra] = useState(false);
   const [suitableDrugs, setSuitableDrugs] = useState([]);
   const [scr, setScr] = useState(0);
+  const [hepatic, setHepatic] = useState();
   const indications = ["af", "dvtt", "dvtp"];
 
   let drugs;
@@ -195,6 +196,7 @@ export default function ChoosingScreen() {
           renalAdjustment={renalAdjustment}
           hepaticAdjustment={hepaticAdjustment}
           renalOnlyParams={["age", "weight"]}
+          setHepatic={setHepatic}
         />
       </View>
       <View
