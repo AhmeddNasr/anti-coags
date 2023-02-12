@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "anti-coags",
-    "slug": "anti-coags",
+    "name": "CoaguRx",
+    "slug": "CoaguRx",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -9,23 +9,21 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#7067cf"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#7067cf"
       },
-      "package": "com.nasr.anticoags"
+      "package": "com.nasr.coagurx"
     },
     "web": {
       "favicon": "./assets/favicon.png"
