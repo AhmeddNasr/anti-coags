@@ -125,7 +125,9 @@ export default function DrugDoseScreen({ navigation, route }) {
                   renalAdjustment={renalAdjustment}
                 />
               )}
-              {drug.name === "heparin" && <Heparin />}
+              {drug.name === "heparin" && (
+                <Heparin setOutput={setOutput} indication={indication} />
+              )}
             </>
           )}
         </View>
@@ -168,6 +170,15 @@ export default function DrugDoseScreen({ navigation, route }) {
             <Text style={[styles.resultReason, styles.content]}>
               {output?.reason}
             </Text>
+            {typeof output?.params === "array" &&
+              output?.params?.length !== 0 && (
+                <>
+                  <Text>Calculated paramaters: </Text>
+                  {output?.params?.map((param, index) => {
+                    return <Text></Text>;
+                  })}
+                </>
+              )}
           </View>
         )}
       </ScrollView>
