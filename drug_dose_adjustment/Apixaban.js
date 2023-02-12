@@ -50,7 +50,7 @@ export default function Apixaban(props) {
           text: "5 mg twice daily",
         });
       }
-    } else if (indication === "dvtt") {
+    } else if (props.indication === "dvtt") {
       props.setOutput({
         text: "10 mg twie daily for 7 days followed by 5 mg twice daily.",
       });
