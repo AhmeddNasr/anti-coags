@@ -13,6 +13,7 @@ import {
   ScrInput,
   PlateletCountGroup,
   RadioButton,
+  ApttInput,
 } from "./custom-inputs";
 import evaluateInput from "../../Utils/evaluateInput";
 import { useState, useEffect } from "react";
@@ -33,7 +34,7 @@ export default function GenerateInputs(props) {
     } else {
       setAllDisabled(false);
     }
-    console.log(allDisabled);
+    // console.log(allDisabled);
   }, [props.hemodialysis, props.hemodialysisContra, props.renalAdjustment]);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ export default function GenerateInputs(props) {
           height: props.height,
           scr: props.scr,
           hepaticValid: hepaticValid,
+          aptt: props.aptt,
         }
       )
     ) {
@@ -69,6 +71,19 @@ export default function GenerateInputs(props) {
     props.hepaticAdjustment,
     props.renalOnlyParams,
   ]);
+  if (props.indication === "monitoring" && props.aptt !== undefined) {
+    return (
+      <>
+        <ApttInput setter={props.setAptt} value={props.aptt} />
+        <SubmitButton
+          calculate={props.calculate}
+          validInput={validInput}
+          buttonTitle={props.buttonTitle}
+        />
+      </>
+    );
+  }
+
   return (
     <>
       {props.hemodialysisContra && props.renalAdjustment && (
