@@ -14,7 +14,7 @@ import capitalizeFirstLetter from "../../Utils/capitalizeFirstLetter";
 
 function TextInputBlock(props) {
   return (
-    <View style={styles.inputGroup}>
+    <View style={[styles.inputGroup, props.style]}>
       <Text style={styles.label}>{props.title}</Text>
       {/* Input */}
       <TextInput
@@ -31,7 +31,7 @@ function TextInputBlock(props) {
         keyboardType={props.keyboardType}
         value={props.value}
         onBlur={() => {
-          console.log("blur!");
+          // console.log("blur!");
           props.setTouched(true);
         }}
         // InputRightElement={
@@ -209,6 +209,30 @@ function ScrInput(props) {
       error={error === "" ? null : error}
       setTouched={(val) => setTouched(val)}
       disabled={props.disabled}
+    />
+  );
+}
+
+function ApttInput(props) {
+  const [error, setError] = useState("");
+  const [touched, setTouched] = useState(false);
+  useEffect(() => {
+    if (!touched) {
+      return;
+    }
+    validateInput(1, 200, setError, error, props.value, "seconds");
+  }, [props.value, touched]);
+  return (
+    <TextInputBlock
+      title="aPTT (seconds)"
+      keyboardType="numeric"
+      setter={props.setter}
+      key="aptt"
+      value={props.value}
+      error={error === "" ? null : error}
+      setTouched={(val) => setTouched(val)}
+      disabled={props.disabled}
+      style={{ marginBottom: 40 }}
     />
   );
 }
@@ -592,4 +616,5 @@ export {
   HepaticAdjustment,
   CustomButton,
   PlateletCountGroup,
+  ApttInput,
 };
