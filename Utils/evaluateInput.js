@@ -8,6 +8,10 @@ export default function evaluateInput(
     return false;
   }
 
+  if (evaluateAptt(data.aptt)) {
+    return true;
+  }
+
   if (hepaticAdjustment && !data.hepaticValid) {
     return false;
   }
@@ -65,4 +69,8 @@ function evaluateHeight(height) {
 
 function evaluateScr(scr) {
   return evaluate(scr, 0.1, 70);
+}
+
+function evaluateAptt(aptt) {
+  return evaluate(aptt, 1, 200);
 }
