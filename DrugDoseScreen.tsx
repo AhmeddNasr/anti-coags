@@ -15,7 +15,7 @@ export default function DrugDoseScreen({ navigation, route }) {
   const [hepaticAdjustment, setHepaticAdjustment] = useState(false);
   const [adjustment, setAdjustment] = useState("renal");
   const [indication, setIndication] = useState("");
-  const [output, setOutput] = useState();
+  const [output, setOutput] = useState({ text: "" });
   const [notes, setNotes] = useState([]);
   const drug = drugs[route.params.id];
 
