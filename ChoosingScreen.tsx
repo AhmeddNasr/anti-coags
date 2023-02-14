@@ -74,6 +74,9 @@ export default function ChoosingScreen() {
       id: 6,
     };
     if (platlet !== 4) {
+      heparin.contra = true;
+      warfarin.contra = true;
+      fondaparinux.contra = true;
       if (indication === "af") {
         if (platlet === 1) {
           apixaban.dose = "Reduced dose (2.5 mg twice daily)";
@@ -99,7 +102,6 @@ export default function ChoosingScreen() {
         }
       }
     }
-    console.log("hi");
     if (renalAdjustment) {
       let gfr = calculateGFR(gender, age, weight, scr);
       if (gfr < 15) {
