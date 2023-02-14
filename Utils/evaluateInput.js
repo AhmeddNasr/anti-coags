@@ -7,8 +7,8 @@ export default function evaluateInput(
   if (data.indication === "") {
     return false;
   }
-
-  if (evaluateAptt(data.aptt)) {
+  // console.log(typeof data.aptt);
+  if (typeof data.aptt === "string" && data.aptt > 1 && data.aptt < 200) {
     return true;
   }
 
