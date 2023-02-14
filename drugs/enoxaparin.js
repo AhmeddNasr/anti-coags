@@ -9,8 +9,11 @@ const enoxaparin = {
     warfarin: [
       "Start warfarin and continue enoxaparin for 5 days until INR is 2 or above before stopping LMWH.",
     ],
+    heparin: [
+      "From theraputic dose of enoxaparin: Start IV UFH (rate based on indication) 1 to 2 hours before the next dose of enoxaparin would have been due.\nFrom prophylactic dose of enoxaparin: UFH should be started without delay. A UFH bolus/loading dose may be used if indicated",
+    ],
     default: [
-      "	Start direct oral anticoagulant (DOAC) within 2 hours prior to the next scheduled dose of enoxaparin.",
+      "Start direct oral anticoagulant (DOAC) within 2 hours prior to the next scheduled dose of enoxaparin.",
     ],
   },
   warning: ["example warning 1", "example warning 2"],
