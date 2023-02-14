@@ -17,50 +17,45 @@ export default function Rivaroxaban(props) {
   };
 
   useEffect(() => {
-    if (props.indication === "af") {
-      props.setOutput({ text: defaultOutput.af });
-    } else if (props.indication === "dvtt") {
-      props.setOutput({ text: defaultOutput.dvtt });
-    } else {
-      props.setOutput({ text: defaultOutput.dvtp });
-    }
-  }, [props.indication]);
+    calculate();
+  }, [props.indication, hemodialysis]);
 
   const calculate = () => {
+    let gfr;
+    let gfrCalculated = false;
+    if (gender === "" || age === "" || weight === "" || scr === "") {
+      gfr = 90;
+    } else {
+      gfr = calculateGFR(gender, age, weight, scr);
+      gfrCalculated = true;
+    }
+
     if (hemodialysis === true) {
-      return props.setOutput({
+      props.setOutput({
         adjustmentType: 0,
         reason: "Rivaroxaban is not used in hemodialysis",
       });
-    }
-    if (props.adjustment === "hepatic" && hepatic >= 7) {
-      return props.setOutput({
+    } else if (props.adjustment === "hepatic" && hepatic >= 7) {
+      props.setOutput({
         adjustmentType: 0,
         reason:
-          "Avoid use with moderate to severe impairment (Child-Pugh class B or C) and any hepatic disease associated with coagulopathy.\n [Child-Pugh score: " +
-          hepatic +
-          " ]",
+          "Avoid use with moderate to severe impairment (Child-Pugh class B or C) and any hepatic disease associated with coagulopathy",
       });
     }
-    if (gender === "" || age === "" || weight === "" || scr === "") {
-      return;
-    }
-    const gfr = calculateGFR(gender, age, weight, scr);
+
     // AF
-    if (props.indication === "af") {
-      if (gfr < 15) {
+    else if (props.indication === "af") {
+      if (gfr < 15 && props.adjustment === "renal") {
         props.setOutput({
           adjustmentType: 0,
           text: "Apixaban or warfarin is preferred",
-          reason:
-            "GFR less than 15 mL/min\n[Estimated GFR: " + gfr + " mL/min]",
+          reason: "GFR less than 15 mL/min",
         });
-      } else if (gfr <= 50) {
+      } else if (gfr <= 50 && props.adjustment === "renal") {
         props.setOutput({
           adjustmentType: 1,
           text: "15 mg once daily with the evening meal.",
-          reason:
-            "GFR less than 50 mL/min\n[Estimated GFR: " + gfr + " mL/min]",
+          reason: "GFR less than 50 mL/min",
         });
       } else {
         props.setOutput({
@@ -70,11 +65,10 @@ export default function Rivaroxaban(props) {
 
       // DVTP
     } else if (props.indication === "dvtp") {
-      if (gfr < 30) {
+      if (gfr < 30 && props.adjustment === "renal") {
         props.setOutput({
           adjustmentType: 0,
-          reason:
-            "GFR less than 30 mL/min\n[Estimated GFR: " + gfr + " mL/min]",
+          reason: "GFR less than 30 mL/min",
         });
       } else {
         props.setOutput({
@@ -83,18 +77,38 @@ export default function Rivaroxaban(props) {
       }
 
       // DVTT
-    } else {
-      if (gfr < 30) {
+    } else if (props.adjustment === "renal") {
+      if (gfr < 30 && props.adjustment === "renal") {
         props.setOutput({
           adjustmentType: 0,
-          reason:
-            "GFR less than 30 mL/min\n[Estimated GFR: " + gfr + " mL/min]",
+          reason: "GFR less than 30 mL/min",
         });
       } else {
         props.setOutput({
           text: defaultOutput.dvtt,
         });
       }
+    }
+    if (hemodialysis) {
+      props.setOutput((prevState) => ({
+        params: [],
+        ...prevState,
+      }));
+    } else if (props.adjustment === "renal" && gfrCalculated) {
+      props.setOutput((prevState) => ({
+        params: [{ title: "GFR", value: gfr + "mL/min" }],
+        ...prevState,
+      }));
+    } else if (props.adjustment === "hepatic" && hepatic !== 0) {
+      props.setOutput((prevState) => ({
+        params: [{ title: "Child-Pugh score", value: hepatic }],
+        ...prevState,
+      }));
+    } else {
+      props.setOutput((prevState) => ({
+        params: [],
+        ...prevState,
+      }));
     }
   };
 
