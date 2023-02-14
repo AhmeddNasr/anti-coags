@@ -131,7 +131,7 @@ export default function DrugDoseScreen({ navigation, route }) {
             </>
           )}
         </View>
-        {indication !== "" && (
+        {indication !== "" && output.text !== "" && (
           <View
             style={[
               styles.resultContainer,
