@@ -145,37 +145,37 @@ export default function DrugDoseScreen({ navigation, route }) {
               },
             ]}
           >
-            <Text style={styles.resultHeader}>
+            <Text style={styles.resultMainHeader}>
               {output?.adjustmentType === 0
                 ? "Use is contraindicated"
                 : "Dose: "}
             </Text>
             {output?.text && (
-              <Text style={[styles.resultDose, styles.content]}>
-                {output?.text}
-              </Text>
+              <Text style={[styles.resultReason]}>{output?.text}</Text>
             )}
-            <Text
-              style={[
-                styles.resultReason,
-                {
-                  fontWeight: "600",
-                  fontSize: theme.FONT_SIZE_MEDIUM,
-                  marginBottom: 0,
-                },
-              ]}
-            >
-              {output?.reason ? "Reason for adjustment: " : null}
-            </Text>
-            <Text style={[styles.resultReason, styles.content]}>
-              {output?.reason}
-            </Text>
-            {typeof output?.params === "array" &&
+            {output?.reason && (
+              <>
+                <Text style={[styles.resultHeader]}>
+                  {output?.reason ? "Reason for adjustment: " : null}
+                </Text>
+                <Text style={[styles.resultReason, styles.content]}>
+                  {output?.reason}
+                </Text>
+              </>
+            )}
+
+            {typeof output?.params === "object" &&
               output?.params?.length !== 0 && (
                 <>
-                  <Text>Calculated paramaters: </Text>
+                  <Text style={styles.resultHeader}>
+                    Calculated paramaters:{" "}
+                  </Text>
                   {output?.params?.map((param, index) => {
-                    return <Text></Text>;
+                    return (
+                      <Text key={"param-" + index} style={styles.resultReason}>
+                        {param.title}: {param.value}
+                      </Text>
+                    );
                   })}
                 </>
               )}
@@ -194,6 +194,15 @@ const styles = StyleSheet.create({
     color: theme.PRIMARY_COLOR,
     fontWeight: "600",
     fontFamily: "inter-font",
+  },
+  resultMainHeader: {
+    color: "black",
+    fontSize: theme.FONT_SIZE_EXTRA_LARGE,
+    fontFamily: "inter-font",
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 15,
+    marginBottom: 20,
   },
   resultContainer: {
     width: "100%",
@@ -219,8 +228,5 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     color: "white",
     marginBottom: 10,
-  },
-  content: {
-    fontSize: theme.FONT_SIZE_MEDIUM,
   },
 });
