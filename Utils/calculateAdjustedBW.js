@@ -10,5 +10,5 @@ export default function calculateAdjustedBW(weight, height, gender) {
   }
 
   let AdjustedBW = idealBW + 0.4 * (weight - idealBW);
-  return AdjustedBW;
+  return Math.floor(AdjustedBW);
 }
