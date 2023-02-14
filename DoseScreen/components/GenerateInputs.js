@@ -86,7 +86,7 @@ export default function GenerateInputs(props) {
 
   return (
     <>
-      {props.hemodialysisContra && props.renalAdjustment && (
+      {props.setHemodialysis && props.renalAdjustment && (
         <>
           <Label title="Dialysis" />
           <RadioButton
