@@ -2,6 +2,7 @@ import { Text } from "react-native";
 import { useState, useEffect } from "react";
 import calculateGFR from "../Utils/calculateGFR";
 import GenerateInputs from "../DoseScreen/components/GenerateInputs";
+import calculateBmi from "../Utils/calculateBmi";
 
 export default function Edoxaban(props) {
   const [weight, setWeight] = useState("");
@@ -15,114 +16,151 @@ export default function Edoxaban(props) {
   const [bleeding, setBleeding] = useState(false);
   const [hepatic, setHepatic] = useState(null);
   const [hemodialysis, setHemodialysis] = useState(false);
-  const defaultOutput = {
-    af: "60 mg once daily",
-    dvtt: `> 60kg: 60 mg once daily \n ≤ 60kg: 30 mg once daily`,
-  };
+
+  // const defaultOutput = {
+  //   af: "60 mg once daily",
+  //   dvtt: `> 60kg: 60 mg once daily \n ≤ 60kg: 30 mg once daily`,
+  // };
 
   useEffect(() => {
-    if (props.indication === "af") {
-      props.setOutput({ text: defaultOutput.af });
-    } else if (props.indication === "dvtt") {
-      props.setOutput({ text: defaultOutput.dvtt });
-    } else {
-      props.setOutput({ text: defaultOutput.dvtp });
-    }
-  }, [props.indication]);
+    // if (props.indication === "af") {
+    //   props.setOutput({ text: defaultOutput.af });
+    // } else if (props.indication === "dvtt") {
+    //   props.setOutput({ text: defaultOutput.dvtt });
+    // } else {
+    //   props.setOutput({ text: defaultOutput.dvtp });
+    // }
+    calculate();
+  }, [props.indication, hemodialysis]);
 
   const calculate = () => {
     let gfr;
-    if (!props.renalAdjustment) {
+    let gfrCalculated = false;
+
+    if (
+      !props.renalAdjustment ||
+      gender === "" ||
+      age === "" ||
+      weight === "" ||
+      scr === ""
+    ) {
       gfr = 80;
     } else {
       gfr = calculateGFR(gender, age, weight, scr);
+      gfrCalculated = true;
     }
 
-    const bmi = weight / Math.pow(height / 100, 2);
+    let bmi;
+    let bmiCalculated = false;
 
-    if (hepatic >= 7) {
-      props.setOutput({
-        adjustmentType: 0,
-        reason:
-          "Avoid use with moderate to severe impairment (Child-Pugh class B or C) and any hepatic disease associated with coagulopathy.\n [Child-Pugh score: " +
-          hepatic +
-          " ]",
-      });
+    if (weight !== "" || height !== "") {
+      bmi = calculateBmi(weight, height);
+      bmiCalculated = true;
     }
-
+    // hemodialysis
     if (hemodialysis) {
-      return props.setOutput({
+      props.setOutput({
         adjustmentType: 0,
         reason: "Edoxaban is not used in hemodialysis",
       });
-    }
-    // contraindications
-    if (bmi > 40 || weight > 120 || gfr > 95 || gfr < 15) {
-      if (bmi > 40 || weight > 120) {
-        return props.setOutput({
-          adjustmentType: 0,
-          reason:
-            "Use should be avoided for patients with BMI >40 kg/m2 % or weight >120 kg [ BMI: " +
-            bmi +
-            " ]",
-          variables: [bmi, weight],
-        });
-      } else {
-        return props.setOutput({
-          adjustmentType: 0,
-          reason:
-            "Use should be avoided for patients with a GFR > 95mL/min or < 15mL/min [ Calculated GFR: " +
-            gfr +
-            " ]",
-          variables: [gfr],
-        });
-      }
+      // hepatic
+    } else if (hepatic >= 7) {
+      props.setOutput({
+        adjustmentType: 0,
+        reason:
+          "Avoid use with moderate to severe impairment (Child-Pugh class B or C) and any hepatic disease associated with coagulopathy.",
+      });
+      //
+    } else if (bmi > 40 || weight > 120) {
+      props.setOutput({
+        adjustmentType: 0,
+        reason:
+          "Use should be avoided for patients with BMI > 40 kg/m2 or weight > 120 kg",
+      });
+    } else if (gfr > 95 || gfr < 15) {
+      props.setOutput({
+        adjustmentType: 0,
+        reason:
+          "Use should be avoided for patients with a GFR > 95 mL/min or < 15 mL/min",
+      });
     }
 
     // AF indication
-    if (props.indication === "af") {
-      if (age >= 80 || weight <= 60) {
+    else if (props.indication === "af") {
+      if (weight != "" && (age >= 80 || weight <= 60)) {
         if (gfr < 30 || bleeding || antiplatelet || antiplatelet) {
-          return props.setOutput({
+          props.setOutput({
             adjustmentType: 1,
             text: "15 mg once daily",
+            reason:
+              "Age ≥ 80 or Weight ≤ 60 kg + one of the following: CrCl <30 mL/minute, history of GI bleeding, concurrent use of antiplatelet, continuous use of NSAIDs",
           });
         }
-      }
-      if (gfr < 50) {
-        return props.setOutput({
+      } else if (gfr < 50) {
+        console.log("hi2");
+        props.setOutput({
           adjustmentType: 1,
           text: "30 mg once daily",
-          reason: "GFR < 50 mL/min [ Calculated GFR: " + gfr + " mL/min ]",
+          reason: "GFR < 50 mL/min",
         });
-      }
-      if (age >= 65 && (weight >= 60 || pgp || gfr <= 50)) {
-        return props.setOutput({
+      } else if (age >= 65 && (weight <= 60 || pgp || gfr <= 50)) {
+        props.setOutput({
           adjustmentType: 1,
           text: "30 mg once daily",
           reason:
-            "Age >= 65 and one of the following: weight > 60, GFR < 50, Use of P-gp inhibitors",
+            "Age ≥ 65 + one of the following: weight > 60, GFR < 50 mL/min, Use of P-gp inhibitors",
+        });
+      } else {
+        props.setOutput({
+          text: "60 mg once daily",
         });
       }
-
-      return props.setOutput({
-        text: "60 mg once daily",
-      });
     }
 
     // DVT treatment
     else {
-      if (weight <= 60 || gfr < 50) {
-        return props.setOutput({
+      if (gfr < 50) {
+        props.setOutput({
           adjustmentType: 1,
           text: "30 mg once daily",
-          reason:
-            "Weight < 60 or GFR < 50 [ Calculated GFR: " + gfr + " mL/min ]",
+          reason: "CrCl 15 to 50 mL/min",
+        });
+      } else if (weight > 60) {
+        props.setOutput({
+          text: "60 mg once daily",
+        });
+      } else if (weight <= 60 && weight != "") {
+        props.setOutput({
+          text: "30 mg once daily",
+        });
+      } else {
+        props.setOutput({
+          text: "> 60 Kg: 60 mg once daily\n< 60 Kg: 30 mg once daily",
         });
       }
-      return props.setOutput({
-        text: "30 mg once daily",
-      });
+    }
+
+    let params = [];
+    if (props.renalAdjustment && gfrCalculated) {
+      params.push({ title: "GFR", value: gfr + " mL/min" });
+    }
+    if (props.hepaticAdjustment && hepatic !== 0) {
+      params.push({ title: "Child-Pugh score", value: hepatic });
+    }
+    if (bmiCalculated) {
+      params.push({ title: "BMI", value: bmi + " Kg/m2" });
+    }
+
+    if (hemodialysis) {
+      props.setOutput((prevState) => ({
+        params: [],
+        ...prevState,
+      }));
+    } else {
+      props.setOutput((prevState) => ({
+        params,
+        ...prevState,
+      }));
     }
   };
 
@@ -147,7 +185,7 @@ export default function Edoxaban(props) {
         hepaticAdjustment={props.hepaticAdjustment}
         setHepatic={setHepatic}
         renalAdjustment={props.renalAdjustment}
-        renalOnlyParams={["age", "gender"]}
+        renalOnlyParams={["gender"]}
         indication={props.indication}
         hemodialysisContra={true}
         hemodialysis={hemodialysis}
