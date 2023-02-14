@@ -9,13 +9,14 @@ import { RadioButton } from "./DoseScreen/components/custom-inputs";
 import { CheckboxInput } from "./DoseScreen/components/custom-inputs";
 import Apixaban from "./drug_dose_adjustment/Apixaban";
 import Enoxaparin from "./drug_dose_adjustment/Enoxaparin";
+import Fondaparinux from "./drug_dose_adjustment/Fondaparinux";
 
 export default function DrugDoseScreen({ navigation, route }) {
   const [renalAdjustment, setRenalAdjustment] = useState(false);
   const [hepaticAdjustment, setHepaticAdjustment] = useState(false);
   const [adjustment, setAdjustment] = useState("renal");
   const [indication, setIndication] = useState("");
-  const [output, setOutput] = useState({ text: "" });
+  const [output, setOutput] = useState({ text: "", reason: "" });
   const [notes, setNotes] = useState([]);
   const drug = drugs[route.params.id];
 
@@ -128,10 +129,17 @@ export default function DrugDoseScreen({ navigation, route }) {
               {drug.name === "heparin" && (
                 <Heparin setOutput={setOutput} indication={indication} />
               )}
+              {drug.name === "fondaparinux" && (
+                <Fondaparinux
+                  setOutput={setOutput}
+                  indication={indication}
+                  renalAdjustment={renalAdjustment}
+                />
+              )}
             </>
           )}
         </View>
-        {indication !== "" && output.text !== "" && (
+        {indication !== "" && output.text !== "" && output.reason != "" && (
           <View
             style={[
               styles.resultContainer,
