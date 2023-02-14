@@ -30,7 +30,7 @@ export default function Rivaroxaban(props) {
       gfrCalculated = true;
     }
 
-    if (hemodialysis === true) {
+    if (hemodialysis && props.adjustment === "renal") {
       props.setOutput({
         adjustmentType: 0,
         reason: "Rivaroxaban is not used in hemodialysis",
@@ -89,14 +89,14 @@ export default function Rivaroxaban(props) {
         });
       }
     }
-    if (hemodialysis) {
+    if (hemodialysis && props.adjustment === "renal") {
       props.setOutput((prevState) => ({
         params: [],
         ...prevState,
       }));
     } else if (props.adjustment === "renal" && gfrCalculated) {
       props.setOutput((prevState) => ({
-        params: [{ title: "GFR", value: gfr + "mL/min" }],
+        params: [{ title: "GFR", value: gfr + " mL/min" }],
         ...prevState,
       }));
     } else if (props.adjustment === "hepatic" && hepatic !== 0) {
