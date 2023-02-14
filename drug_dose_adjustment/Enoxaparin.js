@@ -25,7 +25,7 @@ export default function Enoxaparin(props) {
     }
     let bmiCalculated;
     let bmi;
-    if (weight !== "" || height !== "") {
+    if (weight !== "" && height !== "") {
       bmi = calculateBmi(weight, height);
       bmiCalculated = true;
     }
@@ -49,16 +49,16 @@ export default function Enoxaparin(props) {
         text,
       });
     } else if (props.indication === "dvtp") {
-      if (bmi > 50) {
+      if (bmi > 50 && bmiCalculated) {
         props.setOutput({
           adjustmentType: 1,
           reason: "BMI > 50 kg/m2",
           text: "60 mg twice daily or 0.5 mg/kg [ " + 0.5 * weight + " mg ]",
         });
-      } else if (bmi >= 40) {
+      } else if (bmi >= 40 && bmiCalculated) {
         props.setOutput({
           adjustmentType: 1,
-          reason: "BMI >= 40 kg/m2",
+          reason: "BMI ≥ 40 kg/m2",
           text: "40mg twice daily or 0.5 mg/kg [ " + 0.5 * weight + " mg ]",
         });
       } else {
@@ -67,7 +67,7 @@ export default function Enoxaparin(props) {
         });
       }
     } else if (props.indication === "dvtt") {
-      if (bmi >= 114) {
+      if (bmi >= 114 && bmiCalculated) {
         //TODO
         props.setOutput({
           adjustmentType: 1,
@@ -77,7 +77,7 @@ export default function Enoxaparin(props) {
             0.7 * weight +
             " mg ] may be indicated",
         });
-      } else if (bmi >= 50) {
+      } else if (bmi >= 50 && bmiCalculated) {
         props.setOutput({
           adjustmentType: 1,
           reason: "BMI > 50 kg/m2",
@@ -88,7 +88,7 @@ export default function Enoxaparin(props) {
             weight +
             " mg ]",
         });
-      } else if (bmi >= 30) {
+      } else if (bmi >= 30 && bmiCalculated) {
         props.setOutput({
           adjustmentType: 1,
           reason: "BMI > 30 kg/m2",
