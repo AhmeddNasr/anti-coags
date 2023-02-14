@@ -2,6 +2,7 @@ const fondaparinux = {
   id: 6,
   name: "fondaparinux",
   route: "parentral",
+  indications: ["dvtt", "dvtp"],
   switching: {
     heparin: [
       "From therapeutic fondaparinux doses: Initiate parenteral anticoagulant when next fondaparinux dose is expected to be given. Incases of high bleeding risk, consider omitting initial bolus when transitioning to heparin infusion.",
