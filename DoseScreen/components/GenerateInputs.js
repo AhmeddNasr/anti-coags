@@ -14,6 +14,8 @@ import {
   PlateletCountGroup,
   RadioButton,
   ApttInput,
+  DoseType,
+  InrInput,
 } from "./custom-inputs";
 import evaluateInput from "../../Utils/evaluateInput";
 import { useState, useEffect } from "react";
@@ -86,6 +88,10 @@ export default function GenerateInputs(props) {
 
   return (
     <>
+      {props.setDoseType && (
+        <DoseType value={props.doseType} setter={props.setDoseType} />
+      )}
+      {props.setInr && <InrInput value={props.inr} setter={props.setInr} />}
       {props.setHemodialysis && props.renalAdjustment && (
         <>
           <Label title="Dialysis" />
