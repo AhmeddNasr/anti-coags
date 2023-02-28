@@ -5,6 +5,11 @@ import theme from "./theme";
 export default function HomeScreen({ navigation }) {
   const data = [
     {
+      title: "Checklist",
+      screen: "Choosing",
+      description: "Find suitable anti-coagulants based on patient's data",
+    },
+    {
       title: "Dosing",
       screen: "Dose",
       description:
@@ -14,11 +19,6 @@ export default function HomeScreen({ navigation }) {
       title: "Switching",
       screen: "Switching",
       description: "Switching to another anticoagulant agent guideline",
-    },
-    {
-      title: "Checklist",
-      screen: "Choosing",
-      description: "Find suitable anti-coagulants based on patient's data",
     },
   ];
   let checkIcon = require("./assets/icons/checklist-checked-box.png");
@@ -100,20 +100,6 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* <View>
-        <Text
-          style={{
-            marginBottom: 30,
-            marginTop: 30,
-            fontSize: theme.FONT_SIZE_LOGO,
-            fontFamily: "inter-font",
-            alignSelf: "center",
-            color: "white",
-          }}
-        >
-          CoaguRx
-        </Text>
-      </View> */}
       {data.map((item, index) => {
         return (
           <CustomButton
