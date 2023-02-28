@@ -103,6 +103,37 @@ function CheckboxInput(props) {
   );
 }
 
+function DoseType(props) {
+  return (
+    <>
+      <Text
+        style={{
+          fontSize: theme.FONT_SIZE_EXTRA_LARGE,
+          marginBottom: 15,
+          marginTop: 20,
+          color: theme.PRIMARY_COLOR,
+          fontWeight: "600",
+          fontFamily: "inter-font",
+        }}
+      >
+        Dose Type
+      </Text>
+      <RadioButton
+        title={"Initial Dose"}
+        value={"initial"}
+        selected={props.value}
+        setter={props.setter}
+      />
+      <RadioButton
+        title={"Maintenance Dose"}
+        value={"maintenance"}
+        selected={props.value}
+        setter={props.setter}
+      />
+    </>
+  );
+}
+
 function WeightInput(props) {
   const [error, setError] = useState("");
   const [touched, setTouched] = useState(false);
@@ -124,6 +155,32 @@ function WeightInput(props) {
       setTouched={setTouched}
       disabled={props.disabled}
     />
+  );
+}
+
+function InrInput(props) {
+  const [error, setError] = useState("");
+  const [touched, setTouched] = useState(false);
+  useEffect(() => {
+    if (!touched) {
+      return;
+    }
+    validateInput(0, 20, setError, error, props.value);
+  }, [props.value, touched]);
+  return (
+    <>
+      <Text style={{}}>Patient Information</Text>
+      <TextInputBlock
+        title="INR"
+        keyboardType="numeric"
+        unit=""
+        setter={props.setter}
+        value={props.value}
+        error={error === "" ? null : error}
+        setTouched={setTouched}
+        disabled={props.disabled}
+      />
+    </>
   );
 }
 
@@ -617,4 +674,6 @@ export {
   CustomButton,
   PlateletCountGroup,
   ApttInput,
+  DoseType,
+  InrInput,
 };
