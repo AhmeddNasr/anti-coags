@@ -10,6 +10,7 @@ import { CheckboxInput } from "./DoseScreen/components/custom-inputs";
 import Apixaban from "./drug_dose_adjustment/Apixaban";
 import Enoxaparin from "./drug_dose_adjustment/Enoxaparin";
 import Fondaparinux from "./drug_dose_adjustment/Fondaparinux";
+import Warfarin from "./drug_dose_adjustment/Warfarin";
 
 export default function DrugDoseScreen({ navigation, route }) {
   const [renalAdjustment, setRenalAdjustment] = useState(false);
@@ -58,7 +59,7 @@ export default function DrugDoseScreen({ navigation, route }) {
           {/*  */}
           {indication.length > 0 && (
             <>
-              {drug.name !== "heparin" ? (
+              {drug.name !== "heparin" && drug.name !== "warfarin" ? (
                 <Text style={styles.header}>Adjustment Type</Text>
               ) : null}
               {drug.name === "rivaroxaban" && (
@@ -91,9 +92,9 @@ export default function DrugDoseScreen({ navigation, route }) {
                   value={hepaticAdjustment}
                 />
               )}
-              {drug.name !== "rivaroxaban" ? (
+              {drug.name !== "rivaroxaban" && drug.name !== "warfarin" ? (
                 <Text style={styles.header}>Patient information</Text>
-              ) : adjustment === "renal" ? (
+              ) : adjustment === "renal" && drug.name !== "warfarin" ? (
                 <Text style={styles.header}>Patient information</Text>
               ) : null}
               {drug.name === "rivaroxaban" && (
@@ -135,6 +136,10 @@ export default function DrugDoseScreen({ navigation, route }) {
                   indication={indication}
                   renalAdjustment={renalAdjustment}
                 />
+              )}
+              {/* {console.log(drug.name)} */}
+              {drug.name === "warfarin" && (
+                <Warfarin setOutput={setOutput} indication={indication} />
               )}
             </>
           )}
