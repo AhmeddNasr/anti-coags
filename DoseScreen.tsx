@@ -33,7 +33,10 @@ export default function DoseScreen({ navigation }) {
           <View style={styles.group} key={"oral-group-" + groupIndex}>
             {group.map((drug, index) => {
               return (
-                <View style={{ marginRight: index % 2 === 0 ? 20 : 0 }}>
+                <View
+                  style={{ marginRight: index % 2 === 0 ? 20 : 0 }}
+                  key={"oral-" + index}
+                >
                   <CustomButton
                     handlePress={() => {
                       navigation.navigate("DrugDose", {
@@ -42,7 +45,6 @@ export default function DoseScreen({ navigation }) {
                       });
                     }}
                     title={drug.name}
-                    key={"oral-" + index}
                   />
                 </View>
               );
@@ -60,7 +62,10 @@ export default function DoseScreen({ navigation }) {
           <View style={styles.group} key={"parentral-group-" + groupIndex}>
             {group.map((drug, index) => {
               return (
-                <View style={{ marginRight: index % 2 === 0 ? 20 : 0 }}>
+                <View
+                  style={{ marginRight: index % 2 === 0 ? 20 : 0 }}
+                  key={"parentral-" + index}
+                >
                   <CustomButton
                     handlePress={() => {
                       navigation.navigate("DrugDose", {
@@ -69,7 +74,6 @@ export default function DoseScreen({ navigation }) {
                       });
                     }}
                     title={drug.name}
-                    key={"parentral-" + index}
                   />
                 </View>
               );
