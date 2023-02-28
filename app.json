@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#7067cf"
+      "backgroundColor": "#fff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,7 +21,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#7067cf"
+        "backgroundColor": "#fff"
       },
       "package": "com.nasr.coagurx"
     },
@@ -30,7 +30,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "f29951c7-d174-4de1-9fce-37bfbfad6276"
+        "projectId": "41b60f20-a56e-4c13-a4ca-5e2db6701afe"
       }
     }
   }
