@@ -2,6 +2,7 @@ const warfarin = {
   id: 5,
   name: "warfarin",
   route: "parentral",
+  indications: ["af", "dvtt", "dvtp"],
   switching: {
     enoxaparin: [
       "Stop Warfarin",
