@@ -104,6 +104,7 @@ export default function ChoosingScreen() {
     }
     if (renalAdjustment) {
       let gfr = calculateGFR(gender, age, weight, scr);
+      // console.log(gfr);
       if (gfr < 15) {
         edoxaban.contra = true;
         rivaroxaban.contra = true;
@@ -171,12 +172,12 @@ export default function ChoosingScreen() {
         })}
         <Text style={[styles.header]}>Adjustment Type</Text>
         <CheckboxInput
-          title="Renal Dose Adjustment"
+          title="Renal Impairment"
           setter={setRenalAdjustment}
           value={renalAdjustment}
         />
         <CheckboxInput
-          title="Hepatic Dose Adjustment"
+          title="Hepatic Impairment"
           setter={setHepaticAdjustment}
           value={hepaticAdjustment}
         />
@@ -212,7 +213,7 @@ export default function ChoosingScreen() {
       >
         {/* <Text>All contra: {allContra ? "yes" : "no"}</Text> */}
 
-        {!allContra ? (
+        {suitableDrugs.length === 0 ? null : !allContra ? (
           <>
             <Text
               style={{
@@ -259,7 +260,8 @@ const styles = StyleSheet.create({
   container: {
     // margin: 25,
     // padding: 25,
-    paddingTop: 10,
+    paddingTop: 30,
+    // marginTop: 10,
     // paddingBottom: 50,
     flex: 1,
   },
@@ -279,7 +281,7 @@ const styles = StyleSheet.create({
     fontSize: theme.FONT_SIZE_EXTRA_LARGE,
     marginBottom: 15,
     marginTop: 20,
-    color: theme.PRIMARY_COLOR,
+    color: "black",
     fontWeight: "600",
     fontFamily: "inter-font",
   },
