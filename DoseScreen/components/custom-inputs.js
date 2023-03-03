@@ -165,21 +165,53 @@ function InrInput(props) {
     if (!touched) {
       return;
     }
-    validateInput(0, 20, setError, error, props.value);
+    validateInput(0, 20, setError, error, props.value, "");
   }, [props.value, touched]);
   return (
     <>
-      <Text style={{}}>Patient Information</Text>
-      <TextInputBlock
-        title="INR"
-        keyboardType="numeric"
-        unit=""
-        setter={props.setter}
-        value={props.value}
-        error={error === "" ? null : error}
-        setTouched={setTouched}
-        disabled={props.disabled}
-      />
+      {props.doseType !== "" ? (
+        <>
+          <Text
+            style={{
+              fontSize: theme.FONT_SIZE_EXTRA_LARGE,
+              marginBottom: 15,
+              marginTop: 20,
+              color: "black",
+              fontWeight: "600",
+              fontFamily: "inter-font",
+            }}
+          >
+            Patient Information
+          </Text>
+          <Text style={styles.label}>Anti-Coagulation Goal</Text>
+          {props.doseType === "maintenance" ? (
+            <>
+              <RadioButton
+                title="Regular-intensity Anticoagulation"
+                value={"regular"}
+                selected={props.goalValue}
+                setter={props.goalSetter}
+              />
+              <RadioButton
+                title="High-intensity Anticoagulation"
+                value={"high"}
+                selected={props.goalValue}
+                setter={props.goalSetter}
+              />
+            </>
+          ) : null}
+          <TextInputBlock
+            title={props.doseType === "initial" ? "INR on day 4" : "INR"}
+            keyboardType="numeric"
+            unit=""
+            setter={props.setter}
+            value={props.value}
+            error={error === "" ? null : error}
+            setTouched={setTouched}
+            disabled={props.disabled}
+          />
+        </>
+      ) : null}
     </>
   );
 }
