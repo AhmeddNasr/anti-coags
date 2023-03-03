@@ -91,7 +91,15 @@ export default function GenerateInputs(props) {
       {props.setDoseType && (
         <DoseType value={props.doseType} setter={props.setDoseType} />
       )}
-      {props.setInr && <InrInput value={props.inr} setter={props.setInr} />}
+      {props.setInr && (
+        <InrInput
+          value={props.inr}
+          setter={props.setInr}
+          doseType={props.doseType}
+          goalValue={props.inrGoal}
+          goalSetter={props.setInrGoal}
+        />
+      )}
       {props.setHemodialysis && props.renalAdjustment && (
         <>
           <Label title="Dialysis" />
