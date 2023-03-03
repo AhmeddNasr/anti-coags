@@ -30,7 +30,7 @@ export default function Warfarin(props) {
         adjustmentType: 1,
         text,
       });
-    } else if (doseType === "maintenance") {
+    } else if (doseType === "maintenance" && inr !== 0) {
       let text;
       let reason;
       let nine =
@@ -73,7 +73,7 @@ export default function Warfarin(props) {
           text = one;
           reason = "INR < 1.5";
         }
-      } else if (inrGoal === "high") {
+      } else if (inrGoal === "high" && inr !== 0) {
         if (inr > 10) {
           text = nine;
           reason = "INR >10";
@@ -99,6 +99,8 @@ export default function Warfarin(props) {
           text = one;
           reason = "INR < 2";
         }
+      } else {
+        props.setOutput({});
       }
       props.setOutput({
         text,
