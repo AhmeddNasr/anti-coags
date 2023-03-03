@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     fontSize: theme.FONT_SIZE_EXTRA_LARGE,
     marginBottom: 15,
     marginTop: 20,
-    color: theme.PRIMARY_COLOR,
+    color: "black",
     fontWeight: "600",
     fontFamily: "inter-font",
   },
