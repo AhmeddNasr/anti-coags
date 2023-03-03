@@ -93,7 +93,7 @@ function CheckboxInput(props) {
       <Text
         style={{
           fontSize: theme.FONT_SIZE_MEDIUM,
-          color: theme.PRIMARY_COLOR,
+          color: "black",
           fontWeight: "600",
         }}
       >
@@ -111,7 +111,7 @@ function DoseType(props) {
           fontSize: theme.FONT_SIZE_EXTRA_LARGE,
           marginBottom: 15,
           marginTop: 20,
-          color: theme.PRIMARY_COLOR,
+          color: "black",
           fontWeight: "600",
           fontFamily: "inter-font",
         }}
@@ -300,10 +300,10 @@ function CustomButton(props) {
       onPress={() => props.handlePress()}
       color={theme.SECONDARY_COLOR}
       style={({ pressed }) => ({
-        backgroundColor: theme.BLUE_COLOR,
+        backgroundColor: theme.LIGHT_GREY,
         padding: 20,
         // width: 150,
-        borderRadius: 10,
+        borderRadius: 25,
         marginTop: 10,
         justifyContent: "center",
         alignItems: "center",
@@ -313,7 +313,7 @@ function CustomButton(props) {
     >
       <Text
         style={{
-          color: theme.TEXT_COLOR_WHITE,
+          color: theme.MID_RED,
           fontSize: theme.FONT_SIZE_MEDIUM,
           fontWeight: "600",
         }}
@@ -490,7 +490,7 @@ function RadioButton(props) {
       />
       <Text
         style={{
-          color: theme.PRIMARY_COLOR,
+          color: "black",
           fontWeight: "600",
           fontSize: theme.FONT_SIZE_MEDIUM,
         }}
