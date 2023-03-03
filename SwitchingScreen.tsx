@@ -12,59 +12,69 @@ export default function SwitchingScreen() {
     <View style={styles.container}>
       <ScrollView>
         <Text style={[styles.label, { marginTop: 0 }]}>Switch From</Text>
-        <Select
-          minWidth="200"
-          accessibilityLabel="First drug"
-          placeholder="From"
-          w={"75%"}
-          onValueChange={(value) => {
-            if (value === secondDrug) {
-              setSecondDrug(-1);
-            }
-            setFirstDrug(value);
-          }}
-          fontSize={theme.FONT_SIZE_MEDIUM}
-          p={3}
-        >
-          {drugs.map((drug, key) => {
-            return (
-              <Select.Item
-                label={capitalizeFirstLetter(drug.name)}
-                key={`Switch1-${key}`}
-                value={drug.id}
-              />
-            );
-          })}
-        </Select>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <Select
+            minWidth="200"
+            accessibilityLabel="First drug"
+            placeholder="From"
+            w={"75%"}
+            onValueChange={(value) => {
+              if (value === secondDrug) {
+                setSecondDrug(-1);
+              }
+              setFirstDrug(value);
+            }}
+            fontSize={theme.FONT_SIZE_MEDIUM}
+            p={3}
+            borderRadius={15}
+            bgColor={theme.LIGHT_GREY}
+            color={theme.MID_RED}
+          >
+            {drugs.map((drug, key) => {
+              return (
+                <Select.Item
+                  label={capitalizeFirstLetter(drug.name)}
+                  key={`Switch1-${key}`}
+                  value={drug.id}
+                />
+              );
+            })}
+          </Select>
+        </View>
         <Text style={styles.label}>Switch To</Text>
-        <Select
-          minWidth="200"
-          accessibilityLabel="Second drug"
-          placeholder="To"
-          fontSize={theme.FONT_SIZE_MEDIUM}
-          p={3}
-          // _selectedItem={{
-          //   bg: "teal.600",
-          //   endIcon: <CheckIcon size={2} />,
-          // }}
-          w={"75%"}
-          // mt={10}
-          isDisabled={firstDrug === undefined || firstDrug === null}
-          onValueChange={(value) => setSecondDrug(value)}
-        >
-          {drugs.map((drug, key) => {
-            if (drug.id === firstDrug) {
-              return null;
-            }
-            return (
-              <Select.Item
-                label={capitalizeFirstLetter(drug.name)}
-                key={key}
-                value={drug.id}
-              />
-            );
-          })}
-        </Select>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <Select
+            minWidth="200"
+            accessibilityLabel="Second drug"
+            placeholder="To"
+            fontSize={theme.FONT_SIZE_MEDIUM}
+            p={3}
+            // _selectedItem={{
+            //   bg: "teal.600",
+            //   endIcon: <CheckIcon size={2} />,
+            // }}
+            w={"75%"}
+            // mt={10}
+            isDisabled={firstDrug === undefined || firstDrug === null}
+            onValueChange={(value) => setSecondDrug(value)}
+            borderRadius={15}
+            bgColor={theme.LIGHT_GREY}
+            color={theme.MID_RED}
+          >
+            {drugs.map((drug, key) => {
+              if (drug.id === firstDrug) {
+                return null;
+              }
+              return (
+                <Select.Item
+                  label={capitalizeFirstLetter(drug.name)}
+                  key={key}
+                  value={drug.id}
+                />
+              );
+            })}
+          </Select>
+        </View>
         {/* <Text style={{ marginTop: 30 }}>first drug: {firstDrug}</Text>
       <Text style={{ marginTop: 0 }}>second drug: {secondDrug}</Text> */}
         <Results firstDrug={firstDrug} secondDrug={secondDrug} />
@@ -123,10 +133,12 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
     // alignItems: "center",
     margin: 20,
+    marginTop: 0,
+    paddingTop: 20,
   },
   label: {
-    color: theme.PRIMARY_COLOR,
-    fontSize: theme.FONT_SIZE_LARGE,
+    color: theme.MID_RED,
+    fontSize: theme.FONT_SIZE_LARGE + 2,
     marginBottom: 20,
     marginTop: 20,
     fontWeight: "600",
