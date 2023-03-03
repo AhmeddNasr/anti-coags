@@ -32,7 +32,7 @@ export default function HomeScreen({ navigation }) {
           styles.button,
           pressed
             ? {
-                opacity: 0.9,
+                opacity: 0.7,
               }
             : null,
           { justifyContent: "space-between" },
