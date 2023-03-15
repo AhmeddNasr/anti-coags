@@ -7,6 +7,7 @@ import {
   RadioButton,
 } from "./DoseScreen/components/custom-inputs";
 import calculateGFR from "./Utils/calculateGFR";
+import capitalizeFirstLetter from "./Utils/capitalizeFirstLetter";
 
 export default function ChoosingScreen() {
   const [weight, setWeight] = useState("");
@@ -73,6 +74,17 @@ export default function ChoosingScreen() {
       dose: "",
       id: 6,
     };
+
+    if (indication === "af") {
+      enoxaparin.contra = true;
+      fondaparinux.contra = true;
+      warfarin.contra = true;
+    }
+
+    if (indication === "dvtp") {
+      edoxaban.contra = true;
+    }
+
     if (platlet !== 4) {
       heparin.contra = true;
       warfarin.contra = true;
@@ -152,7 +164,11 @@ export default function ChoosingScreen() {
       {/* TODO DRY */}
       {/* {console.log(suitableDrugs)} */}
       <View style={{ padding: 25, paddingTop: 0 }}>
-        <Text style={[styles.header, { marginTop: 0 }]}>Indication</Text>
+        <Text
+          style={[styles.header, { marginTop: 0, fontFamily: "Proxima-Nova" }]}
+        >
+          Indication
+        </Text>
         {indications.map((val, index) => {
           return (
             <RadioButton
@@ -229,7 +245,9 @@ export default function ChoosingScreen() {
               // console.log(suitableDrugs);
               return (
                 <Pressable key={index}>
-                  <Text style={styles.resultDrug}>{drug.title}</Text>
+                  <Text style={styles.resultDrug}>
+                    {capitalizeFirstLetter(drug.title)}
+                  </Text>
                 </Pressable>
               );
             })}
@@ -294,5 +312,6 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 15,
     backgroundColor: "white",
+    fontFamily: "Proxima-Nova",
   },
 });
