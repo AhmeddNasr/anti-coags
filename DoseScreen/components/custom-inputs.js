@@ -339,7 +339,7 @@ function CustomButton(props) {
         marginTop: 10,
         justifyContent: "center",
         alignItems: "center",
-        opacity: pressed ? 0.75 : 1,
+        opacity: pressed ? 0.5 : 1,
         width: 150,
       })}
     >
@@ -365,25 +365,30 @@ function SubmitButton(props) {
         my={8}
         disabled={!props.validInput || props.disabled}
         style={({ pressed }) => ({
-          backgroundColor: theme.SECONDARY_COLOR,
+          backgroundColor: "white",
+          borderColor: theme.SECONDARY_COLOR,
+          borderWidth: 1,
           padding: 20,
           // width: 150,
-          borderRadius: 15,
-          marginTop: 10,
+          borderRadius: 25,
+          marginTop: 20,
           justifyContent: "center",
           alignItems: "center",
-          opacity: props.validInput ? (pressed ? 0.75 : 1) : 0.6,
+          transform: [{ scale: pressed ? 1.01 : 1 }],
+          opacity: props.validInput ? (pressed ? 0.7 : 1) : 0.6,
         })}
       >
-        <Text
-          style={{
-            color: theme.TEXT_COLOR_WHITE,
-            fontSize: theme.FONT_SIZE_MEDIUM,
-            fontWeight: "700",
-          }}
-        >
-          {props.buttonTitle ? props.buttonTitle : "Calculate Dose"}
-        </Text>
+        {({ pressed }) => (
+          <Text
+            style={{
+              color: theme.SECONDARY_COLOR,
+              fontSize: theme.FONT_SIZE_MEDIUM,
+              fontWeight: "700",
+            }}
+          >
+            {props.buttonTitle ? props.buttonTitle : "Calculate Dose"}
+          </Text>
+        )}
       </Pressable>
       <View
         style={{
