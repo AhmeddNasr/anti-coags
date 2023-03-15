@@ -6,7 +6,7 @@ import SwitchingScreen from "./SwitchingScreen";
 import ChoosingScreen from "./ChoosingScreen";
 import DrugDoseScreen from "./DrugDoseScreen";
 import { NativeBaseProvider } from "native-base";
-import * as myTheme from "./theme";
+import theme, * as myTheme from "./theme";
 import setDefaultProps from "react-native-simple-default-props";
 import { useFonts } from "expo-font";
 import HomeScreen from "./HomeScreen";
@@ -46,27 +46,40 @@ export default function App() {
             headerShadowVisible: false,
             contentStyle: {
               backgroundColor: "white",
+              // paddingTop: 200,
             },
             header: ({ route, navigation, back, options }) => (
               <View
                 style={{
-                  paddingTop: StatusBar.currentHeight + 20,
-                  paddingBottom: 40,
+                  paddingTop: StatusBar.currentHeight + 15,
+                  paddingBottom: 20,
                   backgroundColor: myTheme.default.DARK_RED,
-                  alignItems: "center",
-                  borderBottomRightRadius: 40,
-                  borderBottomLeftRadius: 40,
+                  borderBottomRightRadius: 20,
+                  borderBottomLeftRadius: 20,
                   flexDirection: "row",
                   justifyContent: "center",
-                  marginBottom: 20,
+                  alignItems: "center",
+                  position: "relative",
+                  // marginBottom: 20,
                 }}
               >
                 {/* {navigation.canGoBack()} */}
                 {navigation.canGoBack() && route.name !== "Home" ? (
                   <TouchableOpacity
-                    style={{ padding: 5, paddingTop: 5 }}
+                    style={{
+                      padding: 5,
+                      paddingTop: 5,
+                      position: "absolute",
+                      top: StatusBar.currentHeight + 13,
+                      left: 15,
+                      // backgroundColor: "white",
+                      // borderRadius: "25",
+                    }}
                     onPress={() => navigation.goBack()}
                   >
+                    {/* {console.log(route)} */}
+                    {/* {console.log()} */}
+                    {/* {console.log(route.name === "home")} */}
                     <MaterialIcons
                       name="arrow-back"
                       color="white"
