@@ -142,9 +142,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 20,
     fontWeight: "600",
+    fontFamily: "Proxima-Nova",
   },
   resultText: {
     fontSize: theme.FONT_SIZE_MEDIUM,
     marginBottom: 12,
+    fontFamily: "Proxima-Nova",
   },
 });

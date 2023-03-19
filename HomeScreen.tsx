@@ -32,7 +32,8 @@ export default function HomeScreen({ navigation }) {
           styles.button,
           pressed
             ? {
-                opacity: 0.7,
+                opacity: 0.6,
+                transform: [{ scale: 1.007 }],
               }
             : null,
           { justifyContent: "space-between" },
@@ -46,6 +47,8 @@ export default function HomeScreen({ navigation }) {
               justifyContent: "center",
               // backgroundColor: "cyan",
               padding: 10,
+              position: "relative",
+              width: "100%",
             }}
           >
             <Image
@@ -62,6 +65,9 @@ export default function HomeScreen({ navigation }) {
                 // alignSelf: "center",
                 marginRight: 8,
                 // backgroundColor: "blue",
+                position: "absolute",
+                top: 15,
+                left: 10,
               }}
             />
             <Text
@@ -89,6 +95,8 @@ export default function HomeScreen({ navigation }) {
               alignSelf: "flex-start",
               fontSize: 14,
               fontStyle: "italic",
+              fontFamily: "Proxima-Nova",
+              marginTop: 10,
             }}
           >
             {props.description}
@@ -127,9 +135,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.LIGHT_GREY,
     marginBottom: 30,
-    maxHeight: 150,
+    maxHeight: 180,
+    // height: 100,
   },
   text: {
     color: "BLACK",
+    fontFamily: "Proxima-Nova",
   },
 });

@@ -88,7 +88,13 @@ export default function App() {
                     />
                   </TouchableOpacity>
                 ) : null}
-                <Text style={{ color: "white", fontSize: 30 }}>
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: 30,
+                    fontFamily: "Proxima-Nova",
+                  }}
+                >
                   {options.title}
                 </Text>
               </View>

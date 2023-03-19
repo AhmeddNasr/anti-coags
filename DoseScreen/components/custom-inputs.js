@@ -690,6 +690,7 @@ const styles = StyleSheet.create({
     fontSize: theme.FONT_SIZE_MEDIUM,
     marginBottom: 10,
     marginTop: 6,
+    fontFamily: "Proxima-Nova",
   },
 });
 

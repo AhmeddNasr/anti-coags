@@ -34,7 +34,7 @@ export default function DoseScreen({ navigation }) {
             {group.map((drug, index) => {
               return (
                 <View
-                  style={{ marginRight: index % 2 === 0 ? 20 : 0 }}
+                  style={{ margin: 10, marginBottom: 0, marginTop: 0 }}
                   key={"oral-" + index}
                 >
                   <CustomButton
@@ -60,24 +60,29 @@ export default function DoseScreen({ navigation }) {
       {parentralDrugs.map((group, groupIndex) => {
         return (
           <View style={styles.group} key={"parentral-group-" + groupIndex}>
-            {group.map((drug, index) => {
-              return (
-                <View
-                  style={{ marginRight: index % 2 === 0 ? 20 : 0 }}
-                  key={"parentral-" + index}
-                >
-                  <CustomButton
-                    handlePress={() => {
-                      navigation.navigate("DrugDose", {
-                        id: drug.id,
-                        name: drug.name,
-                      });
-                    }}
-                    title={drug.name}
-                  />
-                </View>
-              );
-            })}
+            <>
+              {group.map((drug, index) => {
+                return (
+                  <View
+                    style={{ margin: 10, marginBottom: 0, marginTop: 0 }}
+                    key={"parentral-" + index}
+                  >
+                    <CustomButton
+                      handlePress={() => {
+                        navigation.navigate("DrugDose", {
+                          id: drug.id,
+                          name: drug.name,
+                        });
+                      }}
+                      title={drug.name}
+                    />
+                  </View>
+                );
+              })}
+              {groupIndex === 1 ? (
+                <View style={{ width: 130, marginRight: 10, marginLeft: 30 }} />
+              ) : null}
+            </>
           </View>
         );
       })}
@@ -98,7 +103,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
   },
-  title: { fontSize: theme.FONT_SIZE_LOGO, marginBottom: 20 },
+  title: {
+    fontSize: 25,
+    marginTop: 20,
+    marginBottom: 15,
+    textAlign: "center",
+    fontFamily: "Proxima-Nova",
+  },
   Button: {
     borderColor: "gray",
     marginTop: 20,
@@ -115,8 +126,12 @@ const styles = StyleSheet.create({
   },
   ButtonText: {
     color: "white",
+
+    fontFamily: "Proxima-Nova",
   },
   group: {
     flexDirection: "row",
+    // backgroundColor: "black",
+    justifyContent: "center",
   },
 });

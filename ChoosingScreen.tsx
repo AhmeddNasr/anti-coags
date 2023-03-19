@@ -264,7 +264,13 @@ export default function ChoosingScreen() {
             >
               No Drugs Found
             </Text>
-            <Text style={{ color: "white", fontSize: theme.FONT_SIZE_MEDIUM }}>
+            <Text
+              style={{
+                color: "white",
+                fontSize: theme.FONT_SIZE_MEDIUM,
+                fontFamily: "Proxima-Nova",
+              }}
+            >
               We could not find any suitable drug for this patient
             </Text>
           </>
