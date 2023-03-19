@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import drugs from "./drugs";
 import theme from "./theme";
 import Rivaroxaban from "./drug_dose_adjustment/Rivaroxaban";
@@ -11,7 +11,7 @@ import Apixaban from "./drug_dose_adjustment/Apixaban";
 import Enoxaparin from "./drug_dose_adjustment/Enoxaparin";
 import Fondaparinux from "./drug_dose_adjustment/Fondaparinux";
 import Warfarin from "./drug_dose_adjustment/Warfarin";
-
+import Lottie from "lottie-react-native";
 export default function DrugDoseScreen({ navigation, route }) {
   const [renalAdjustment, setRenalAdjustment] = useState(false);
   const [hepaticAdjustment, setHepaticAdjustment] = useState(false);
@@ -23,10 +23,27 @@ export default function DrugDoseScreen({ navigation, route }) {
 
   const hepaticDrugs = ["edoxaban", "apixaban"];
   const renalDrugs = ["edoxaban", "enoxaparin", "fondaparinux", "apixaban"];
+  const animation = useRef(null);
+  const scrollView = useRef(null);
+
+  useEffect(() => {
+    animation.current?.play();
+  }, [output]);
+
+  const handleSubmit = (value, scroll) => {
+    setOutput(value);
+    scroll && scrollView.current?.scrollToEnd();
+  };
 
   return (
-    <>
-      <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }} ref={scrollView}>
+      <View
+        style={{
+          flex: 1,
+          // justifyContent: "space-between",
+          // backgroundColor: "pink",
+        }}
+      >
         <View style={{ padding: 25, paddingTop: 10, flex: 1 }}>
           {/*  */}
           {/* Indication */}
@@ -114,7 +131,7 @@ export default function DrugDoseScreen({ navigation, route }) {
               )}
               {drug.name === "apixaban" && (
                 <Apixaban
-                  setOutput={setOutput}
+                  setOutput={handleSubmit}
                   indication={indication}
                   hepaticAdjustment={hepaticAdjustment}
                   renalAdjustment={renalAdjustment}
@@ -149,20 +166,55 @@ export default function DrugDoseScreen({ navigation, route }) {
             style={[
               styles.resultContainer,
               {
-                backgroundColor:
-                  output?.adjustmentType === 0
-                    ? theme.RED_COLOR
-                    : output?.adjustmentType === 1
-                    ? theme.BLUE_COLOR
-                    : theme.GREEN_COLOR,
+                backgroundColor: theme.PRIMARY_COLOR,
+                // backgroundColor:
+                //   output?.adjustmentType === 0
+                //     ? theme.RED_COLOR
+                //     : output?.adjustmentType === 1
+                //     ? theme.BLUE_COLOR
+                //     : theme.GREEN_COLOR,
               },
             ]}
           >
-            <Text style={styles.resultMainHeader}>
-              {output?.adjustmentType === 0
-                ? "Use is contraindicated"
-                : "Dose: "}
-            </Text>
+            <View
+              style={{
+                backgroundColor: "white",
+                justifyContent: "space-between",
+                alignItems: "center",
+                // flex: 1,
+                flexDirection: "row",
+                borderRadius: 25,
+                padding: 10,
+                marginBottom: 20,
+              }}
+            >
+              <View style={{ flex: 4 }}>
+                <Text style={styles.resultMainHeader}>
+                  {output?.adjustmentType === 0
+                    ? "Use is contraindicated"
+                    : output?.adjustmentType === 1
+                    ? "Adjusted Dose"
+                    : "Unadjusted Dose"}
+                </Text>
+              </View>
+              <View style={{ flex: 1, height: 40 }}>
+                {output?.adjustmentType === 0 ? (
+                  <Lottie
+                    source={require("./assets/animations/error.json")}
+                    ref={animation}
+                    autoPlay={false}
+                    loop={false}
+                  />
+                ) : (
+                  <Lottie
+                    source={require("./assets/animations/check.json")}
+                    ref={animation}
+                    autoPlay={false}
+                    loop={false}
+                  />
+                )}
+              </View>
+            </View>
             {output?.text && (
               <Text style={[styles.resultReason]}>{output?.text}</Text>
             )}
@@ -194,8 +246,8 @@ export default function DrugDoseScreen({ navigation, route }) {
               )}
           </View>
         )}
-      </ScrollView>
-    </>
+      </View>
+    </ScrollView>
   );
 }
 
@@ -212,10 +264,10 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: theme.FONT_SIZE_EXTRA_LARGE,
     fontFamily: "inter-font",
-    backgroundColor: "white",
-    padding: 10,
-    borderRadius: 15,
-    marginBottom: 20,
+    // backgroundColor: "white",
+    // padding: 10,
+    // borderRadius: 15,
+    // marginBottom: 20,
   },
   resultContainer: {
     width: "100%",
@@ -224,7 +276,8 @@ const styles = StyleSheet.create({
     // color: "white",
     minHeight: 100,
     // marginTop: "auto",
-    marginTop: "auto",
+    // marginTop: "auto",
+    // alignSelf: "flex-end",
   },
   resultHeader: {
     color: "white",
@@ -236,10 +289,13 @@ const styles = StyleSheet.create({
   resultDose: {
     color: "white",
     marginBottom: 20,
+    fontFamily: "Proxima-Nova",
   },
   resultReason: {
-    fontStyle: "italic",
+    // fontStyle: "italic",
     color: "white",
-    marginBottom: 10,
+    marginBottom: 20,
+    fontSize: theme.FONT_SIZE_MEDIUM,
+    fontFamily: "Proxima-Nova",
   },
 });
