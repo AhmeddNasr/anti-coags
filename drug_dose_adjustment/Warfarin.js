@@ -2,7 +2,7 @@ import GenerateInputs from "../DoseScreen/components/GenerateInputs";
 import { useState, useEffect } from "react";
 
 export default function Warfarin(props) {
-  const [doseType, setDoseType] = useState("");
+  const [doseType, setDoseType] = useState("initial");
   const [inrGoal, setInrGoal] = useState("");
   const [inr, setInr] = useState(0);
   useEffect(() => {
