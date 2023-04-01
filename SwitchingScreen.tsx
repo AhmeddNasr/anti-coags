@@ -24,6 +24,7 @@ export default function SwitchingScreen() {
               }
               setFirstDrug(value);
             }}
+            fontFamily={"Proxima-Nova"}
             fontSize={theme.FONT_SIZE_MEDIUM}
             p={3}
             borderRadius={15}
@@ -36,6 +37,8 @@ export default function SwitchingScreen() {
                   label={capitalizeFirstLetter(drug.name)}
                   key={`Switch1-${key}`}
                   value={drug.id}
+                  fontFamily={"Proxima-Nova"}
+                  fontStyle={"initial"}
                 />
               );
             })}
@@ -49,6 +52,8 @@ export default function SwitchingScreen() {
             placeholder="To"
             fontSize={theme.FONT_SIZE_MEDIUM}
             p={3}
+            fontFamily={"Proxima-Nova"}
+            // fontFamily={"Proxima-Nova"}
             // _selectedItem={{
             //   bg: "teal.600",
             //   endIcon: <CheckIcon size={2} />,
@@ -70,6 +75,7 @@ export default function SwitchingScreen() {
                   label={capitalizeFirstLetter(drug.name)}
                   key={key}
                   value={drug.id}
+                  fontFamily={"Proxima-Nova"}
                 />
               );
             })}

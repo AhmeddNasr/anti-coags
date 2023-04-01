@@ -383,7 +383,8 @@ function SubmitButton(props) {
             style={{
               color: theme.SECONDARY_COLOR,
               fontSize: theme.FONT_SIZE_MEDIUM,
-              fontWeight: "700",
+              fontWeight: "600",
+              fontFamily: "Proxima-Nova",
             }}
           >
             {props.buttonTitle ? props.buttonTitle : "Calculate Dose"}

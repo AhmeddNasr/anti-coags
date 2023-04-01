@@ -7,18 +7,20 @@ export default function HomeScreen({ navigation }) {
     {
       title: "Checklist",
       screen: "Choosing",
-      description: "Find suitable anti-coagulants based on patient's data",
+      description:
+        "Find suitable anti-coagulants based on the patient's platelet count, renal and hepatic function",
     },
     {
       title: "Dosing",
       screen: "Dose",
       description:
-        "Calculate optimum dose based on patient's weight, height, renal and hepatic function",
+        "Calculate optimum dose based on the patient's weight, height, renal and hepatic function",
     },
     {
       title: "Switching",
       screen: "Switching",
-      description: "Switching to another anticoagulant agent guideline",
+      description:
+        "Recommendations on switching between different anticoagulants",
     },
   ];
   let checkIcon = require("./assets/icons/checklist-checked-box.png");
@@ -76,7 +78,7 @@ export default function HomeScreen({ navigation }) {
                 {
                   fontSize: 25,
                   fontFamily: "inter-font",
-                  fontWeight: "900",
+                  fontWeight: "500",
                   // marginTop: 10,
                   // padding: 10,
                   paddingRight: 0,
@@ -94,7 +96,7 @@ export default function HomeScreen({ navigation }) {
               color: theme.LIGHT_BLACK,
               alignSelf: "flex-start",
               fontSize: 14,
-              fontStyle: "italic",
+              // fontStyle: "italic",
               fontFamily: "Proxima-Nova",
               marginTop: 10,
             }}
