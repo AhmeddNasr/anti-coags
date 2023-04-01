@@ -48,7 +48,7 @@ export default function DrugDoseScreen({ navigation, route }) {
           {/*  */}
           {/* Indication */}
           {/*  */}
-          <Text style={[styles.header, { marginTop: 0 }]}>Indication</Text>
+          <Text style={[styles.header, { marginTop: 5 }]}>Indication</Text>
           {drug.indications.map((val, index) => {
             return (
               <RadioButton
