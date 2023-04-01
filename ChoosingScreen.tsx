@@ -186,17 +186,8 @@ export default function ChoosingScreen() {
             />
           );
         })}
-        <Text style={[styles.header]}>Adjustment Type</Text>
-        <CheckboxInput
-          title="Renal Impairment"
-          setter={setRenalAdjustment}
-          value={renalAdjustment}
-        />
-        <CheckboxInput
-          title="Hepatic Impairment"
-          setter={setHepaticAdjustment}
-          value={hepaticAdjustment}
-        />
+        {/* <Text style={[styles.header]}>Adjustment Type</Text> */}
+
         <Text style={[styles.header]}>Patient Information</Text>
         <GenerateInputs
           indication={indication}
@@ -211,6 +202,8 @@ export default function ChoosingScreen() {
           scr={scr}
           setScr={setScr}
           calculate={calculate}
+          setHepaticAdjustment={setHepaticAdjustment}
+          setRenalAdjustment={setRenalAdjustment}
           buttonTitle={"Find Suitable Drug"}
           renalAdjustment={renalAdjustment}
           hepaticAdjustment={hepaticAdjustment}

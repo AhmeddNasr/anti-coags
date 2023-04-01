@@ -16,9 +16,12 @@ import {
   ApttInput,
   DoseType,
   InrInput,
+  CheckboxInput,
 } from "./custom-inputs";
 import evaluateInput from "../../Utils/evaluateInput";
 import { useState, useEffect } from "react";
+import { Text, View } from "react-native";
+import theme from "../../theme";
 
 export default function GenerateInputs(props) {
   const [validInput, setValidInput] = useState(false);
@@ -88,6 +91,32 @@ export default function GenerateInputs(props) {
 
   return (
     <>
+      {props.setHepaticAdjustment && props.setRenalAdjustment && (
+        <>
+          <Text
+            style={{
+              color: theme.TEXT_COLOR_GRAY,
+              fontSize: theme.FONT_SIZE_MEDIUM,
+              marginBottom: 10,
+              marginTop: 6,
+              fontFamily: "Proxima-Nova",
+            }}
+          >
+            Adjustment Type
+          </Text>
+          <CheckboxInput
+            title="Renal Impairment"
+            setter={props.setRenalAdjustment}
+            value={props.renalAdjustment}
+          />
+          <CheckboxInput
+            title="Hepatic Impairment"
+            setter={props.setHepaticAdjustment}
+            value={props.hepaticAdjustment}
+          />
+          <View style={{ marginBottom: 15 }}></View>
+        </>
+      )}
       {props.setDoseType && (
         <DoseType value={props.doseType} setter={props.setDoseType} />
       )}
