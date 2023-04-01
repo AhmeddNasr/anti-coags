@@ -17,8 +17,8 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [loaded] = useFonts({
-    "Proxima-Nova": require("./assets/fonts/proxima-nova.ttf"),
-    "inter-font": require("./assets/fonts/inter.ttf"),
+    "Proxima-Nova": require("./assets/fonts/Proxima-Nova.ttf"),
+    "inter-font": require("./assets/fonts/inter-font.ttf"),
   });
 
   if (!loaded) {
@@ -51,7 +51,7 @@ export default function App() {
             header: ({ route, navigation, back, options }) => (
               <View
                 style={{
-                  paddingTop: StatusBar.currentHeight + 15,
+                  paddingTop: StatusBar.currentHeight,
                   paddingBottom: 20,
                   backgroundColor: myTheme.default.DARK_RED,
                   borderBottomRightRadius: 20,
@@ -70,7 +70,7 @@ export default function App() {
                       padding: 5,
                       paddingTop: 5,
                       position: "absolute",
-                      top: StatusBar.currentHeight + 13,
+                      top: StatusBar.currentHeight - 5,
                       left: 15,
                       // backgroundColor: "white",
                       // borderRadius: "25",
@@ -97,6 +97,7 @@ export default function App() {
                 >
                   {options.title}
                 </Text>
+                <StatusBar barStyle={"dark-content"} />
               </View>
             ),
           }}
